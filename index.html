@@ -2083,7 +2083,7 @@
       <div id="loginErro" style="font-size:12px;color:var(--red);min-height:18px;margin-bottom:8px;display:none;"></div>
 
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:14px;">
-        <input type="checkbox" id="lembrarCheck" checked style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent);">
+        <input type="checkbox" id="lembrarCheck" style="width:14px;height:14px;cursor:pointer;accent-color:var(--accent);">
         <span style="font-size:12px;color:var(--text2);">Lembrar de mim (sessão permanente)</span>
       </label>
 
@@ -2286,14 +2286,11 @@ function verificarLogin() {
     const salvo = localStorage.getItem('fc_auth_perm');
     if (!salvo) return;
     const auth = JSON.parse(salvo);
-    // Só expira se explicitamente marcado como não-permanente E passou de 8h
-    if (auth.permanente === false && Date.now() - auth.ts > 8 * 60 * 60 * 1000) {
+    // Sessão permanente: nunca expira. Sem lembrar: expira em 8h
+    if (!auth.permanente && Date.now() - auth.ts > 8 * 60 * 60 * 1000) {
       localStorage.removeItem('fc_auth_perm');
       return;
     }
-    // Renovar timestamp automaticamente
-    auth.ts = Date.now();
-    localStorage.setItem('fc_auth_perm', JSON.stringify(auth));
     document.getElementById('loginScreen').style.display = 'none';
     atualizarSidebarUsuario(auth);
   } catch(e) {
@@ -2935,23 +2932,12 @@ function navIr(destino) {
 
     case 'fontes':
       show(fontesApp, 'column');
-      setTimeout(() => {
-        fontesCadastradas = FONTES_DEFAULT.map(f => ({...f, ativo: true}));
-        fontesPageFiltradas = [...fontesCadastradas];
-        filtrarFontesPage();
-        _renderStatsInterno();
-      }, 200);
+      setTimeout(() => renderFontesPage(), 150);
       break;
 
     case 'biblioteca-editorial':
       show(document.getElementById('bibliotecaEditorialApp'), 'column');
-      setTimeout(() => {
-        renderBibCalendario();
-        renderBibLivros(BIBLIOTECA_EDITORIAL.livros);
-        const bc = document.getElementById('bibCount');
-        if (bc) bc.textContent = BIBLIOTECA_EDITORIAL.livros.length + ' livros';
-        renderBibSelecao();
-      }, 200);
+      setTimeout(() => initBibliotecaEditorial(), 150);
       break;
 
     case 'biblioteca':

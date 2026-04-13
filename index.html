@@ -1371,6 +1371,8 @@
           <div class="hashtags-area" id="hashtagsArea" style="display:none;"></div>
           <div class="output-actions">
             <button class="btn btn-ghost" onclick="copiarConteudo()">📋 Copiar</button>
+            <button class="btn btn-ghost" onclick="salvarNoRepositorio('gerador')" style="background:rgba(245,200,66,0.1);border-color:rgba(245,200,66,0.3);color:#f5c842;">💾 Salvar</button>
+            <button class="btn btn-ghost" onclick="editarConteudo('gerador')" style="background:rgba(74,158,255,0.1);border-color:rgba(74,158,255,0.3);color:#4a9eff;">✏️ Editar</button>
             <button class="btn btn-ghost" onclick="compartilharConteudo('gerador')" style="background:rgba(37,211,102,0.1);border-color:rgba(37,211,102,0.3);color:#25D366;">📤 Compartilhar</button>
             <button class="btn btn-ghost" onclick="gerarConteudo()">🔄 Regenerar</button>
             <button class="btn btn-ghost" onclick="salvarNaBiblioteca()">💾 Salvar</button>
@@ -1541,7 +1543,10 @@
     <div class="page-title">📰 Sophos <span>Newsletter</span></div>
     <div class="topbar-right">
       <div class="badge badge-ai"><span class="badge-dot"></span> API Ativa</div>
-      <button class="btn btn-primary" onclick="exportarNewspaper()">📤 Exportar / Enviar</button>
+      <button class="btn btn-ghost" onclick="salvarNoRepositorio('newsletter')" style="color:#f5c842;border-color:rgba(245,200,66,0.3);background:rgba(245,200,66,0.08);">💾 Salvar</button>
+      <button class="btn btn-ghost" onclick="editarConteudo('newsletter')" style="color:#4a9eff;border-color:rgba(74,158,255,0.3);background:rgba(74,158,255,0.08);">✏️ Editar</button>
+      <button class="btn btn-ghost" onclick="compartilharConteudo('newsletter')" style="color:#25D366;border-color:rgba(37,211,102,0.3);background:rgba(37,211,102,0.08);">📤 Compartilhar</button>
+      <button class="btn btn-primary" onclick="exportarNewspaper()">📄 Exportar PDF</button>
     </div>
   </div>
 
@@ -1883,7 +1888,8 @@
         <div style="display:flex;gap:6px;">
           <span id="bibStatus" style="font-size:11px;padding:3px 8px;border-radius:8px;background:var(--surface3);color:var(--text3);">Aguardando</span>
           <button onclick="copiarBib()" class="btn btn-ghost" style="font-size:11px;padding:4px 10px;">📋 Copiar</button>
-          <button onclick="salvarBib()" class="btn btn-ghost" style="font-size:11px;padding:4px 10px;">💾 Salvar</button>
+          <button onclick="salvarNoRepositorio('biblioteca')" style="font-size:11px;padding:4px 10px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.3);color:#f5c842;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;">💾 Salvar</button>
+          <button onclick="editarConteudo('biblioteca')" style="font-size:11px;padding:4px 10px;background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.3);color:#4a9eff;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;">✏️ Editar</button>
           <button onclick="compartilharConteudo('biblioteca')" style="font-size:11px;padding:4px 10px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.3);color:#25D366;border-radius:6px;cursor:pointer;">📤 Compartilhar</button>
         </div>
       </div>
@@ -2413,6 +2419,8 @@
         <div style="display:flex;gap:6px;">
           <span id="livroStatus" style="font-size:11px;padding:3px 8px;border-radius:8px;background:var(--surface3);color:var(--text3);">Aguardando</span>
           <button onclick="livroCopiar()" class="btn btn-ghost" style="font-size:11px;">📋 Copiar</button>
+          <button onclick="salvarNoRepositorio('livro')" style="font-size:11px;padding:4px 10px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.3);color:#f5c842;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;">💾 Salvar</button>
+          <button onclick="editarConteudo('livro')" style="font-size:11px;padding:4px 10px;background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.3);color:#4a9eff;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;">✏️ Editar</button>
           <button onclick="compartilharConteudo('livro')" style="font-size:11px;padding:4px 10px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.3);color:#25D366;border-radius:6px;cursor:pointer;">📤 Compartilhar</button>
           <button onclick="livroSalvar()" class="btn btn-ghost" style="font-size:11px;">💾 .txt</button>
         </div>
@@ -2473,6 +2481,8 @@
         <div style="display:flex;gap:6px;">
           <span id="apresStatus" style="font-size:11px;padding:3px 8px;border-radius:8px;background:var(--surface3);color:var(--text3);">Aguardando</span>
           <button onclick="apresCopiar()" class="btn btn-ghost" style="font-size:11px;">📋 Copiar</button>
+          <button onclick="salvarNoRepositorio('apresentacao')" style="font-size:11px;padding:4px 10px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.3);color:#f5c842;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;">💾 Salvar</button>
+          <button onclick="editarConteudo('apresentacao')" style="font-size:11px;padding:4px 10px;background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.3);color:#4a9eff;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;">✏️ Editar</button>
           <button onclick="compartilharConteudo('apresentacao')" style="font-size:11px;padding:4px 10px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.3);color:#25D366;border-radius:6px;cursor:pointer;">📤 Compartilhar</button>
           <button onclick="apresSalvar()" class="btn btn-ghost" style="font-size:11px;">💾 .txt</button>
         </div>
@@ -2542,6 +2552,8 @@
         <div style="display:flex;gap:6px;">
           <span id="docStatus" style="font-size:11px;padding:3px 8px;border-radius:8px;background:var(--surface3);color:var(--text3);">Aguardando</span>
           <button onclick="docCopiar()" class="btn btn-ghost" style="font-size:11px;">📋 Copiar</button>
+          <button onclick="salvarNoRepositorio('documento')" style="font-size:11px;padding:4px 10px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.3);color:#f5c842;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;">💾 Salvar</button>
+          <button onclick="editarConteudo('documento')" style="font-size:11px;padding:4px 10px;background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.3);color:#4a9eff;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;">✏️ Editar</button>
           <button onclick="compartilharConteudo('documento')" style="font-size:11px;padding:4px 10px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.3);color:#25D366;border-radius:6px;cursor:pointer;">📤 Compartilhar</button>
           <button onclick="docSalvar()" class="btn btn-ghost" style="font-size:11px;">💾 .txt</button>
         </div>
@@ -5122,41 +5134,135 @@ function exportarHTML() {
   if (!content) return;
   const fullHtml = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&display=swap" rel="stylesheet"><style>body{margin:0;padding:20px;background:#e8e4dc;font-family:Georgia,serif;}.newsletter{background:#fff;max-width:800px;margin:0 auto;}.np-masthead{padding:16px 24px 12px;text-align:center;}.np-title{font-size:48px;font-weight:900;color:#fff;}.np-tagline{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-top:4px;}.np-top-bar{display:flex;justify-content:space-between;font-size:10px;margin-bottom:8px;font-family:Arial,sans-serif;border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:6px;color:rgba(255,255,255,0.6);}.np-edition-bar{color:#fff;font-size:10px;font-family:Arial,sans-serif;padding:4px 24px;display:flex;justify-content:space-between;}.np-body{padding:16px 20px;}.np-headline-section{border-bottom:2px solid #1a1a1a;padding-bottom:16px;margin-bottom:16px;}.np-headline-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;font-family:Arial,sans-serif;font-weight:700;margin-bottom:4px;}.np-headline{font-size:26px;font-weight:900;line-height:1.15;margin-bottom:8px;border-bottom:1px solid #ccc;padding-bottom:8px;}.np-lead{font-size:13px;font-style:italic;color:#333;margin-bottom:10px;line-height:1.5;border-left:3px solid #c0392b;padding-left:10px;}.np-article-text{font-size:12px;line-height:1.75;color:#222;text-align:justify;}.np-quote{background:#f5f5f0;border-left:4px solid;padding:10px 14px;margin:10px 0;font-size:13px;font-style:italic;line-height:1.5;}.np-columns{display:grid;grid-template-columns:1fr 1fr;gap:16px;border-top:2px solid #1a1a1a;padding-top:14px;margin-bottom:14px;}.np-column{border-right:1px solid #ccc;padding-right:14px;}.np-column:last-child{border-right:none;padding-right:0;}.np-col-headline{font-size:14px;font-weight:900;line-height:1.2;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid #1a1a1a;}.np-col-text{font-size:11px;line-height:1.65;text-align:justify;color:#333;}.np-footer-article{border-top:2px solid #1a1a1a;padding-top:12px;margin-top:4px;}.np-footer-columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}.np-footer-col{font-size:11px;line-height:1.6;color:#333;border-right:1px solid #ddd;padding-right:12px;text-align:justify;}.np-footer-col:last-child{border-right:none;}.np-section-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;font-family:Arial,sans-serif;font-weight:700;margin-bottom:4px;}.np-paper-footer{color:#aaa;padding:8px 24px;font-size:9px;font-family:Arial,sans-serif;display:flex;justify-content:space-between;}</style></head><body>${content}
 <!-- ==================== MODAL COMPARTILHAR ==================== -->
-<div id="modalCompartilhar" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;align-items:center;justify-content:center;">
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:460px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+<div id="modalCompartilhar" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:2000;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:620px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;">
+    
+    <!-- Header -->
+    <div style="padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
       <div style="font-size:16px;font-weight:700;color:var(--text);">📤 Compartilhar Conteúdo</div>
       <button onclick="document.getElementById('modalCompartilhar').style.display='none'" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
     </div>
 
-    <!-- Preview do conteúdo -->
-    <div id="sharePreview" style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:12px;font-size:12px;color:var(--text2);max-height:100px;overflow:hidden;margin-bottom:16px;line-height:1.5;position:relative;">
-      <div id="sharePreviewText"></div>
-      <div style="position:absolute;bottom:0;left:0;right:0;height:30px;background:linear-gradient(transparent,var(--surface2));"></div>
+    <!-- Destinatário -->
+    <div style="padding:16px 24px;border-bottom:1px solid var(--border);flex-shrink:0;">
+      <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Destinatário (opcional)</label>
+      <select id="shareCliente" onchange="shareAtualizarCliente()" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;">
+        <option value="">— Sem destinatário específico —</option>
+      </select>
+      <div id="shareClienteInfo" style="display:none;margin-top:8px;font-size:11px;color:var(--text3);display:flex;gap:12px;"></div>
     </div>
 
-    <!-- Selecionar cliente -->
-    <div style="margin-bottom:14px;">
-      <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Destinatário</label>
-      <select id="shareCliente" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;">
-        <option value="">— Selecione um cliente —</option>
+    <!-- Preview do conteúdo editável -->
+    <div style="padding:16px 24px;border-bottom:1px solid var(--border);flex:1;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <label style="font-size:11px;color:#888;text-transform:uppercase;">Mensagem a enviar</label>
+        <div style="display:flex;gap:6px;">
+          <span id="shareCharCount" style="font-size:11px;color:var(--text3);"></span>
+          <button onclick="shareResetar()" style="font-size:10px;padding:2px 8px;background:var(--surface2);border:1px solid var(--border2);border-radius:4px;color:var(--text3);cursor:pointer;">↺ Original</button>
+        </div>
+      </div>
+      <textarea id="shareTextarea" oninput="shareContar()" style="flex:1;min-height:180px;max-height:280px;width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:12px;color:var(--text);font-size:12px;line-height:1.7;outline:none;resize:vertical;font-family:'DM Sans',sans-serif;"></textarea>
+      <div id="shareAviso" style="display:none;margin-top:6px;font-size:11px;color:#f5c842;padding:6px 10px;background:rgba(245,200,66,0.08);border-radius:6px;border:1px solid rgba(245,200,66,0.2);">
+        ⚠ Texto truncado para WhatsApp (limite de 1800 chars). O texto completo será copiado automaticamente.
+      </div>
+    </div>
+
+    <!-- Botões de envio -->
+    <div style="padding:16px 24px;display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+      
+      <!-- WhatsApp -->
+      <button onclick="shareEnviarWpp()" id="btnShareWpp" style="padding:12px 16px;background:#25D366;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">💬</span>
+        <div style="text-align:left;">
+          <div>Enviar pelo WhatsApp</div>
+          <div id="shareWppInfo" style="font-size:11px;opacity:0.8;font-weight:400;">Abre WhatsApp com a mensagem pronta</div>
+        </div>
+      </button>
+
+      <!-- Telegram -->
+      <button onclick="shareEnviarTelegram()" style="padding:12px 16px;background:#0088cc;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">✈️</span>
+        <div style="text-align:left;">
+          <div>Enviar pelo Telegram</div>
+          <div id="shareTelInfo" style="font-size:11px;opacity:0.8;font-weight:400;">Abre Telegram com a mensagem</div>
+        </div>
+      </button>
+
+      <!-- Email -->
+      <button onclick="shareEnviarEmail()" style="padding:12px 16px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">📧</span>
+        <div style="text-align:left;">
+          <div>Enviar por E-mail</div>
+          <div id="shareEmailInfo" style="font-size:11px;color:var(--text3);font-weight:400;">Abre cliente de e-mail</div>
+        </div>
+      </button>
+
+      <!-- Copiar -->
+      <button onclick="shareEnviarCopiar()" style="padding:10px 16px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+        📋 Copiar texto para colar manualmente
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL SALVAR NO REPOSITÓRIO ==================== -->
+<div id="modalSalvarRepo" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:420px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div style="font-size:16px;font-weight:700;color:var(--text);">💾 Salvar no Repositório</div>
+      <button onclick="document.getElementById('modalSalvarRepo').style.display='none'" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+    </div>
+    <div style="background:var(--surface2);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--text3);margin-bottom:16px;line-height:1.6;">
+      <span id="salvarRepoPreview"></span>
+    </div>
+    <div style="margin-bottom:12px;">
+      <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Título / Nome do conteúdo</label>
+      <input id="salvarRepoTitulo" type="text" placeholder="Ex: Newsletter Abril 2026 — Mercado Financeiro" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;" onkeydown="if(event.key==='Enter') confirmarSalvarRepo()">
+    </div>
+    <div style="margin-bottom:16px;">
+      <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Tipo</label>
+      <select id="salvarRepoTipo" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;">
+        <option value="newsletter">📰 Newsletter</option>
+        <option value="artigo">📄 Artigo</option>
+        <option value="apresentacao">📊 Apresentação</option>
+        <option value="livro">📖 Livro</option>
+        <option value="documento">📑 Documento Word</option>
+        <option value="gerador">✨ Gerador IA</option>
       </select>
     </div>
+    <div style="display:flex;gap:8px;">
+      <button onclick="confirmarSalvarRepo()" style="flex:1;padding:12px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:14px;">💾 Salvar</button>
+      <button onclick="document.getElementById('modalSalvarRepo').style.display='none'" style="padding:12px 16px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
+    </div>
+  </div>
+</div>
 
-    <!-- Botões de canal -->
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <button onclick="shareViaWhatsapp()" id="btnShareWpp" style="padding:12px;background:#25D366;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
-        💬 Enviar pelo WhatsApp
-      </button>
-      <button onclick="shareViaTelegram()" id="btnShareTel" style="padding:12px;background:#0088cc;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
-        ✈️ Enviar pelo Telegram
-      </button>
-      <button onclick="shareViaEmail()" id="btnShareEmail" style="padding:12px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
-        📧 Enviar por E-mail
-      </button>
-      <button onclick="shareViaClipboard()" style="padding:10px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;font-size:12px;cursor:pointer;">
-        📋 Copiar e colar manualmente
-      </button>
+<!-- ==================== MODAL EDITAR CONTEÚDO ==================== -->
+<div id="modalEditar" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:2000;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;width:100%;max-width:800px;margin:auto;display:flex;flex-direction:column;gap:14px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:16px;font-weight:700;color:var(--text);">✏️ Editar Conteúdo</div>
+      <div style="display:flex;gap:8px;">
+        <button onclick="editarSalvar()" style="padding:8px 18px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;">✓ Salvar alterações</button>
+        <button onclick="document.getElementById('modalEditar').style.display='none'" style="padding:8px 14px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text3);">Edite o conteúdo abaixo. As alterações serão aplicadas no módulo e poderão ser salvas no repositório.</div>
+    <!-- Toolbar de formatação -->
+    <div style="display:flex;gap:6px;flex-wrap:wrap;padding:8px;background:var(--surface2);border-radius:8px;">
+      <button onclick="editarFormatar('negrito')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;font-weight:700;">N</button>
+      <button onclick="editarFormatar('italico')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;font-style:italic;">I</button>
+      <button onclick="editarFormatar('titulo')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;">H2</button>
+      <button onclick="editarFormatar('subtitulo')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;">H3</button>
+      <button onclick="editarFormatar('lista')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;">• Lista</button>
+      <button onclick="editarFormatar('separador')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;">— Separador</button>
+      <div style="flex:1;"></div>
+      <span id="editarContador" style="font-size:11px;color:var(--text3);align-self:center;">0 caracteres</span>
+    </div>
+    <textarea id="editarTextarea" oninput="editarContar()" style="width:100%;min-height:500px;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:16px;color:var(--text);font-size:13px;line-height:1.9;outline:none;resize:vertical;font-family:'DM Sans',sans-serif;"></textarea>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button onclick="editarSalvar()" style="padding:10px 24px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;">✓ Salvar alterações</button>
+      <button onclick="document.getElementById('modalEditar').style.display='none'" style="padding:10px 16px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
     </div>
   </div>
 </div>
@@ -5174,41 +5280,135 @@ function imprimirNewsletter() {
   const win = window.open('', '_blank');
   win.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><style>@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&display=swap');*{margin:0;padding:0;box-sizing:border-box;}body{background:#e8e4dc;padding:20px;font-family:Georgia,serif;}.newsletter{background:#fff;max-width:800px;margin:0 auto;}.np-masthead{padding:16px 24px 12px;text-align:center;}.np-title{font-size:48px;font-weight:900;color:#fff;line-height:1;}.np-tagline{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-top:4px;}.np-top-bar{display:flex;justify-content:space-between;font-size:10px;margin-bottom:8px;font-family:Arial;border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:6px;color:rgba(255,255,255,0.6);}.np-edition-bar{color:#fff;font-size:10px;font-family:Arial;padding:4px 24px;display:flex;justify-content:space-between;}.np-body{padding:16px 20px;}.np-headline-section{border-bottom:2px solid #1a1a1a;padding-bottom:16px;margin-bottom:16px;}.np-headline-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;font-family:Arial;font-weight:700;margin-bottom:4px;}.np-headline{font-size:26px;font-weight:900;line-height:1.15;margin-bottom:8px;border-bottom:1px solid #ccc;padding-bottom:8px;}.np-lead{font-size:13px;font-style:italic;color:#333;margin-bottom:10px;line-height:1.5;border-left:3px solid;padding-left:10px;}.np-article-text{font-size:12px;line-height:1.75;color:#222;column-count:2;column-gap:20px;column-rule:1px solid #ddd;text-align:justify;}.np-quote{background:#f5f5f0;border-left:4px solid;padding:10px 14px;margin:10px 0;font-size:13px;font-style:italic;line-height:1.5;break-inside:avoid;}.np-columns{display:grid;grid-template-columns:1fr 1fr;gap:16px;border-top:2px solid #1a1a1a;padding-top:14px;margin-bottom:14px;}.np-column{border-right:1px solid #ccc;padding-right:14px;}.np-column:last-child{border-right:none;padding-right:0;}.np-col-headline{font-size:14px;font-weight:900;line-height:1.2;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid #1a1a1a;}.np-col-text{font-size:11px;line-height:1.65;text-align:justify;color:#333;}.np-footer-article{border-top:2px solid #1a1a1a;padding-top:12px;}.np-footer-columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}.np-footer-col{font-size:11px;line-height:1.6;color:#333;border-right:1px solid #ddd;padding-right:12px;text-align:justify;}.np-footer-col:last-child{border-right:none;}.np-section-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;font-family:Arial;font-weight:700;margin-bottom:4px;}.np-paper-footer{color:#aaa;padding:8px 24px;font-size:9px;font-family:Arial;display:flex;justify-content:space-between;}@media print{body{padding:0;background:#fff;}}</style></head><body>${content}
 <!-- ==================== MODAL COMPARTILHAR ==================== -->
-<div id="modalCompartilhar" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;align-items:center;justify-content:center;">
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:460px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+<div id="modalCompartilhar" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:2000;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:620px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;">
+    
+    <!-- Header -->
+    <div style="padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
       <div style="font-size:16px;font-weight:700;color:var(--text);">📤 Compartilhar Conteúdo</div>
       <button onclick="document.getElementById('modalCompartilhar').style.display='none'" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
     </div>
 
-    <!-- Preview do conteúdo -->
-    <div id="sharePreview" style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:12px;font-size:12px;color:var(--text2);max-height:100px;overflow:hidden;margin-bottom:16px;line-height:1.5;position:relative;">
-      <div id="sharePreviewText"></div>
-      <div style="position:absolute;bottom:0;left:0;right:0;height:30px;background:linear-gradient(transparent,var(--surface2));"></div>
+    <!-- Destinatário -->
+    <div style="padding:16px 24px;border-bottom:1px solid var(--border);flex-shrink:0;">
+      <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Destinatário (opcional)</label>
+      <select id="shareCliente" onchange="shareAtualizarCliente()" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;">
+        <option value="">— Sem destinatário específico —</option>
+      </select>
+      <div id="shareClienteInfo" style="display:none;margin-top:8px;font-size:11px;color:var(--text3);display:flex;gap:12px;"></div>
     </div>
 
-    <!-- Selecionar cliente -->
-    <div style="margin-bottom:14px;">
-      <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Destinatário</label>
-      <select id="shareCliente" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;">
-        <option value="">— Selecione um cliente —</option>
+    <!-- Preview do conteúdo editável -->
+    <div style="padding:16px 24px;border-bottom:1px solid var(--border);flex:1;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <label style="font-size:11px;color:#888;text-transform:uppercase;">Mensagem a enviar</label>
+        <div style="display:flex;gap:6px;">
+          <span id="shareCharCount" style="font-size:11px;color:var(--text3);"></span>
+          <button onclick="shareResetar()" style="font-size:10px;padding:2px 8px;background:var(--surface2);border:1px solid var(--border2);border-radius:4px;color:var(--text3);cursor:pointer;">↺ Original</button>
+        </div>
+      </div>
+      <textarea id="shareTextarea" oninput="shareContar()" style="flex:1;min-height:180px;max-height:280px;width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:12px;color:var(--text);font-size:12px;line-height:1.7;outline:none;resize:vertical;font-family:'DM Sans',sans-serif;"></textarea>
+      <div id="shareAviso" style="display:none;margin-top:6px;font-size:11px;color:#f5c842;padding:6px 10px;background:rgba(245,200,66,0.08);border-radius:6px;border:1px solid rgba(245,200,66,0.2);">
+        ⚠ Texto truncado para WhatsApp (limite de 1800 chars). O texto completo será copiado automaticamente.
+      </div>
+    </div>
+
+    <!-- Botões de envio -->
+    <div style="padding:16px 24px;display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+      
+      <!-- WhatsApp -->
+      <button onclick="shareEnviarWpp()" id="btnShareWpp" style="padding:12px 16px;background:#25D366;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">💬</span>
+        <div style="text-align:left;">
+          <div>Enviar pelo WhatsApp</div>
+          <div id="shareWppInfo" style="font-size:11px;opacity:0.8;font-weight:400;">Abre WhatsApp com a mensagem pronta</div>
+        </div>
+      </button>
+
+      <!-- Telegram -->
+      <button onclick="shareEnviarTelegram()" style="padding:12px 16px;background:#0088cc;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">✈️</span>
+        <div style="text-align:left;">
+          <div>Enviar pelo Telegram</div>
+          <div id="shareTelInfo" style="font-size:11px;opacity:0.8;font-weight:400;">Abre Telegram com a mensagem</div>
+        </div>
+      </button>
+
+      <!-- Email -->
+      <button onclick="shareEnviarEmail()" style="padding:12px 16px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">📧</span>
+        <div style="text-align:left;">
+          <div>Enviar por E-mail</div>
+          <div id="shareEmailInfo" style="font-size:11px;color:var(--text3);font-weight:400;">Abre cliente de e-mail</div>
+        </div>
+      </button>
+
+      <!-- Copiar -->
+      <button onclick="shareEnviarCopiar()" style="padding:10px 16px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+        📋 Copiar texto para colar manualmente
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL SALVAR NO REPOSITÓRIO ==================== -->
+<div id="modalSalvarRepo" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:420px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div style="font-size:16px;font-weight:700;color:var(--text);">💾 Salvar no Repositório</div>
+      <button onclick="document.getElementById('modalSalvarRepo').style.display='none'" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+    </div>
+    <div style="background:var(--surface2);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--text3);margin-bottom:16px;line-height:1.6;">
+      <span id="salvarRepoPreview"></span>
+    </div>
+    <div style="margin-bottom:12px;">
+      <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Título / Nome do conteúdo</label>
+      <input id="salvarRepoTitulo" type="text" placeholder="Ex: Newsletter Abril 2026 — Mercado Financeiro" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;" onkeydown="if(event.key==='Enter') confirmarSalvarRepo()">
+    </div>
+    <div style="margin-bottom:16px;">
+      <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Tipo</label>
+      <select id="salvarRepoTipo" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;">
+        <option value="newsletter">📰 Newsletter</option>
+        <option value="artigo">📄 Artigo</option>
+        <option value="apresentacao">📊 Apresentação</option>
+        <option value="livro">📖 Livro</option>
+        <option value="documento">📑 Documento Word</option>
+        <option value="gerador">✨ Gerador IA</option>
       </select>
     </div>
+    <div style="display:flex;gap:8px;">
+      <button onclick="confirmarSalvarRepo()" style="flex:1;padding:12px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:14px;">💾 Salvar</button>
+      <button onclick="document.getElementById('modalSalvarRepo').style.display='none'" style="padding:12px 16px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
+    </div>
+  </div>
+</div>
 
-    <!-- Botões de canal -->
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <button onclick="shareViaWhatsapp()" id="btnShareWpp" style="padding:12px;background:#25D366;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
-        💬 Enviar pelo WhatsApp
-      </button>
-      <button onclick="shareViaTelegram()" id="btnShareTel" style="padding:12px;background:#0088cc;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
-        ✈️ Enviar pelo Telegram
-      </button>
-      <button onclick="shareViaEmail()" id="btnShareEmail" style="padding:12px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
-        📧 Enviar por E-mail
-      </button>
-      <button onclick="shareViaClipboard()" style="padding:10px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;font-size:12px;cursor:pointer;">
-        📋 Copiar e colar manualmente
-      </button>
+<!-- ==================== MODAL EDITAR CONTEÚDO ==================== -->
+<div id="modalEditar" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:2000;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;width:100%;max-width:800px;margin:auto;display:flex;flex-direction:column;gap:14px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:16px;font-weight:700;color:var(--text);">✏️ Editar Conteúdo</div>
+      <div style="display:flex;gap:8px;">
+        <button onclick="editarSalvar()" style="padding:8px 18px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;">✓ Salvar alterações</button>
+        <button onclick="document.getElementById('modalEditar').style.display='none'" style="padding:8px 14px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text3);">Edite o conteúdo abaixo. As alterações serão aplicadas no módulo e poderão ser salvas no repositório.</div>
+    <!-- Toolbar de formatação -->
+    <div style="display:flex;gap:6px;flex-wrap:wrap;padding:8px;background:var(--surface2);border-radius:8px;">
+      <button onclick="editarFormatar('negrito')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;font-weight:700;">N</button>
+      <button onclick="editarFormatar('italico')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;font-style:italic;">I</button>
+      <button onclick="editarFormatar('titulo')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;">H2</button>
+      <button onclick="editarFormatar('subtitulo')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;">H3</button>
+      <button onclick="editarFormatar('lista')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;">• Lista</button>
+      <button onclick="editarFormatar('separador')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;">— Separador</button>
+      <div style="flex:1;"></div>
+      <span id="editarContador" style="font-size:11px;color:var(--text3);align-self:center;">0 caracteres</span>
+    </div>
+    <textarea id="editarTextarea" oninput="editarContar()" style="width:100%;min-height:500px;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:16px;color:var(--text);font-size:13px;line-height:1.9;outline:none;resize:vertical;font-family:'DM Sans',sans-serif;"></textarea>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button onclick="editarSalvar()" style="padding:10px 24px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;">✓ Salvar alterações</button>
+      <button onclick="document.getElementById('modalEditar').style.display='none'" style="padding:10px 16px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
     </div>
   </div>
 </div>
@@ -6327,549 +6527,543 @@ function telEnviarMassa() {
 
 
 // =============================================
-// COMPARTILHAR CONTEÚDO
+// COMPARTILHAR CONTEÚDO — SISTEMA MELHORADO
 // =============================================
+let _shareTextoOriginal = '';
 let _shareTexto = '';
 
 function compartilharConteudo(modulo) {
-  // Pegar texto do módulo correto
   const fontes = {
     gerador: () => document.getElementById('outputContent')?.innerText || document.getElementById('outputContent')?.textContent || '',
-    biblioteca: () => document.getElementById('bibOutput')?.innerText || '',
+    biblioteca: () => document.getElementById('bibOutput')?.innerText || document.getElementById('bibOutput')?.textContent || '',
+    newsletter: () => {
+      const arts = (typeof npArticles !== 'undefined') ? npArticles : null;
+      if (arts?.art1?.manchete) {
+        const nome = document.getElementById('npNome')?.value || 'Sophos Newsletter';
+        const edicao = document.getElementById('npEdicao')?.value || '';
+        let txt = `📰 *${nome}*\n${edicao}\n${'─'.repeat(35)}\n\n`;
+        txt += `🔴 *${arts.art1.manchete}*\n\n`;
+        if (arts.art1.lead) txt += `_${arts.art1.lead}_\n\n`;
+        if (arts.art1.col1) txt += arts.art1.col1.substring(0, 600) + '...\n\n';
+        if (arts.art2?.manchete) txt += `📌 *${arts.art2.manchete}*\n${(arts.art2.col1||'').substring(0,200)}...\n\n`;
+        txt += `👉 Acesse a newsletter completa: https://fincontent.netlify.app`;
+        return txt;
+      }
+      const out = document.getElementById('npOutput');
+      return out ? (out.innerText||out.textContent||'').trim().substring(0, 1200) : '';
+    },
     livro: () => document.getElementById('livroOutput')?.textContent || '',
     apresentacao: () => document.getElementById('apresOutput')?.textContent || '',
     documento: () => document.getElementById('docOutput')?.textContent || '',
-    newsletter: () => {
-      const arts = npGetArtigos ? npGetArtigos() : null;
-      if (arts?.art1?.manchete) return arts.art1.manchete + '\n\n' + (arts.art1.col1 || '');
-      return document.getElementById('npOutput')?.innerText || '';
-    }
   };
 
-  _shareTexto = (fontes[modulo] ? fontes[modulo]() : '').trim();
-
-  if (!_shareTexto || _shareTexto.length < 10) {
+  const texto = (fontes[modulo] ? fontes[modulo]() : '').trim();
+  if (!texto || texto.length < 10) {
     showToast('⚠ Gere o conteúdo primeiro antes de compartilhar!');
     return;
   }
 
-  // Popular select de clientes
+  _shareTextoOriginal = texto;
+  _shareTexto = texto;
+
+  // Popular clientes
   const sel = document.getElementById('shareCliente');
   const clientes = crmCarregar();
-  sel.innerHTML = '<option value="">— Selecione um cliente —</option>' +
-    clientes.map(c => `<option value="${c.id}">${c.nome}${c.empresa ? ' — ' + c.empresa : ''}</option>`).join('');
+  sel.innerHTML = '<option value="">— Sem destinatário específico —</option>' +
+    clientes.map(c => `<option value="${c.id}">${c.nome}${c.empresa?' — '+c.empresa:''}</option>`).join('');
 
-  // Mostrar preview
-  document.getElementById('sharePreviewText').textContent = _shareTexto.substring(0, 200) + (_shareTexto.length > 200 ? '...' : '');
+  // Preencher textarea com texto formatado para WhatsApp
+  document.getElementById('shareTextarea').value = texto;
+  shareContar();
+  shareAtualizarCliente();
 
-  // Mostrar modal
   document.getElementById('modalCompartilhar').style.display = 'flex';
 }
 
-function shareGetCliente() {
-  const id = document.getElementById('shareCliente')?.value;
-  if (!id) return null;
-  return crmCarregar().find(c => c.id === id) || null;
+function shareContar() {
+  const txt = document.getElementById('shareTextarea')?.value || '';
+  _shareTexto = txt;
+  const el = document.getElementById('shareCharCount');
+  const aviso = document.getElementById('shareAviso');
+  if (el) {
+    const cor = txt.length > 1800 ? '#e74c3c' : txt.length > 1000 ? '#f5c842' : '#2ecc71';
+    el.innerHTML = `<span style="color:${cor}">${txt.length.toLocaleString('pt-BR')} chars</span>`;
+  }
+  if (aviso) aviso.style.display = txt.length > 1800 ? 'block' : 'none';
 }
 
-function shareViaWhatsapp() {
-  const cliente = shareGetCliente();
-  let texto = _shareTexto;
+function shareResetar() {
+  document.getElementById('shareTextarea').value = _shareTextoOriginal;
+  _shareTexto = _shareTextoOriginal;
+  shareContar();
+}
 
-  if (cliente?.nome) {
-    texto = 'Olá ' + cliente.nome.split(' ')[0] + '! 👋\n\n' + texto;
+function shareAtualizarCliente() {
+  const id = document.getElementById('shareCliente')?.value;
+  const cliente = id ? crmCarregar().find(c => c.id === id) : null;
+  const wppInfo = document.getElementById('shareWppInfo');
+  const telInfo = document.getElementById('shareTelInfo');
+  const emailInfo = document.getElementById('shareEmailInfo');
+
+  if (cliente) {
+    if (wppInfo) wppInfo.textContent = cliente.whatsapp ? `→ ${cliente.whatsapp}` : 'Cliente sem WhatsApp cadastrado';
+    if (telInfo) telInfo.textContent = cliente.telegram ? `→ ${cliente.telegram}` : 'Cliente sem Telegram cadastrado';
+    if (emailInfo) emailInfo.textContent = cliente.email ? `→ ${cliente.email}` : 'Cliente sem e-mail cadastrado';
+    // Personalizar texto com nome
+    const nome = cliente.nome.split(' ')[0];
+    if (!_shareTexto.startsWith('Olá')) {
+      const personalizado = `Olá ${nome}! 👋\n\n` + _shareTextoOriginal;
+      document.getElementById('shareTextarea').value = personalizado;
+      _shareTexto = personalizado;
+      shareContar();
+    }
+  } else {
+    if (wppInfo) wppInfo.textContent = 'Abre WhatsApp com a mensagem pronta';
+    if (telInfo) telInfo.textContent = 'Abre Telegram com a mensagem';
+    if (emailInfo) emailInfo.textContent = 'Abre cliente de e-mail';
+    document.getElementById('shareTextarea').value = _shareTextoOriginal;
+    _shareTexto = _shareTextoOriginal;
+    shareContar();
+  }
+}
+
+function shareGetClienteAtual() {
+  const id = document.getElementById('shareCliente')?.value;
+  return id ? crmCarregar().find(c => c.id === id) : null;
+}
+
+function shareEnviarWpp() {
+  const texto = document.getElementById('shareTextarea')?.value || _shareTexto;
+  const cliente = shareGetClienteAtual();
+  const LIMITE = 1800;
+
+  // Texto para o link (truncado se necessário)
+  let textoLink = texto;
+  let textoCompleto = null;
+  if (texto.length > LIMITE) {
+    textoLink = texto.substring(0, LIMITE) + '...';
+    textoCompleto = texto;
   }
 
+  // Sempre copiar para clipboard (facilita o envio)
+  navigator.clipboard.writeText(textoCompleto || texto).catch(() => {});
+
   if (cliente?.whatsapp) {
+    // Cliente com número: abrir link direto wa.me
     const num = '55' + cliente.whatsapp.replace(/\D/g, '');
-    window.open('https://wa.me/' + num + '?text=' + encodeURIComponent(texto), '_blank');
+    window.open(`https://wa.me/${num}?text=${encodeURIComponent(textoLink)}`, '_blank');
+    showToast('💬 WhatsApp aberto! Texto copiado — basta enviar.');
   } else {
-    // Sem número — abrir WhatsApp Web com o texto
-    window.open('https://web.whatsapp.com/', '_blank');
-    navigator.clipboard.writeText(texto).then(() => {
-      showToast('📋 Texto copiado! Cole no WhatsApp Web que abriu.');
+    // Sem número: usar web.whatsapp.com na aba existente ou nova
+    // Copiar texto primeiro, depois navegar
+    navigator.clipboard.writeText(textoCompleto || texto).then(() => {
+      // Tentar encontrar aba do WhatsApp Web já aberta
+      window.open('https://web.whatsapp.com', '_blank', 'noopener');
+      showToast('📋 Texto copiado! WhatsApp Web aberto — escolha o contato e cole (Ctrl+V).');
     });
   }
   document.getElementById('modalCompartilhar').style.display = 'none';
 }
 
-function shareViaTelegram() {
-  const cliente = shareGetCliente();
-  let texto = _shareTexto;
+function shareEnviarTelegram() {
+  const texto = document.getElementById('shareTextarea')?.value || _shareTexto;
+  const cliente = shareGetClienteAtual();
 
-  if (cliente?.nome) {
-    texto = 'Olá *' + cliente.nome.split(' ')[0] + '*! 👋\n\n' + texto;
-  }
+  navigator.clipboard.writeText(texto).catch(() => {});
 
   if (cliente?.telegram) {
     const usuario = cliente.telegram.replace('@', '');
-    window.open('https://t.me/' + usuario, '_blank');
-    navigator.clipboard.writeText(texto).then(() => {
-      showToast('📋 Texto copiado! Cole na conversa do Telegram que abriu.');
-    });
+    window.open(`https://t.me/${usuario}`, '_blank');
+    showToast('✈️ Telegram aberto! Texto copiado — cole na conversa (Ctrl+V).');
   } else {
-    // Usar share do Telegram
-    window.open('https://t.me/share/url?url=&text=' + encodeURIComponent(texto.substring(0, 4000)), '_blank');
+    window.open('https://web.telegram.org', '_blank');
+    showToast('📋 Texto copiado! Telegram aberto — escolha o contato e cole (Ctrl+V).');
   }
   document.getElementById('modalCompartilhar').style.display = 'none';
 }
 
-function shareViaEmail() {
-  const cliente = shareGetCliente();
+function shareEnviarEmail() {
+  const texto = document.getElementById('shareTextarea')?.value || _shareTexto;
+  const cliente = shareGetClienteAtual();
   const email = cliente?.email || '';
-  const nome = cliente?.nome ? ('Olá ' + cliente.nome.split(' ')[0] + ',\n\n') : '';
-  const assunto = 'Conteúdo Financeiro — Sophos Inteligência Financeira';
-  const corpo = nome + _shareTexto + '\n\nAtenciosamente,\nEquipe Sophos';
-
-  const mailtoLink = 'mailto:' + email +
-    '?subject=' + encodeURIComponent(assunto) +
-    '&body=' + encodeURIComponent(corpo);
-
-  window.open(mailtoLink);
+  const nome = cliente?.nome ? `Olá ${cliente.nome.split(' ')[0]},\n\n` : '';
+  const assunto = 'Sophos Inteligência Financeira';
+  const corpo = nome + texto;
+  window.open(`mailto:${email}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`);
   document.getElementById('modalCompartilhar').style.display = 'none';
 }
 
-function shareViaClipboard() {
-  navigator.clipboard.writeText(_shareTexto).then(() => {
-    showToast('✅ Conteúdo copiado! Cole onde quiser.');
+function shareEnviarCopiar() {
+  const texto = document.getElementById('shareTextarea')?.value || _shareTexto;
+  navigator.clipboard.writeText(texto).then(() => {
+    showToast('✅ Texto copiado! Cole onde precisar (Ctrl+V).');
     document.getElementById('modalCompartilhar').style.display = 'none';
   });
 }
 
-// =============================================
-// REPOSITÓRIO DE CONTEÚDOS
-// =============================================
-function repoSalvar(tipo, titulo, conteudo, extra) {
-  if (!conteudo || conteudo.trim().length < 10) return;
-  const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
-  const item = {
-    id: 'r' + Date.now(),
-    tipo,
-    titulo: titulo || 'Sem título',
-    conteudo,
-    extra: extra || {},
-    criadoEm: new Date().toISOString(),
-    tamanho: conteudo.length
-  };
-  repo.unshift(item);
-  // Manter max 200 itens
-  if (repo.length > 200) repo.splice(200);
-  localStorage.setItem('fc_repositorio', JSON.stringify(repo));
-  return item.id;
-}
-
-function repoCarregar(tipo, busca) {
-  let repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
-  if (tipo) repo = repo.filter(r => r.tipo === tipo);
-  if (busca) {
-    const b = busca.toLowerCase();
-    repo = repo.filter(r => r.titulo?.toLowerCase().includes(b) || r.conteudo?.toLowerCase().includes(b));
-  }
-  return repo;
-}
-
-function repoInit() {
-  repoFiltrar('');
-  repoStats();
-}
-
-function repoStats() {
-  const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
-  const tipos = {};
-  repo.forEach(r => { tipos[r.tipo] = (tipos[r.tipo] || 0) + 1; });
-  const el = document.getElementById('repoStats');
-  if (el) el.innerHTML = `Total: <strong>${repo.length}</strong><br>` +
-    Object.entries(tipos).map(([t,c]) => `${t}: ${c}`).join('<br>');
-}
-
-let _repoFiltroAtual = '';
-function repoFiltrar(tipo) {
-  _repoFiltroAtual = tipo;
-  // Atualizar botões
-  document.querySelectorAll('[id^="repoFiltro"]').forEach(b => {
-    b.style.background = 'var(--surface2)';
-    b.style.color = 'var(--text2)';
-    b.style.border = '1px solid var(--border2)';
-  });
-  const ativo = document.getElementById('repoFiltro' + (tipo ? tipo.charAt(0).toUpperCase() + tipo.slice(1) : 'Todos'));
-  if (ativo) { ativo.style.background = 'var(--accent)'; ativo.style.color = '#000'; ativo.style.border = 'none'; }
-  repoRenderizar();
-}
-
-function repoBuscar() {
-  repoRenderizar();
-}
-
-function repoRenderizar() {
-  const busca = document.getElementById('repoBusca')?.value || '';
-  const lista = repoCarregar(_repoFiltroAtual, busca);
-  const container = document.getElementById('repoLista');
-  if (!container) return;
-  if (!lista.length) {
-    container.innerHTML = '<div style="text-align:center;padding:60px;color:var(--text3);"><div style="font-size:36px;margin-bottom:12px;">📭</div><div>Nenhum conteúdo salvo ainda</div><div style="font-size:12px;margin-top:6px;">Os conteúdos gerados aparecem aqui automaticamente</div></div>';
-    return;
-  }
-  const icons = { newsletter:'📰', artigo:'📄', apresentacao:'📊', livro:'📖', documento:'📑', gerador:'✨' };
-  container.innerHTML = lista.map(r => `
-    <div onclick="repoVisualizar('${r.id}')" style="background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:12px 14px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)'">
-      <div style="font-size:20px;flex-shrink:0;">${icons[r.tipo] || '📄'}</div>
-      <div style="flex:1;min-width:0;">
-        <div style="font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(r.titulo)}</div>
-        <div style="font-size:10px;color:var(--text3);margin-top:2px;">${r.tipo} · ${new Date(r.criadoEm).toLocaleDateString('pt-BR')} · ${(r.tamanho/1000).toFixed(1)}KB</div>
-        <div style="font-size:11px;color:var(--text2);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(r.conteudo.substring(0,80))}...</div>
-      </div>
-      <button onclick="event.stopPropagation();repoExcluir('${r.id}')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;flex-shrink:0;" title="Excluir">🗑</button>
-    </div>`).join('');
-}
-
-function repoVisualizar(id) {
-  const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
-  const item = repo.find(r => r.id === id);
-  if (!item) return;
-  const viewer = document.getElementById('repoViewer');
-  if (!viewer) return;
-  const icons = { newsletter:'📰', artigo:'📄', apresentacao:'📊', livro:'📖', documento:'📑', gerador:'✨' };
-  viewer.innerHTML = `
-    <div style="border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:14px;">
-      <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;">${icons[item.tipo]||'📄'} ${escapeHtml(item.titulo)}</div>
-      <div style="font-size:11px;color:var(--text3);">${item.tipo} · ${new Date(item.criadoEm).toLocaleString('pt-BR')} · ${(item.tamanho/1000).toFixed(1)} KB</div>
-      <div style="display:flex;gap:6px;margin-top:10px;">
-        <button onclick="navigator.clipboard.writeText(${JSON.stringify(item.conteudo)}).then(()=>showToast('✅ Copiado!'))" style="padding:6px 12px;background:var(--surface2);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:11px;">📋 Copiar</button>
-        <button onclick="repoDownload('${id}')" style="padding:6px 12px;background:var(--surface2);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:11px;">💾 .txt</button>
-        <button onclick="compartilharRepoItem('${id}')" style="padding:6px 12px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.3);border-radius:6px;color:#25D366;cursor:pointer;font-size:11px;">📤 Compartilhar</button>
-      </div>
-    </div>
-    <div style="font-size:12px;line-height:1.9;color:var(--text2);white-space:pre-wrap;">${escapeHtml(item.conteudo)}</div>`;
-}
-
-function repoDownload(id) {
-  const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
-  const item = repo.find(r => r.id === id);
-  if (!item) return;
-  const a = document.createElement('a');
-  a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(item.conteudo);
-  a.download = item.titulo.replace(/\s+/g,'_') + '.txt';
-  a.click();
-}
+// Manter compatibilidade com funções antigas
+function shareViaWhatsapp() { shareEnviarWpp(); }
+function shareViaTelegram() { shareEnviarTelegram(); }
+function shareViaEmail() { shareEnviarEmail(); }
+function shareViaClipboard() { shareEnviarCopiar(); }
+function shareGetCliente() { return shareGetClienteAtual(); }
 
 function compartilharRepoItem(id) {
   const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
   const item = repo.find(r => r.id === id);
   if (!item) return;
+  _shareTextoOriginal = item.conteudo;
   _shareTexto = item.conteudo;
   const sel = document.getElementById('shareCliente');
   const clientes = crmCarregar();
-  sel.innerHTML = '<option value="">— Selecione um cliente —</option>' +
+  sel.innerHTML = '<option value="">— Sem destinatário específico —</option>' +
     clientes.map(c => `<option value="${c.id}">${c.nome}${c.empresa?' — '+c.empresa:''}</option>`).join('');
-  document.getElementById('sharePreviewText').textContent = item.conteudo.substring(0, 200) + '...';
+  document.getElementById('shareTextarea').value = item.conteudo;
+  shareContar();
   document.getElementById('modalCompartilhar').style.display = 'flex';
 }
 
-function repoExcluir(id) {
-  if (!confirm('Excluir este conteúdo?')) return;
-  const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]').filter(r => r.id !== id);
-  localStorage.setItem('fc_repositorio', JSON.stringify(repo));
-  repoRenderizar();
-  repoStats();
-  document.getElementById('repoViewer').innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text3);"><div style="font-size:36px;margin-bottom:12px;">🗂️</div><div style="font-size:13px;color:var(--text2);">Selecione um conteúdo para visualizar</div></div>';
-  showToast('🗑 Conteúdo removido.');
-}
-
-function repoLimparTudo() {
-  if (!confirm('Excluir TODOS os conteúdos salvos? Esta ação não pode ser desfeita.')) return;
-  localStorage.removeItem('fc_repositorio');
-  repoRenderizar();
-  repoStats();
-  showToast('🗑 Repositório limpo.');
-}
-
-function repoExportar() {
-  const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
-  if (!repo.length) { showToast('⚠ Nenhum conteúdo para exportar.'); return; }
-  const txt = repo.map(r =>
-    '═'.repeat(60) + '\n' +
-    `[${r.tipo.toUpperCase()}] ${r.titulo}\n` +
-    `Data: ${new Date(r.criadoEm).toLocaleString('pt-BR')}\n` +
-    '─'.repeat(60) + '\n' +
-    r.conteudo + '\n'
-  ).join('\n\n');
-  const a = document.createElement('a');
-  a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt);
-  a.download = 'repositorio_fincontent_' + new Date().toISOString().split('T')[0] + '.txt';
-  a.click();
-  showToast(`✅ ${repo.length} conteúdos exportados!`);
-}
-
 // =============================================
-// ENVIOS EM BLOCO
+// SALVAR NO REPOSITÓRIO — FUNÇÃO CENTRAL
 // =============================================
-function initEnviosApp() {
-  envioAtualizarDestinatarios();
-  // Carregar clientes no select individual
-  const sel = document.getElementById('envioClienteInd');
-  if (sel) {
-    const clientes = crmCarregar();
-    sel.innerHTML = '<option value="">— Selecione —</option>' +
-      clientes.map(c => `<option value="${c.id}">${c.nome}${c.empresa?' — '+c.empresa:''}</option>`).join('');
-  }
-}
+let _salvarRepoTexto = '';
+let _salvarRepoModulo = '';
 
-function envioCarregarConteudos() {
-  const tipo = document.getElementById('envioTipoConteudo')?.value;
-  const div = document.getElementById('envioConteudoDiv');
-  const sel = document.getElementById('envioConteudoSelecionado');
-  if (!tipo || tipo === 'personalizado') { if(div) div.style.display = 'none'; return; }
-  const repo = repoCarregar(tipo);
-  if (sel) sel.innerHTML = '<option value="">— Selecione —</option>' +
-    repo.map(r => `<option value="${r.id}">${escapeHtml(r.titulo)} (${new Date(r.criadoEm).toLocaleDateString('pt-BR')})</option>`).join('');
-  if (div) div.style.display = repo.length ? 'block' : 'none';
-  if (!repo.length) showToast('⚠ Nenhum ' + tipo + ' salvo ainda. Gere e salve conteúdos primeiro.');
-}
+function salvarNoRepositorio(modulo) {
+  // Pegar texto do módulo
+  const fontes = {
+    gerador: () => document.getElementById('outputContent')?.innerText || document.getElementById('outputContent')?.textContent || '',
+    biblioteca: () => document.getElementById('bibOutput')?.innerText || document.getElementById('bibOutput')?.textContent || '',
+    newsletter: () => {
+      // Extrair texto formatado do newsletter
+      const arts = (typeof npArticles !== 'undefined') ? npArticles : null;
+      if (arts?.art1?.manchete) {
+        const nome = document.getElementById('npNome')?.value || 'Newsletter';
+        const edicao = document.getElementById('npEdicao')?.value || '';
+        let txt = `${nome}\n${edicao}\n${'═'.repeat(50)}\n\n`;
+        txt += `MANCHETE\n${arts.art1.manchete}\n\n`;
+        if (arts.art1.lead) txt += `${arts.art1.lead}\n\n`;
+        if (arts.art1.col1) txt += `${arts.art1.col1}\n\n`;
+        if (arts.art1.col2) txt += `${arts.art1.col2}\n\n`;
+        if (arts.art2?.manchete) txt += `${'─'.repeat(40)}\n${arts.art2.manchete}\n${arts.art2.col1||''}\n\n`;
+        if (arts.art3?.manchete) txt += `${'─'.repeat(40)}\n${arts.art3.manchete}\n${arts.art3.col1||''}\n\n`;
+        return txt.trim();
+      }
+      const out = document.getElementById('npOutput');
+      return out ? (out.innerText || out.textContent || '').trim() : '';
+    },
+    livro: () => document.getElementById('livroOutput')?.textContent || '',
+    apresentacao: () => document.getElementById('apresOutput')?.textContent || '',
+    documento: () => document.getElementById('docOutput')?.textContent || '',
+  };
 
-function envioAtualizarDestinatarios() {
-  const grupo = document.getElementById('envioGrupo')?.value || 'todos';
-  const divInd = document.getElementById('envioClienteIndDiv');
-  if (divInd) divInd.style.display = grupo === 'individual' ? 'block' : 'none';
-  const lista = envioGetDestinatarios();
-  const el = document.getElementById('envioContagem');
-  if (el) el.textContent = `👥 ${lista.length} destinatário${lista.length !== 1 ? 's' : ''}`;
-}
+  const texto = (fontes[modulo] ? fontes[modulo]() : '').trim();
 
-function envioGetDestinatarios() {
-  const grupo = document.getElementById('envioGrupo')?.value || 'todos';
-  let clientes = crmCarregar();
-  if (grupo === 'ativos') return clientes.filter(c => c.status === 'ativo');
-  if (grupo === 'leads') return clientes.filter(c => c.status === 'lead');
-  if (grupo === 'individual') {
-    const id = document.getElementById('envioClienteInd')?.value;
-    return id ? clientes.filter(c => c.id === id) : [];
-  }
-  const segmentos = ['contador','empresario','investidor','gestor'];
-  if (segmentos.includes(grupo)) return clientes.filter(c => c.segmento === grupo);
-  return clientes;
-}
-
-function envioGetTexto() {
-  const tipo = document.getElementById('envioTipoConteudo')?.value;
-  const selId = document.getElementById('envioConteudoSelecionado')?.value;
-  const msgExtra = document.getElementById('envioMensagem')?.value.trim() || '';
-  if (selId) {
-    const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
-    const item = repo.find(r => r.id === selId);
-    if (item) return msgExtra ? msgExtra + '\n\n' + item.conteudo : item.conteudo;
-  }
-  return msgExtra;
-}
-
-function envioExecutar() {
-  const texto = envioGetTexto();
-  if (!texto) { showToast('⚠ Configure o conteúdo primeiro!'); return; }
-  const clientes = envioGetDestinatarios();
-  if (!clientes.length) { showToast('⚠ Nenhum destinatário selecionado. Cadastre clientes primeiro!'); return; }
-  const canWpp = document.getElementById('envioCanWpp')?.checked;
-  const canTel = document.getElementById('envioCanTel')?.checked;
-  const canEmail = document.getElementById('envioCanEmail')?.checked;
-  if (!canWpp && !canTel && !canEmail) { showToast('⚠ Selecione pelo menos um canal!'); return; }
-  const container = document.getElementById('enviosLista');
-  const status = document.getElementById('envioStatus');
-  if (status) { status.textContent = `${clientes.length} envios preparados`; status.style.background = 'rgba(245,200,66,0.15)'; status.style.color = '#f5c842'; }
-  container.innerHTML = `<div style="margin-bottom:12px;padding:10px 14px;background:rgba(245,200,66,0.08);border:1px solid rgba(245,200,66,0.2);border-radius:8px;font-size:12px;color:#f5c842;">
-    ✅ ${clientes.length} envios preparados — clique em cada botão para enviar
-  </div>` +
-  clientes.map(c => {
-    const msg = texto.replace(/\{nome\}/g, c.nome.split(' ')[0]);
-    const wppLink = c.whatsapp && canWpp ? `<a href="https://wa.me/55${c.whatsapp.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}" target="_blank" style="padding:6px 10px;background:#25D366;color:#fff;border-radius:6px;text-decoration:none;font-size:11px;font-weight:600;">💬 WPP</a>` : '';
-    const telLink = c.telegram && canTel ? `<a href="https://t.me/${c.telegram.replace('@','')}" target="_blank" onclick="navigator.clipboard.writeText(${JSON.stringify(msg)})" style="padding:6px 10px;background:#0088cc;color:#fff;border-radius:6px;text-decoration:none;font-size:11px;font-weight:600;">✈️ TEL</a>` : '';
-    const emailLink = c.email && canEmail ? `<a href="mailto:${c.email}?subject=Sophos Inteligência Financeira&body=${encodeURIComponent(msg)}" style="padding:6px 10px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:6px;text-decoration:none;font-size:11px;">📧 EMAIL</a>` : '';
-    const temCanal = wppLink || telLink || emailLink;
-    return `<div style="background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;">
-      <div style="flex:1;min-width:0;">
-        <div style="font-size:12px;font-weight:600;color:var(--text);">${escapeHtml(c.nome)}</div>
-        <div style="font-size:10px;color:var(--text3);">${escapeHtml(c.empresa||c.email||'')}</div>
-      </div>
-      <div style="display:flex;gap:6px;flex-shrink:0;">
-        ${temCanal ? wppLink + telLink + emailLink : '<span style="font-size:11px;color:#e74c3c;">Sem canal cadastrado</span>'}
-      </div>
-    </div>`;
-  }).join('');
-  showToast(`📤 ${clientes.length} envios preparados!`);
-}
-
-// =============================================
-// BANCO DE IMAGENS
-// =============================================
-let _imgFiltro = '';
-let _imgPendentes = [];
-let _imgPendenteIdx = 0;
-
-function imgInit() {
-  imgRenderizar();
-  imgStatsUpdate();
-}
-
-function imgCarregar() {
-  try { return JSON.parse(localStorage.getItem('fc_imagens') || '[]'); } catch(e) { return []; }
-}
-
-function imgSalvarDB(imgs) {
-  localStorage.setItem('fc_imagens', JSON.stringify(imgs));
-}
-
-function imgStatsUpdate() {
-  const imgs = imgCarregar();
-  const el = document.getElementById('imgStats');
-  if (!el) return;
-  const cats = {};
-  imgs.forEach(i => { cats[i.categoria] = (cats[i.categoria]||0)+1; });
-  el.innerHTML = `Total: <strong>${imgs.length}</strong><br>` +
-    Object.entries(cats).map(([c,n]) => `${c}: ${n}`).join('<br>');
-}
-
-function imgFiltrar(cat) {
-  _imgFiltro = cat;
-  document.querySelectorAll('.imgCatBtn, #imgCatTodos').forEach(b => {
-    b.style.background = 'var(--surface2)'; b.style.color = 'var(--text2)'; b.style.border = '1px solid var(--border2)';
-  });
-  const id = cat ? null : document.getElementById('imgCatTodos');
-  if (!cat && id) { id.style.background = 'var(--accent)'; id.style.color = '#000'; id.style.border = 'none'; }
-  imgRenderizar();
-}
-
-function imgBuscar() { imgRenderizar(); }
-
-function imgRenderizar() {
-  const busca = (document.getElementById('imgBusca')?.value || '').toLowerCase();
-  const ordem = document.getElementById('imgOrdem')?.value || 'recente';
-  let imgs = imgCarregar();
-  if (_imgFiltro) imgs = imgs.filter(i => i.categoria === _imgFiltro);
-  if (busca) imgs = imgs.filter(i => i.nome?.toLowerCase().includes(busca));
-  if (ordem === 'nome') imgs.sort((a,b) => a.nome.localeCompare(b.nome));
-  const grid = document.getElementById('imgGrid');
-  if (!grid) return;
-  if (!imgs.length) {
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text3);"><div style="font-size:40px;margin-bottom:12px;">🖼️</div><div style="font-size:13px;color:var(--text2);">Nenhuma imagem cadastrada</div><div style="font-size:11px;margin-top:6px;">Clique em "+ Adicionar Imagens" para começar</div></div>';
+  if (!texto || texto.length < 20) {
+    showToast('⚠ Gere o conteúdo primeiro antes de salvar!');
     return;
   }
-  grid.innerHTML = imgs.map(img => `
-    <div style="background:var(--surface2);border:1px solid var(--border2);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)'" onclick="imgAbrirModal('${img.id}')">
-      <div style="height:110px;background:var(--surface3);display:flex;align-items:center;justify-content:center;overflow:hidden;">
-        <img src="${img.data}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
-      </div>
-      <div style="padding:8px 10px;">
-        <div style="font-size:11px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(img.nome)}</div>
-        <div style="font-size:10px;color:var(--text3);margin-top:2px;">${img.categoria}</div>
-      </div>
-      <div style="padding:0 8px 8px;display:flex;gap:4px;">
-        <button onclick="event.stopPropagation();imgCopiarLink('${img.id}')" style="flex:1;padding:4px;background:var(--surface3);border:none;border-radius:4px;color:var(--text3);cursor:pointer;font-size:10px;">📋</button>
-        <button onclick="event.stopPropagation();imgExcluir('${img.id}')" style="padding:4px 8px;background:rgba(231,76,60,0.1);border:1px solid rgba(231,76,60,0.2);border-radius:4px;color:#e74c3c;cursor:pointer;font-size:10px;">🗑</button>
-      </div>
-    </div>`).join('');
-}
 
-function imgUpload(input) {
-  const files = Array.from(input.files);
-  if (!files.length) return;
-  _imgPendentes = files;
-  _imgPendenteIdx = 0;
-  imgProximoPendente();
-}
+  _salvarRepoTexto = texto;
+  _salvarRepoModulo = modulo;
 
-function imgProximoPendente() {
-  if (_imgPendenteIdx >= _imgPendentes.length) return;
-  const file = _imgPendentes[_imgPendenteIdx];
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    document.getElementById('imgPreviewModal').src = e.target.result;
-    document.getElementById('imgNomeModal').value = file.name.replace(/\.[^.]+$/, '');
-    document.getElementById('modalImgAdd').style.display = 'flex';
-    document.getElementById('modalImgAdd')._data = e.target.result;
+  // Sugerir título baseado no módulo
+  const titulos = {
+    gerador: document.getElementById('temaInput')?.value || document.getElementById('tema')?.value || '',
+    biblioteca: document.getElementById('bibTema')?.value || '',
+    newsletter: document.getElementById('npTema1')?.value || document.getElementById('npNome')?.value || '',
+    livro: document.getElementById('livroTitulo')?.value || document.getElementById('livroTema')?.value || '',
+    apresentacao: document.getElementById('apresTitulo')?.value || document.getElementById('apresTema')?.value || '',
+    documento: document.getElementById('docTitulo')?.value || document.getElementById('docTema')?.value || '',
   };
-  reader.readAsDataURL(file);
+
+  const tipos = {
+    gerador: 'gerador', biblioteca: 'artigo', newsletter: 'newsletter',
+    livro: 'livro', apresentacao: 'apresentacao', documento: 'documento'
+  };
+
+  const sugestao = titulos[modulo] || '';
+  const data = new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+
+  document.getElementById('salvarRepoTitulo').value = sugestao || '';
+  document.getElementById('salvarRepoTitulo').placeholder = 'Ex: ' + (sugestao || modulo) + ' — ' + data;
+  document.getElementById('salvarRepoTipo').value = tipos[modulo] || 'artigo';
+  document.getElementById('salvarRepoPreview').textContent = texto.substring(0, 120) + '...';
+  document.getElementById('modalSalvarRepo').style.display = 'flex';
+
+  // Focar no campo de título
+  setTimeout(() => document.getElementById('salvarRepoTitulo').focus(), 100);
 }
 
-function imgSalvar() {
-  const nome = document.getElementById('imgNomeModal')?.value.trim();
-  const cat = document.getElementById('imgCatModal')?.value || 'outros';
-  const data = document.getElementById('modalImgAdd')._data;
-  if (!nome || !data) { showToast('⚠ Preencha o nome da imagem'); return; }
-  const imgs = imgCarregar();
-  imgs.unshift({ id: 'img' + Date.now(), nome, categoria: cat, data, criadoEm: new Date().toISOString() });
-  imgSalvarDB(imgs);
-  document.getElementById('modalImgAdd').style.display = 'none';
-  _imgPendenteIdx++;
-  if (_imgPendenteIdx < _imgPendentes.length) {
-    setTimeout(imgProximoPendente, 300);
-  } else {
-    imgRenderizar();
-    imgStatsUpdate();
-    showToast(`✅ ${_imgPendenteIdx} imagem(ns) salva(s)!`);
-    document.getElementById('imgUploadInput').value = '';
+function confirmarSalvarRepo() {
+  let titulo = document.getElementById('salvarRepoTitulo')?.value.trim();
+  const tipo = document.getElementById('salvarRepoTipo')?.value || 'artigo';
+
+  if (!titulo) {
+    const data = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    titulo = tipo.charAt(0).toUpperCase() + tipo.slice(1) + ' — ' + data;
   }
+
+  // Capturar HTML do elemento de output para preservar layout
+  const htmlFontes = {
+    gerador: 'outputContent',
+    biblioteca: 'bibOutput',
+    newsletter: 'npOutput',
+    livro: 'livroOutput',
+    apresentacao: 'apresOutput',
+    documento: 'docOutput',
+  };
+  const elId = htmlFontes[_salvarRepoModulo];
+  const el = elId ? document.getElementById(elId) : null;
+  const htmlSalvo = el ? el.innerHTML : null;
+
+  const id = repoSalvar(tipo, titulo, _salvarRepoTexto, {}, htmlSalvo);
+  document.getElementById('modalSalvarRepo').style.display = 'none';
+  showToast('✅ "' + titulo + '" salvo no Repositório!');
 }
 
-function imgAbrirModal(id) {
-  const img = imgCarregar().find(i => i.id === id);
-  if (!img) return;
-  document.getElementById('imgPreviewModal').src = img.data;
-  document.getElementById('imgNomeModal').value = img.nome;
-  document.getElementById('imgCatModal').value = img.categoria;
-  document.getElementById('modalImgAdd').style.display = 'flex';
-  document.getElementById('modalImgAdd')._data = img.data;
-  document.getElementById('modalImgAdd')._editId = id;
+// =============================================
+// EDITAR CONTEÚDO
+// =============================================
+let _editarModulo = '';
+let _editarRepoId = '';
+
+function editarConteudo(modulo) {
+  const fontes = {
+    gerador: 'outputContent',
+    biblioteca: 'bibOutput',
+    newsletter: 'npOutput',
+    livro: 'livroOutput',
+    apresentacao: 'apresOutput',
+    documento: 'docOutput',
+  };
+  const elId = fontes[modulo];
+  const el = elId ? document.getElementById(elId) : null;
+  if (!el) { showToast('⚠ Gere o conteúdo primeiro!'); return; }
+  const texto = el.textContent || el.innerText || '';
+  if (!texto || texto.trim().length < 10) { showToast('⚠ Nenhum conteúdo para editar. Gere primeiro!'); return; }
+  _editarModulo = modulo;
+  _editarRepoId = '';
+  document.getElementById('editarTextarea').value = texto.trim();
+  editarContar();
+  document.getElementById('modalEditar').style.display = 'flex';
+  setTimeout(() => document.getElementById('editarTextarea').focus(), 100);
 }
 
-function imgCopiarLink(id) {
-  const img = imgCarregar().find(i => i.id === id);
-  if (!img) return;
-  navigator.clipboard.writeText(img.data).then(() => showToast('✅ Imagem copiada! Cole onde precisar.'));
+function repoEditarItem(id) {
+  const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+  const item = repo.find(r => r.id === id);
+  if (!item) return;
+  _editarModulo = item.tipo;
+  _editarRepoId = id;
+  document.getElementById('editarTextarea').value = item.conteudo;
+  editarContar();
+  document.getElementById('modalEditar').style.display = 'flex';
+  setTimeout(() => document.getElementById('editarTextarea').focus(), 100);
 }
 
-function imgExcluir(id) {
-  if (!confirm('Excluir esta imagem?')) return;
-  imgSalvarDB(imgCarregar().filter(i => i.id !== id));
-  imgRenderizar();
-  imgStatsUpdate();
-  showToast('🗑 Imagem removida.');
+function editarContar() {
+  const len = (document.getElementById('editarTextarea')?.value || '').length;
+  const el = document.getElementById('editarContador');
+  if (el) el.textContent = len.toLocaleString('pt-BR') + ' caracteres';
 }
 
+function editarFormatar(tipo) {
+  const ta = document.getElementById('editarTextarea');
+  if (!ta) return;
+  const start = ta.selectionStart;
+  const end = ta.selectionEnd;
+  const sel = ta.value.substring(start, end);
+  const antes = ta.value.substring(0, start);
+  const depois = ta.value.substring(end);
+  const formatos = {
+    negrito: `**${sel || 'texto em negrito'}**`,
+    italico: `_${sel || 'texto em itálico'}_`,
+    titulo: `\n## ${sel || 'Título'}\n`,
+    subtitulo: `\n### ${sel || 'Subtítulo'}\n`,
+    lista: `\n• ${sel || 'Item da lista'}`,
+    separador: `\n\n${'─'.repeat(40)}\n\n`,
+  };
+  const novo = formatos[tipo] || sel;
+  ta.value = antes + novo + depois;
+  ta.focus();
+  ta.selectionStart = start + novo.length;
+  ta.selectionEnd = start + novo.length;
+  editarContar();
+}
+
+function editarSalvar() {
+  const novoTexto = document.getElementById('editarTextarea')?.value.trim();
+  if (!novoTexto) { showToast('⚠ O conteúdo não pode ficar vazio.'); return; }
+
+  // Se editando item do repositório
+  if (_editarRepoId) {
+    const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+    const idx = repo.findIndex(r => r.id === _editarRepoId);
+    if (idx >= 0) {
+      repo[idx].conteudo = novoTexto;
+      repo[idx].html = null; // limpar HTML antigo pois foi editado
+      repo[idx].atualizadoEm = new Date().toISOString();
+      repo[idx].tamanho = novoTexto.length;
+      localStorage.setItem('fc_repositorio', JSON.stringify(repo));
+      repoVisualizar(_editarRepoId);
+      showToast('✅ Conteúdo atualizado no repositório!');
+    }
+    document.getElementById('modalEditar').style.display = 'none';
+    return;
+  }
+
+  // Atualizar no módulo
+  const fontes = {
+    gerador: 'outputContent',
+    biblioteca: 'bibOutput',
+    newsletter: 'npOutput',
+    livro: 'livroOutput',
+    apresentacao: 'apresOutput',
+    documento: 'docOutput',
+  };
+  const elId = fontes[_editarModulo];
+  const el = elId ? document.getElementById(elId) : null;
+  if (el) {
+    // Preservar formatação com quebras de linha
+    el.style.whiteSpace = 'pre-wrap';
+    el.textContent = novoTexto;
+    showToast('✅ Conteúdo atualizado! Clique em 💾 Salvar para guardar no repositório.');
+  }
+  document.getElementById('modalEditar').style.display = 'none';
+}
 </script>
 
 <!-- ==================== MODAL COMPARTILHAR ==================== -->
-<div id="modalCompartilhar" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;align-items:center;justify-content:center;">
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:460px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+<div id="modalCompartilhar" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:2000;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:620px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;">
+    
+    <!-- Header -->
+    <div style="padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
       <div style="font-size:16px;font-weight:700;color:var(--text);">📤 Compartilhar Conteúdo</div>
       <button onclick="document.getElementById('modalCompartilhar').style.display='none'" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
     </div>
 
-    <!-- Preview do conteúdo -->
-    <div id="sharePreview" style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:12px;font-size:12px;color:var(--text2);max-height:100px;overflow:hidden;margin-bottom:16px;line-height:1.5;position:relative;">
-      <div id="sharePreviewText"></div>
-      <div style="position:absolute;bottom:0;left:0;right:0;height:30px;background:linear-gradient(transparent,var(--surface2));"></div>
+    <!-- Destinatário -->
+    <div style="padding:16px 24px;border-bottom:1px solid var(--border);flex-shrink:0;">
+      <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Destinatário (opcional)</label>
+      <select id="shareCliente" onchange="shareAtualizarCliente()" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;">
+        <option value="">— Sem destinatário específico —</option>
+      </select>
+      <div id="shareClienteInfo" style="display:none;margin-top:8px;font-size:11px;color:var(--text3);display:flex;gap:12px;"></div>
     </div>
 
-    <!-- Selecionar cliente -->
-    <div style="margin-bottom:14px;">
-      <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Destinatário</label>
-      <select id="shareCliente" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;">
-        <option value="">— Selecione um cliente —</option>
+    <!-- Preview do conteúdo editável -->
+    <div style="padding:16px 24px;border-bottom:1px solid var(--border);flex:1;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <label style="font-size:11px;color:#888;text-transform:uppercase;">Mensagem a enviar</label>
+        <div style="display:flex;gap:6px;">
+          <span id="shareCharCount" style="font-size:11px;color:var(--text3);"></span>
+          <button onclick="shareResetar()" style="font-size:10px;padding:2px 8px;background:var(--surface2);border:1px solid var(--border2);border-radius:4px;color:var(--text3);cursor:pointer;">↺ Original</button>
+        </div>
+      </div>
+      <textarea id="shareTextarea" oninput="shareContar()" style="flex:1;min-height:180px;max-height:280px;width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:12px;color:var(--text);font-size:12px;line-height:1.7;outline:none;resize:vertical;font-family:'DM Sans',sans-serif;"></textarea>
+      <div id="shareAviso" style="display:none;margin-top:6px;font-size:11px;color:#f5c842;padding:6px 10px;background:rgba(245,200,66,0.08);border-radius:6px;border:1px solid rgba(245,200,66,0.2);">
+        ⚠ Texto truncado para WhatsApp (limite de 1800 chars). O texto completo será copiado automaticamente.
+      </div>
+    </div>
+
+    <!-- Botões de envio -->
+    <div style="padding:16px 24px;display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+      
+      <!-- WhatsApp -->
+      <button onclick="shareEnviarWpp()" id="btnShareWpp" style="padding:12px 16px;background:#25D366;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">💬</span>
+        <div style="text-align:left;">
+          <div>Enviar pelo WhatsApp</div>
+          <div id="shareWppInfo" style="font-size:11px;opacity:0.8;font-weight:400;">Abre WhatsApp com a mensagem pronta</div>
+        </div>
+      </button>
+
+      <!-- Telegram -->
+      <button onclick="shareEnviarTelegram()" style="padding:12px 16px;background:#0088cc;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">✈️</span>
+        <div style="text-align:left;">
+          <div>Enviar pelo Telegram</div>
+          <div id="shareTelInfo" style="font-size:11px;opacity:0.8;font-weight:400;">Abre Telegram com a mensagem</div>
+        </div>
+      </button>
+
+      <!-- Email -->
+      <button onclick="shareEnviarEmail()" style="padding:12px 16px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">📧</span>
+        <div style="text-align:left;">
+          <div>Enviar por E-mail</div>
+          <div id="shareEmailInfo" style="font-size:11px;color:var(--text3);font-weight:400;">Abre cliente de e-mail</div>
+        </div>
+      </button>
+
+      <!-- Copiar -->
+      <button onclick="shareEnviarCopiar()" style="padding:10px 16px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+        📋 Copiar texto para colar manualmente
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL SALVAR NO REPOSITÓRIO ==================== -->
+<div id="modalSalvarRepo" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:420px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div style="font-size:16px;font-weight:700;color:var(--text);">💾 Salvar no Repositório</div>
+      <button onclick="document.getElementById('modalSalvarRepo').style.display='none'" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+    </div>
+    <div style="background:var(--surface2);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--text3);margin-bottom:16px;line-height:1.6;">
+      <span id="salvarRepoPreview"></span>
+    </div>
+    <div style="margin-bottom:12px;">
+      <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Título / Nome do conteúdo</label>
+      <input id="salvarRepoTitulo" type="text" placeholder="Ex: Newsletter Abril 2026 — Mercado Financeiro" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;" onkeydown="if(event.key==='Enter') confirmarSalvarRepo()">
+    </div>
+    <div style="margin-bottom:16px;">
+      <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Tipo</label>
+      <select id="salvarRepoTipo" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;">
+        <option value="newsletter">📰 Newsletter</option>
+        <option value="artigo">📄 Artigo</option>
+        <option value="apresentacao">📊 Apresentação</option>
+        <option value="livro">📖 Livro</option>
+        <option value="documento">📑 Documento Word</option>
+        <option value="gerador">✨ Gerador IA</option>
       </select>
     </div>
+    <div style="display:flex;gap:8px;">
+      <button onclick="confirmarSalvarRepo()" style="flex:1;padding:12px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:14px;">💾 Salvar</button>
+      <button onclick="document.getElementById('modalSalvarRepo').style.display='none'" style="padding:12px 16px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
+    </div>
+  </div>
+</div>
 
-    <!-- Botões de canal -->
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <button onclick="shareViaWhatsapp()" id="btnShareWpp" style="padding:12px;background:#25D366;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
-        💬 Enviar pelo WhatsApp
-      </button>
-      <button onclick="shareViaTelegram()" id="btnShareTel" style="padding:12px;background:#0088cc;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
-        ✈️ Enviar pelo Telegram
-      </button>
-      <button onclick="shareViaEmail()" id="btnShareEmail" style="padding:12px;background:var(--surface2);color:var(--text);border:1px solid var(--border2);border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
-        📧 Enviar por E-mail
-      </button>
-      <button onclick="shareViaClipboard()" style="padding:10px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;font-size:12px;cursor:pointer;">
-        📋 Copiar e colar manualmente
-      </button>
+<!-- ==================== MODAL EDITAR CONTEÚDO ==================== -->
+<div id="modalEditar" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:2000;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;width:100%;max-width:800px;margin:auto;display:flex;flex-direction:column;gap:14px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:16px;font-weight:700;color:var(--text);">✏️ Editar Conteúdo</div>
+      <div style="display:flex;gap:8px;">
+        <button onclick="editarSalvar()" style="padding:8px 18px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;">✓ Salvar alterações</button>
+        <button onclick="document.getElementById('modalEditar').style.display='none'" style="padding:8px 14px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text3);">Edite o conteúdo abaixo. As alterações serão aplicadas no módulo e poderão ser salvas no repositório.</div>
+    <!-- Toolbar de formatação -->
+    <div style="display:flex;gap:6px;flex-wrap:wrap;padding:8px;background:var(--surface2);border-radius:8px;">
+      <button onclick="editarFormatar('negrito')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;font-weight:700;">N</button>
+      <button onclick="editarFormatar('italico')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;font-style:italic;">I</button>
+      <button onclick="editarFormatar('titulo')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;">H2</button>
+      <button onclick="editarFormatar('subtitulo')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;">H3</button>
+      <button onclick="editarFormatar('lista')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;">• Lista</button>
+      <button onclick="editarFormatar('separador')" style="padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;">— Separador</button>
+      <div style="flex:1;"></div>
+      <span id="editarContador" style="font-size:11px;color:var(--text3);align-self:center;">0 caracteres</span>
+    </div>
+    <textarea id="editarTextarea" oninput="editarContar()" style="width:100%;min-height:500px;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:16px;color:var(--text);font-size:13px;line-height:1.9;outline:none;resize:vertical;font-family:'DM Sans',sans-serif;"></textarea>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button onclick="editarSalvar()" style="padding:10px 24px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;">✓ Salvar alterações</button>
+      <button onclick="document.getElementById('modalEditar').style.display='none'" style="padding:10px 16px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
     </div>
   </div>
 </div>

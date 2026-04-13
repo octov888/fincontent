@@ -1224,7 +1224,7 @@
       <span class="icon">🎯</span> Apresentação
     </div>
     <div class="nav-item" id="nav-documento" onclick="navIr('documento')">
-      <span class="icon">📄</span> Documento Word
+      <span class="icon">📝</span> Artigo
     </div>
   </div>
 
@@ -1251,7 +1251,7 @@
       <div id="sidebarUsuario" style="font-size:10px;color:var(--text3);margin-top:4px;"></div>
     </div>
     <div style="text-align:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">
-      <span style="font-size:9px;color:var(--text3);letter-spacing:0.5px;">v2.1.0 · Abril 2026</span>
+      <span style="font-size:9px;color:var(--text3);letter-spacing:0.5px;">v2.2.0 · Abril 2026</span>
       <div style="margin-top:6px;">
         <button onclick="baixarScripts()" style="width:100%;padding:5px 8px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.3);border-radius:6px;color:#f5c842;font-size:10px;cursor:pointer;font-family:'DM Sans',sans-serif;">
           ⬇ Baixar Scripts de Atualização
@@ -2281,7 +2281,6 @@
       <div>
         <label class="form-label">Telegram (@usuario)</label>
         <input id="cTelegram" type="text" placeholder="@usuario" class="tema-input" style="min-height:0;padding:8px 12px;">
-        </div>
       </div>
       <div>
         <label class="form-label">E-mail</label>
@@ -2464,7 +2463,7 @@
             <div style="font-size:10px;color:var(--text3);margin-top:2px;">Netlify</div>
           </div>
           <div style="background:var(--surface);border-radius:8px;padding:12px;text-align:center;">
-            <div id="dominioStatusUrl" style="font-size:11px;font-weight:600;color:#f5c842;margin-top:4px;word-break:break-all;">fincontent.netlify.app</div>
+            <div id="dominioStatusUrl" style="font-size:11px;font-weight:600;color:#f5c842;margin-top:4px;word-break:break-all;">cartainvest.com</div>
             <div style="font-size:10px;color:var(--text3);margin-top:2px;">URL atual</div>
           </div>
           <div style="background:var(--surface);border-radius:8px;padding:12px;text-align:center;">
@@ -2512,7 +2511,7 @@
               <div style="background:#0a0a0a;border-radius:6px;padding:8px 12px;margin-top:8px;font-family:monospace;font-size:11px;color:#2ecc71;">
                 Tipo: CNAME<br>
                 Nome: @ (ou subdomínio)<br>
-                Valor: <span id="dominioNetlifyTarget">fincontent.netlify.app</span><br>
+                Valor: <span id="dominioNetlifyTarget">cartainvest.com</span><br>
                 TTL: 3600
               </div>
             </div>
@@ -2798,6 +2797,8 @@
           <option>Acadêmico</option>
           <option>Prático e direto</option>
         </select>
+        <label class="form-label" style="margin-top:10px;">Categoria</label>
+        <select id="livroCat" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;" onchange=""></select>
       </div>
       <div class="section">
         <div class="section-title">📖 Referências Bibliográficas</div>
@@ -2875,6 +2876,8 @@
           <option value="pptx">Estrutura para PowerPoint</option>
           <option value="pdf">Estrutura para PDF</option>
         </select>
+        <label class="form-label" style="margin-top:10px;">Categoria</label>
+        <select id="apresCat" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;" onchange=""></select>
       </div>
       <div class="section">
         <div class="section-title">📚 Referências</div>
@@ -2905,10 +2908,10 @@
   </div>
 </div>
 
-<!-- ==================== DOCUMENTO WORD ==================== -->
+<!-- ==================== ARTIGO ==================== -->
 <div id="documentoApp" style="display:none;flex:1;flex-direction:column;height:100vh;overflow:hidden;">
   <div class="topbar">
-    <div class="page-title">📄 Documento <span>Word</span></div>
+    <div class="page-title">📝 <span>Artigo</span></div>
     <div class="topbar-right">
       <button class="btn btn-ghost" onclick="docExportar()">📋 Exportar</button>
       <button class="btn btn-primary" onclick="docGerar()">✦ Gerar com IA</button>
@@ -2917,7 +2920,7 @@
   <div style="flex:1;display:flex;overflow:hidden;">
     <div style="width:280px;min-width:280px;border-right:1px solid var(--border);overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">
       <div class="section">
-        <div class="section-title">📄 Sobre o Documento</div>
+        <div class="section-title">📝 Sobre o Artigo</div>
         <label class="form-label">Título</label>
         <input type="text" id="docTitulo" class="tema-input" placeholder="Ex: Relatório de Análise Financeira" style="min-height:0;padding:8px 12px;">
         <label class="form-label" style="margin-top:10px;">Tipo de documento</label>
@@ -2946,16 +2949,18 @@
           <option>Executivo e conciso</option>
           <option>Educativo e claro</option>
         </select>
+        <label class="form-label" style="margin-top:10px;">Categoria</label>
+        <select id="docCat" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;" onchange=""></select>
       </div>
       <div class="section">
         <div class="section-title">📚 Referências</div>
         <div id="docRefsList" style="max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;"></div>
       </div>
-      <button class="gerar-btn" id="docGerarBtn" onclick="docGerar()">✦ Gerar Documento com IA</button>
+      <button class="gerar-btn" id="docGerarBtn" onclick="docGerar()">✦ Gerar Artigo com IA</button>
     </div>
     <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
       <div style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
-        <span style="font-size:12px;font-weight:600;color:var(--text2);">📄 Conteúdo do Documento</span>
+        <span style="font-size:12px;font-weight:600;color:var(--text2);">📝 Conteúdo do Artigo</span>
         <div style="display:flex;gap:6px;">
           <span id="docStatus" style="font-size:11px;padding:3px 8px;border-radius:8px;background:var(--surface3);color:var(--text3);">Aguardando</span>
           <button onclick="docCopiar()" class="btn btn-ghost" style="font-size:11px;">📋 Copiar</button>
@@ -2969,7 +2974,7 @@
         <div style="text-align:center;padding:80px 20px;color:var(--text3);">
           <div style="font-size:40px;margin-bottom:16px;">📄</div>
           <div style="font-size:15px;font-weight:600;color:var(--text2);">Configure e clique em Gerar</div>
-          <div style="font-size:12px;margin-top:8px;">A IA criará o documento completo com formatação profissional</div>
+          <div style="font-size:12px;margin-top:8px;">A IA criará o artigo completo com formatação profissional</div>
         </div>
       </div>
     </div>
@@ -4173,6 +4178,9 @@ let npArticles = {};
 // NAVEGAÇÃO CENTRAL
 // =====================
 function navIr(destino) {
+  if (['livro','apresentacao','documento'].includes(destino)) {
+    setTimeout(() => popularSelectsCategorias(), 80);
+  }
   // Marcar item ativo
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   const navEl = document.getElementById('nav-' + destino);
@@ -4305,7 +4313,7 @@ function navIr(destino) {
 
     case 'categorias':
       show(document.getElementById('categoriasApp'), 'column');
-      setTimeout(() => catInit(), 100);
+      setTimeout(() => { catInit(); popularSelectsCategorias(); }, 150);
       break;
 
     case 'whatsapp':
@@ -5996,11 +6004,8 @@ function imprimirNewsletter() {
     </div>
   </div>
 </div>
-  win.document.close();
-  setTimeout(() => win.print(), 800);
-  closeModal('modalExportar');
-}
 
+<script>
 function abrirPreviewJanela() {
   imprimirNewsletter();
 }
@@ -6498,6 +6503,8 @@ async function livroGerar() {
   if (!apiKey || apiKey.length < 20) { showToast('⚠ Configure sua API Key nas Configurações!'); return; }
 
   const titulo = document.getElementById('livroTitulo')?.value.trim() || '';
+  const catEl = document.getElementById('livroCat');
+  const catNome = catEl?.selectedOptions[0]?.text || '';
   const tema = document.getElementById('livroTema')?.value.trim() || '';
   const publico = document.getElementById('livroPublico')?.value.trim() || 'leitores em geral';
   const capitulos = document.getElementById('livroCapitulos')?.value || '8';
@@ -6520,7 +6527,8 @@ async function livroGerar() {
   if (output) output.innerHTML = '<div style="text-align:center;padding:60px;"><div class="loading-dots" style="justify-content:center;"><span></span><span></span><span></span></div><div style="margin-top:12px;color:var(--text3);font-size:13px;">A IA está escrevendo seu livro...</div></div>';
 
   const prompts = {
-    estrutura: `Crie a estrutura completa de um livro com as seguintes especificações:\n- Título: "${titulo || tema}"\n- Tema: ${tema}\n- Público-alvo: ${publico}\n- Número de capítulos: ${capitulos}\n- Tom: ${tom}\n\nInclua: prefácio, índice detalhado com descrição de cada capítulo, introdução e conclusão.${refs ? `\n\nReferências bibliográficas para embasar: ${refs}` : ''}`,
+    estrutura: `Crie a estrutura completa de um livro com as seguintes especificações:\n- Título: "${titulo || tema}"\n- Tema: ${tema}
+Categoria: ${catNome || "Finanças e Contabilidade"}\n- Público-alvo: ${publico}\n- Número de capítulos: ${capitulos}\n- Tom: ${tom}\n\nInclua: prefácio, índice detalhado com descrição de cada capítulo, introdução e conclusão.${refs ? `\n\nReferências bibliográficas para embasar: ${refs}` : ''}`,
     capitulo: `Escreva o capítulo ${capNum} de um livro sobre "${titulo || tema}" com as seguintes especificações:\n- Tema central: ${tema}\n- Público: ${publico}\n- Tom: ${tom}\n- Tamanho: mínimo 1500 palavras\n\nO capítulo deve ter: título, introdução, 3-4 seções com subtítulos, exemplos práticos e conclusão.${refs ? `\n\nBaseie-se nestas referências: ${refs}` : ''}`,
     introducao: `Escreva a introdução e o prefácio de um livro com as seguintes especificações:\n- Título: "${titulo || tema}"\n- Tema: ${tema}\n- Público: ${publico}\n- Tom: ${tom}\n\nInclua: prefácio (contexto do autor), introdução (apresentação do livro, objetivos, estrutura).${refs ? `\n\nReferências: ${refs}` : ''}`,
     completo: `Escreva um livro completo e condensado sobre:\n- Título: "${titulo || tema}"\n- Tema: ${tema}\n- Público: ${publico}\n- ${capitulos} capítulos\n- Tom: ${tom}\n\nFormato: índice, prefácio, todos os capítulos (condensados mas completos), conclusão e referências.${refs ? `\n\nBaseie-se em: ${refs}` : ''}`
@@ -6582,6 +6590,8 @@ async function apresGerar() {
   if (!apiKey || apiKey.length < 20) { showToast('⚠ Configure sua API Key!'); return; }
 
   const titulo = document.getElementById('apresTitulo')?.value.trim() || '';
+  const catEl = document.getElementById('apresCat');
+  const catNome = catEl?.selectedOptions[0]?.text || '';
   const tema = document.getElementById('apresTema')?.value.trim() || '';
   const publico = document.getElementById('apresPublico')?.value.trim() || 'executivos';
   const slides = document.getElementById('apresSlides')?.value || '12';
@@ -6660,6 +6670,8 @@ async function docGerar() {
   if (!apiKey || apiKey.length < 20) { showToast('⚠ Configure sua API Key!'); return; }
 
   const titulo = document.getElementById('docTitulo')?.value.trim() || '';
+  const catEl = document.getElementById('docCat');
+  const catNome = catEl?.selectedOptions[0]?.text || '';
   const tipo = document.getElementById('docTipo')?.value || 'relatorio';
   const tema = document.getElementById('docTema')?.value.trim() || '';
   const tamanho = document.getElementById('docTamanho')?.value || 'medio';
@@ -6696,7 +6708,7 @@ async function docGerar() {
     if (output) output.innerHTML = `<div style="color:#e74c3c;padding:20px;">❌ ${escapeHtml(err.message)}</div>`;
     if (status) { status.textContent = '✗ Erro'; status.style.color = '#e74c3c'; }
   }
-  btn.disabled = false; btn.innerHTML = '✦ Gerar Documento com IA';
+  btn.disabled = false; btn.innerHTML = '✦ Gerar Artigo com IA';
 }
 
 function docCopiar() {
@@ -6759,9 +6771,9 @@ function chamarAPIComXHR(apiKey, prompt, maxTokens) {
 // =====================
 function baixarScripts() {
   const scripts = {
-    'ORGANIZAR-FINCONTENT.bat': `@echo off\nchcp 65001 >nul\nsetlocal enabledelayedexpansion\ntitle FinContent AI\n\n:MENU\ncls\necho.\necho  ================================================\necho   FinContent AI - Atualizador Local\necho  ================================================\necho.\n\nset PASTA=%USERPROFILE%\\FinContent AI\nset APP=%PASTA%\\FinContent AI.html\nset DOWNLOADS=%USERPROFILE%\\Downloads\n\nset VER=Nao instalado\nif exist "%APP%" (\n    powershell -NoProfile -Command "$t=(Get-Content '%APP%' -Raw -Encoding UTF8);if($t -match 'v[\\d]+\\.[\\d]+\\.[\\d]+ . \\w+ [\\d]{4}'){Write-Host $matches[0]}" > "%TEMP%\\fver.txt" 2>nul\n    set /p VER=<"%TEMP%\\fver.txt"\n    if "!VER!"=="" set VER=Instalado\n)\n\nset NOVO=\nset NOVO_NOME=\nfor /f "delims=" %%F in ('dir "%DOWNLOADS%\\index*.html" /b /o:-d 2^>nul') do (\n    if not defined NOVO ( set NOVO=%DOWNLOADS%\\%%F & set NOVO_NOME=%%F )\n)\n\necho  Versao instalada : !VER!\nif defined NOVO_NOME (echo  Arquivo nos Downloads: !NOVO_NOME!) else (echo  Nenhum arquivo novo nos Downloads)\necho.\necho  [1] Atualizar app local\necho  [2] Abrir FinContent AI\necho  [3] Abrir pasta Downloads\necho  [4] Abrir pasta FinContent AI\necho  [5] Abrir site online\necho  [6] Sair\necho.\nset /p OP=  Opcao: \n\nif "!OP!"=="1" goto ATUALIZAR\nif "!OP!"=="2" goto ABRIR\nif "!OP!"=="3" explorer "%DOWNLOADS%" & goto MENU\nif "!OP!"=="4" explorer "%PASTA%" & goto MENU\nif "!OP!"=="5" start https://fincontent.netlify.app & goto MENU\nif "!OP!"=="6" exit\ngoto MENU\n\n:ATUALIZAR\nset ARQ=\nfor /f "delims=" %%F in ('dir "%DOWNLOADS%\\index*.html" /b /o:-d 2^>nul') do (\n    if not defined ARQ set ARQ=%DOWNLOADS%\\%%F\n)\nif not defined ARQ (echo ERRO: Nenhum index.html nos Downloads. Baixe primeiro. & pause & goto MENU)\nif not exist "%PASTA%" mkdir "%PASTA%"\ncopy /Y "!ARQ!" "%APP%" >nul\nif exist "%APP%" (\n    powershell -NoProfile -Command "$t=(Get-Content '%APP%' -Raw -Encoding UTF8);if($t -match 'v[\\d]+\\.[\\d]+\\.[\\d]+ . \\w+ [\\d]{4}'){Write-Host $matches[0]}" > "%TEMP%\\fver.txt" 2>nul\n    set /p NV=<"%TEMP%\\fver.txt"\n    echo Instalado: !NV!\n    set /p AB=  Abrir agora? (s/n^): \n    if /i "!AB!"=="s" start "" "%APP%"\n) else (echo ERRO ao atualizar.)\npause & goto MENU\n\n:ABRIR\nif exist "%APP%" (start "" "%APP%") else (echo App nao instalado. Use opcao 1. & pause)\ngoto MENU`,
+    'ORGANIZAR-FINCONTENT.bat': `@echo off\nchcp 65001 >nul\nsetlocal enabledelayedexpansion\ntitle FinContent AI\n\n:MENU\ncls\necho.\necho  ================================================\necho   FinContent AI - Atualizador Local\necho  ================================================\necho.\n\nset PASTA=%USERPROFILE%\\FinContent AI\nset APP=%PASTA%\\FinContent AI.html\nset DOWNLOADS=%USERPROFILE%\\Downloads\n\nset VER=Nao instalado\nif exist "%APP%" (\n    powershell -NoProfile -Command "$t=(Get-Content '%APP%' -Raw -Encoding UTF8);if($t -match 'v[\\d]+\\.[\\d]+\\.[\\d]+ . \\w+ [\\d]{4}'){Write-Host $matches[0]}" > "%TEMP%\\fver.txt" 2>nul\n    set /p VER=<"%TEMP%\\fver.txt"\n    if "!VER!"=="" set VER=Instalado\n)\n\nset NOVO=\nset NOVO_NOME=\nfor /f "delims=" %%F in ('dir "%DOWNLOADS%\\index*.html" /b /o:-d 2^>nul') do (\n    if not defined NOVO ( set NOVO=%DOWNLOADS%\\%%F & set NOVO_NOME=%%F )\n)\n\necho  Versao instalada : !VER!\nif defined NOVO_NOME (echo  Arquivo nos Downloads: !NOVO_NOME!) else (echo  Nenhum arquivo novo nos Downloads)\necho.\necho  [1] Atualizar app local\necho  [2] Abrir FinContent AI\necho  [3] Abrir pasta Downloads\necho  [4] Abrir pasta FinContent AI\necho  [5] Abrir site online\necho  [6] Sair\necho.\nset /p OP=  Opcao: \n\nif "!OP!"=="1" goto ATUALIZAR\nif "!OP!"=="2" goto ABRIR\nif "!OP!"=="3" explorer "%DOWNLOADS%" & goto MENU\nif "!OP!"=="4" explorer "%PASTA%" & goto MENU\nif "!OP!"=="5" start https://cartainvest.com & goto MENU\nif "!OP!"=="6" exit\ngoto MENU\n\n:ATUALIZAR\nset ARQ=\nfor /f "delims=" %%F in ('dir "%DOWNLOADS%\\index*.html" /b /o:-d 2^>nul') do (\n    if not defined ARQ set ARQ=%DOWNLOADS%\\%%F\n)\nif not defined ARQ (echo ERRO: Nenhum index.html nos Downloads. Baixe primeiro. & pause & goto MENU)\nif not exist "%PASTA%" mkdir "%PASTA%"\ncopy /Y "!ARQ!" "%APP%" >nul\nif exist "%APP%" (\n    powershell -NoProfile -Command "$t=(Get-Content '%APP%' -Raw -Encoding UTF8);if($t -match 'v[\\d]+\\.[\\d]+\\.[\\d]+ . \\w+ [\\d]{4}'){Write-Host $matches[0]}" > "%TEMP%\\fver.txt" 2>nul\n    set /p NV=<"%TEMP%\\fver.txt"\n    echo Instalado: !NV!\n    set /p AB=  Abrir agora? (s/n^): \n    if /i "!AB!"=="s" start "" "%APP%"\n) else (echo ERRO ao atualizar.)\npause & goto MENU\n\n:ABRIR\nif exist "%APP%" (start "" "%APP%") else (echo App nao instalado. Use opcao 1. & pause)\ngoto MENU`,
 
-    'PUBLICAR-ONLINE.bat': `@echo off\nchcp 65001 >nul\nsetlocal enabledelayedexpansion\ntitle FinContent AI - Publicar Online\ncolor 0B\ncls\necho FinContent AI - Publicar no Site Online\necho.\nset PASTA=%USERPROFILE%\\FinContent AI\nset APP=%PASTA%\\FinContent AI.html\nset CONFIG=%PASTA%\\token.txt\nset PY=%TEMP%\\fc_pub.py\nif not exist "%APP%" (echo ERRO: App nao encontrado. Use ORGANIZAR primeiro. & pause & exit)\npython --version >nul 2>&1\nif !errorlevel! neq 0 (echo ERRO: Python nao instalado. Acesse python.org/downloads & pause & exit)\nset TOKEN=\nif exist "%CONFIG%" (set /p TOKEN=<"%CONFIG%" & for /f "tokens=* delims= " %%A in ("!TOKEN!") do set TOKEN=%%A)\nif "!TOKEN!"=="" (\n    echo Token GitHub nao configurado.\n    echo.\n    echo 1. Abra no Chrome: https://github.com/settings/tokens/new?scopes=repo\n    echo 2. Note: fincontent-pub\n    echo 3. Expiration: No expiration\n    echo 4. Clique Generate token\n    echo 5. Copie o token (ghp_...)\n    echo.\n    set /p TOKEN=Cole o token aqui: \n    for /f "tokens=* delims= " %%A in ("!TOKEN!") do set TOKEN=%%A\n    if "!TOKEN!"=="" (echo Token vazio. & pause & exit)\n    echo !TOKEN!>"%CONFIG%"\n    echo Token salvo para proximas vezes!\n    echo.\n)\necho Token: !TOKEN:~0,12!...\necho Enviando para GitHub...\necho ─────────────────────────────\n(\necho import base64,json,urllib.request,urllib.error\necho TOKEN=open(r'%CONFIG%','r',encoding='utf-8'^).read(^).strip(^)\necho APP=r'%APP%'\necho URL='https://api.github.com/repos/octov888/fincontent/contents/index.html'\necho H={'Authorization':'token '+TOKEN,'Accept':'application/vnd.github.v3+json'}\necho content=open(APP,'rb'^).read(^)\necho b64=base64.b64encode(content^).decode(^)\necho print(f'Tamanho: {len(content^)//1024} KB'^)\necho sha=None\necho try:\necho  req=urllib.request.Request(URL,headers=H^)\necho  with urllib.request.urlopen(req,timeout=15^) as rr: sha=json.loads(rr.read(^)^).get('sha'^)\n  echo  print('SHA ok'^)\necho except Exception as e: print(f'Aviso: {e}'^)\necho body={'message':'Atualizacao FinContent AI','content':b64}\necho if sha: body['sha']=sha\necho req2=urllib.request.Request(URL,data=json.dumps(body^).encode(^),method='PUT',headers={**H,'Content-Type':'application/json'}^)\necho try:\necho  with urllib.request.urlopen(req2,timeout=60^) as rr:\necho   json.loads(rr.read(^)^)\necho   print('SUCESSO'^)\necho except urllib.error.HTTPError as e:\necho  msg=e.read(^).decode(^)\necho  if e.code==401: print('TOKEN_INVALIDO'^)\necho  elif e.code==422: print('ARQUIVO_IDENTICO'^)\necho  else: print(f'ERRO {e.code}: {msg[:200]}'^)\necho except Exception as e: print(f'ERRO: {e}'^)\n) > "%PY%"\npython "%PY%" 2>&1\nset RES=\nfor /f "delims=" %%L in ('python "%PY%" 2^>^&1') do set RES=%%L\necho ─────────────────────────────\nif "!RES!"=="SUCESSO" (\n    echo SUCESSO! Site atualizado!\n    echo Aguarde 30s e acesse: https://fincontent.netlify.app\n    set /p AB=Abrir site? (s/n^): \n    if /i "!AB!"=="s" start https://fincontent.netlify.app\n) else if "!RES!"=="TOKEN_INVALIDO" (\n    echo Token invalido! Deletando...\n    del "%CONFIG%" >nul 2>&1\n    echo Execute novamente para inserir novo token.\n) else if "!RES!"=="ARQUIVO_IDENTICO" (\n    echo Arquivo ja esta atualizado no GitHub.\n) else (echo Erro - verifique conexao com internet.)\necho.\npause`
+    'PUBLICAR-ONLINE.bat': `@echo off\nchcp 65001 >nul\nsetlocal enabledelayedexpansion\ntitle FinContent AI - Publicar Online\ncolor 0B\ncls\necho FinContent AI - Publicar no Site Online\necho.\nset PASTA=%USERPROFILE%\\FinContent AI\nset APP=%PASTA%\\FinContent AI.html\nset CONFIG=%PASTA%\\token.txt\nset PY=%TEMP%\\fc_pub.py\nif not exist "%APP%" (echo ERRO: App nao encontrado. Use ORGANIZAR primeiro. & pause & exit)\npython --version >nul 2>&1\nif !errorlevel! neq 0 (echo ERRO: Python nao instalado. Acesse python.org/downloads & pause & exit)\nset TOKEN=\nif exist "%CONFIG%" (set /p TOKEN=<"%CONFIG%" & for /f "tokens=* delims= " %%A in ("!TOKEN!") do set TOKEN=%%A)\nif "!TOKEN!"=="" (\n    echo Token GitHub nao configurado.\n    echo.\n    echo 1. Abra no Chrome: https://github.com/settings/tokens/new?scopes=repo\n    echo 2. Note: fincontent-pub\n    echo 3. Expiration: No expiration\n    echo 4. Clique Generate token\n    echo 5. Copie o token (ghp_...)\n    echo.\n    set /p TOKEN=Cole o token aqui: \n    for /f "tokens=* delims= " %%A in ("!TOKEN!") do set TOKEN=%%A\n    if "!TOKEN!"=="" (echo Token vazio. & pause & exit)\n    echo !TOKEN!>"%CONFIG%"\n    echo Token salvo para proximas vezes!\n    echo.\n)\necho Token: !TOKEN:~0,12!...\necho Enviando para GitHub...\necho ─────────────────────────────\n(\necho import base64,json,urllib.request,urllib.error\necho TOKEN=open(r'%CONFIG%','r',encoding='utf-8'^).read(^).strip(^)\necho APP=r'%APP%'\necho URL='https://api.github.com/repos/octov888/fincontent/contents/index.html'\necho H={'Authorization':'token '+TOKEN,'Accept':'application/vnd.github.v3+json'}\necho content=open(APP,'rb'^).read(^)\necho b64=base64.b64encode(content^).decode(^)\necho print(f'Tamanho: {len(content^)//1024} KB'^)\necho sha=None\necho try:\necho  req=urllib.request.Request(URL,headers=H^)\necho  with urllib.request.urlopen(req,timeout=15^) as rr: sha=json.loads(rr.read(^)^).get('sha'^)\n  echo  print('SHA ok'^)\necho except Exception as e: print(f'Aviso: {e}'^)\necho body={'message':'Atualizacao FinContent AI','content':b64}\necho if sha: body['sha']=sha\necho req2=urllib.request.Request(URL,data=json.dumps(body^).encode(^),method='PUT',headers={**H,'Content-Type':'application/json'}^)\necho try:\necho  with urllib.request.urlopen(req2,timeout=60^) as rr:\necho   json.loads(rr.read(^)^)\necho   print('SUCESSO'^)\necho except urllib.error.HTTPError as e:\necho  msg=e.read(^).decode(^)\necho  if e.code==401: print('TOKEN_INVALIDO'^)\necho  elif e.code==422: print('ARQUIVO_IDENTICO'^)\necho  else: print(f'ERRO {e.code}: {msg[:200]}'^)\necho except Exception as e: print(f'ERRO: {e}'^)\n) > "%PY%"\npython "%PY%" 2>&1\nset RES=\nfor /f "delims=" %%L in ('python "%PY%" 2^>^&1') do set RES=%%L\necho ─────────────────────────────\nif "!RES!"=="SUCESSO" (\n    echo SUCESSO! Site atualizado!\n    echo Aguarde 30s e acesse: https://cartainvest.com\n    set /p AB=Abrir site? (s/n^): \n    if /i "!AB!"=="s" start https://cartainvest.com\n) else if "!RES!"=="TOKEN_INVALIDO" (\n    echo Token invalido! Deletando...\n    del "%CONFIG%" >nul 2>&1\n    echo Execute novamente para inserir novo token.\n) else if "!RES!"=="ARQUIVO_IDENTICO" (\n    echo Arquivo ja esta atualizado no GitHub.\n) else (echo Erro - verifique conexao com internet.)\necho.\npause`
   };
 
   let count = 0;
@@ -6997,8 +7009,8 @@ function wppGetDestinatarios() {
 function wppMudarTipo() {
   const tipo = document.getElementById('wppTipo')?.value;
   const msgs = {
-    newsletter: 'Olá {nome}! 👋\n\nA newsletter desta semana está incrível!\n\nAcesse: https://fincontent.netlify.app\n\nAté a próxima! 🚀',
-    artigo: 'Oi {nome}! 📊\n\nPreparei um artigo exclusivo que pode te interessar.\n\nLeia aqui: https://fincontent.netlify.app\n\nQualquer dúvida, estou à disposição!',
+    newsletter: 'Olá {nome}! 👋\n\nA newsletter desta semana está incrível!\n\nAcesse: https://cartainvest.com\n\nAté a próxima! 🚀',
+    artigo: 'Oi {nome}! 📊\n\nPreparei um artigo exclusivo que pode te interessar.\n\nLeia aqui: https://cartainvest.com\n\nQualquer dúvida, estou à disposição!',
     livre: '',
     ia: 'Gerando mensagem personalizada com IA...'
   };
@@ -7102,7 +7114,7 @@ function telGerarLinks() {
     clientes.map(c => {
       const usuario = c.telegram.replace('@', '');
       const link = `https://t.me/${usuario}`;
-      const linkMsg = `https://t.me/share/url?url=${encodeURIComponent('https://fincontent.netlify.app')}&text=${encodeURIComponent(mensagem)}`;
+      const linkMsg = `https://t.me/share/url?url=${encodeURIComponent('https://cartainvest.com')}&text=${encodeURIComponent(mensagem)}`;
       return `<div style="background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
         <div style="flex:1;min-width:0;">
           <div style="font-size:12px;font-weight:600;color:var(--text);">${escapeHtml(c.nome)}</div>
@@ -7143,7 +7155,7 @@ function compartilharConteudo(modulo) {
         if (arts.art1.lead) txt += `_${arts.art1.lead}_\n\n`;
         if (arts.art1.col1) txt += arts.art1.col1.substring(0, 600) + '...\n\n';
         if (arts.art2?.manchete) txt += `📌 *${arts.art2.manchete}*\n${(arts.art2.col1||'').substring(0,200)}...\n\n`;
-        txt += `👉 Acesse a newsletter completa: https://fincontent.netlify.app`;
+        txt += `👉 Acesse a newsletter completa: https://cartainvest.com`;
         return txt;
       }
       const out = document.getElementById('npOutput');
@@ -7842,6 +7854,21 @@ function catSalvarDB(categorias) {
   localStorage.setItem('fc_categorias', JSON.stringify(extras));
 }
 
+// Popula selects de categoria em todos os módulos
+function popularSelectsCategorias() {
+  const cats = catCarregar();
+  const selectIds = ['livroCat', 'apresCat', 'docCat'];
+  const defaultOpt = '<option value="">Selecione uma categoria...</option>';
+  selectIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const val = el.value;
+    el.innerHTML = defaultOpt + cats.map(c =>
+      `<option value="${c.id}" ${c.id === val ? 'selected' : ''}>${c.icone} ${c.nome}</option>`
+    ).join('');
+  });
+}
+
 function catInit() {
   catRenderizar();
 }
@@ -7981,7 +8008,7 @@ function dominioInit() {
   if (url) {
     document.getElementById('dominioStatusCustom').textContent = 'https://' + url;
     document.getElementById('dominioStatusCustom').style.color = '#2ecc71';
-    document.getElementById('dominioNetlifyTarget') && (document.getElementById('dominioNetlifyTarget').textContent = 'fincontent.netlify.app');
+    document.getElementById('dominioNetlifyTarget') && (document.getElementById('dominioNetlifyTarget').textContent = 'cartainvest.com');
   }
 }
 

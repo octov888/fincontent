@@ -6735,22 +6735,36 @@ function salvarNoRepositorio(modulo) {
     gerador: () => document.getElementById('outputContent')?.innerText || document.getElementById('outputContent')?.textContent || '',
     biblioteca: () => document.getElementById('bibOutput')?.innerText || document.getElementById('bibOutput')?.textContent || '',
     newsletter: () => {
-      // Extrair texto formatado do newsletter
-      const arts = (typeof npArticles !== 'undefined') ? npArticles : null;
-      if (arts?.art1?.manchete) {
-        const nome = document.getElementById('npNome')?.value || 'Newsletter';
-        const edicao = document.getElementById('npEdicao')?.value || '';
-        let txt = `${nome}\n${edicao}\n${'═'.repeat(50)}\n\n`;
-        txt += `MANCHETE\n${arts.art1.manchete}\n\n`;
-        if (arts.art1.lead) txt += `${arts.art1.lead}\n\n`;
-        if (arts.art1.col1) txt += `${arts.art1.col1}\n\n`;
-        if (arts.art1.col2) txt += `${arts.art1.col2}\n\n`;
-        if (arts.art2?.manchete) txt += `${'─'.repeat(40)}\n${arts.art2.manchete}\n${arts.art2.col1||''}\n\n`;
-        if (arts.art3?.manchete) txt += `${'─'.repeat(40)}\n${arts.art3.manchete}\n${arts.art3.col1||''}\n\n`;
-        return txt.trim();
+      // Verificar se newsletter foi gerado
+      const arts = (typeof npArticles !== 'undefined' && npArticles?.art1?.manchete) ? npArticles : null;
+      if (!arts) return ''; // newsletter não foi gerado ainda
+
+      const nome = document.getElementById('npNome')?.value || 'Sophos Newsletter';
+      const edicao = document.getElementById('npEdicao')?.value || '';
+      const sep = '═'.repeat(50);
+      const sep2 = '─'.repeat(40);
+      let txt = `${nome}\n${edicao}\n${sep}\n\n`;
+      // Manchete
+      txt += `MANCHETE\n${arts.art1.manchete}\n\n`;
+      if (arts.art1.lead) txt += `${arts.art1.lead}\n\n`;
+      if (arts.art1.col1) txt += `${arts.art1.col1}\n\n`;
+      if (arts.art1.col2) txt += `${arts.art1.col2}\n\n`;
+      // Artigo 2
+      if (arts.art2?.manchete) {
+        txt += `${sep2}\n${arts.art2.manchete}\n\n`;
+        if (arts.art2.col1) txt += `${arts.art2.col1}\n\n`;
       }
-      const out = document.getElementById('npOutput');
-      return out ? (out.innerText || out.textContent || '').trim() : '';
+      // Artigo 3
+      if (arts.art3?.manchete) {
+        txt += `${sep2}\n${arts.art3.manchete}\n\n`;
+        if (arts.art3.col1) txt += `${arts.art3.col1}\n\n`;
+      }
+      // Artigo 4
+      if (arts.art4?.manchete) {
+        txt += `${sep2}\n${arts.art4.manchete}\n\n`;
+        if (arts.art4.col1) txt += `${arts.art4.col1}\n\n`;
+      }
+      return txt.trim();
     },
     livro: () => document.getElementById('livroOutput')?.textContent || '',
     apresentacao: () => document.getElementById('apresOutput')?.textContent || '',
@@ -6760,7 +6774,11 @@ function salvarNoRepositorio(modulo) {
   const texto = (fontes[modulo] ? fontes[modulo]() : '').trim();
 
   if (!texto || texto.length < 20) {
-    showToast('⚠ Gere o conteúdo primeiro antes de salvar!');
+    if (modulo === 'newsletter') {
+      showToast('⚠ Gere a newsletter primeiro antes de salvar!');
+    } else {
+      showToast('⚠ Gere o conteúdo primeiro antes de salvar!');
+    }
     return;
   }
 
@@ -6815,9 +6833,20 @@ function confirmarSalvarRepo() {
   };
   const elId = htmlFontes[_salvarRepoModulo];
   const el = elId ? document.getElementById(elId) : null;
-  const htmlSalvo = el ? el.innerHTML : null;
+  
+  // Para newsletter: salvar HTML completo do npOutput (preserva layout visual)
+  let htmlSalvo = null;
+  if (el) {
+    if (_salvarRepoModulo === 'newsletter') {
+      // npOutput pode estar hidden mas ainda tem o conteúdo
+      const npOut = document.getElementById('npOutput');
+      htmlSalvo = npOut?.innerHTML || el.innerHTML || null;
+    } else {
+      htmlSalvo = el.innerHTML || null;
+    }
+  }
 
-  const id = repoSalvar(tipo, titulo, _salvarRepoTexto, {}, htmlSalvo);
+  const id = repoSalvar(tipo, titulo, _salvarRepoTexto, {modulo: _salvarRepoModulo}, htmlSalvo);
   document.getElementById('modalSalvarRepo').style.display = 'none';
   showToast('✅ "' + titulo + '" salvo no Repositório!');
 }
@@ -6848,6 +6877,209 @@ function editarConteudo(modulo) {
   editarContar();
   document.getElementById('modalEditar').style.display = 'flex';
   setTimeout(() => document.getElementById('editarTextarea').focus(), 100);
+}
+
+// =============================================
+// REPOSITÓRIO — FUNÇÕES COMPLETAS
+// =============================================
+function repoSalvar(tipo, titulo, conteudo, extra, htmlContent) {
+  if (!conteudo || conteudo.trim().length < 10) return;
+  try {
+    const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+    const item = {
+      id: 'r' + Date.now(),
+      tipo,
+      titulo: titulo || 'Sem título',
+      conteudo,
+      html: htmlContent || null,
+      extra: extra || {},
+      criadoEm: new Date().toISOString(),
+      tamanho: conteudo.length
+    };
+    repo.unshift(item);
+    if (repo.length > 200) repo.splice(200);
+    localStorage.setItem('fc_repositorio', JSON.stringify(repo));
+    return item.id;
+  } catch(e) { console.error('Erro ao salvar no repositório:', e); }
+}
+
+function repoCarregar(tipo, busca) {
+  try {
+    let repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+    if (tipo) repo = repo.filter(r => r.tipo === tipo);
+    if (busca) {
+      const b = busca.toLowerCase();
+      repo = repo.filter(r => r.titulo?.toLowerCase().includes(b) || r.conteudo?.toLowerCase().includes(b));
+    }
+    return repo;
+  } catch(e) { return []; }
+}
+
+function repoInit() {
+  repoFiltrar('');
+  repoStats();
+}
+
+function repoStats() {
+  try {
+    const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+    const tipos = {};
+    repo.forEach(r => { tipos[r.tipo] = (tipos[r.tipo]||0)+1; });
+    const el = document.getElementById('repoStats');
+    if (el) el.innerHTML = `Total: <strong style="color:var(--accent)">${repo.length}</strong><br>` +
+      Object.entries(tipos).map(([t,c]) => `${t}: ${c}`).join('<br>');
+  } catch(e) {}
+}
+
+let _repoFiltroAtual = '';
+function repoFiltrar(tipo) {
+  _repoFiltroAtual = tipo;
+  document.querySelectorAll('[id^="repoFiltro"]').forEach(b => {
+    b.style.background = 'var(--surface2)';
+    b.style.color = 'var(--text2)';
+    b.style.border = '1px solid var(--border2)';
+  });
+  const idMap = {'':'Todos','newsletter':'Newsletter','artigo':'Artigo','apresentacao':'Apres','livro':'Livro','documento':'Doc','gerador':'Gerador'};
+  const btnId = 'repoFiltro' + (idMap[tipo] || '');
+  const btn = document.getElementById(btnId);
+  if (btn) { btn.style.background='var(--accent)'; btn.style.color='#000'; btn.style.border='none'; }
+  repoRenderizar();
+}
+
+function repoBuscar() { repoRenderizar(); }
+
+function repoRenderizar() {
+  const busca = document.getElementById('repoBusca')?.value || '';
+  const lista = repoCarregar(_repoFiltroAtual, busca);
+  const container = document.getElementById('repoLista');
+  if (!container) return;
+  if (!lista.length) {
+    container.innerHTML = '<div style="text-align:center;padding:60px;color:var(--text3);"><div style="font-size:36px;margin-bottom:12px;">📭</div><div style="font-size:14px;font-weight:600;color:var(--text2);">Nenhum conteúdo salvo ainda</div><div style="font-size:12px;margin-top:6px;">Gere conteúdos e clique em 💾 Salvar</div></div>';
+    return;
+  }
+  const icons = { newsletter:'📰', artigo:'📄', apresentacao:'📊', livro:'📖', documento:'📑', gerador:'✨' };
+  const cores = { newsletter:'#e74c3c', artigo:'#3498db', apresentacao:'#9b59b6', livro:'#27ae60', documento:'#e67e22', gerador:'#f5c842' };
+  container.innerHTML = lista.map(r => `
+    <div onclick="repoVisualizar('${r.id}')" style="background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:12px 14px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;transition:all 0.15s;" onmouseover="this.style.borderColor=getComputedStyle(document.documentElement).getPropertyValue('--accent')" onmouseout="this.style.borderColor='var(--border2)'">
+      <div style="width:36px;height:36px;border-radius:8px;background:${cores[r.tipo]||'#888'}22;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">${icons[r.tipo]||'📄'}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(r.titulo)}</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px;">${r.tipo} · ${new Date(r.criadoEm).toLocaleDateString('pt-BR')} · ${(r.tamanho/1000).toFixed(1)}KB</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml((r.conteudo||'').substring(0,80))}...</div>
+      </div>
+      <button onclick="event.stopPropagation();repoExcluir('${r.id}')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;flex-shrink:0;padding:2px 6px;" title="Excluir">🗑</button>
+    </div>`).join('');
+}
+
+function repoVisualizar(id) {
+  try {
+    const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+    const item = repo.find(r => r.id === id);
+    if (!item) return;
+    const viewer = document.getElementById('repoViewer');
+    if (!viewer) return;
+    const icons = { newsletter:'📰', artigo:'📄', apresentacao:'📊', livro:'📖', documento:'📑', gerador:'✨' };
+
+    // Conteúdo visual
+    let contentHtml = '';
+    if (item.html && item.html.trim().length > 50) {
+      if (item.tipo === 'newsletter') {
+        // Newsletter: mostrar em escala reduzida com scroll
+        contentHtml = `
+          <div style="overflow:auto;max-height:500px;border:1px solid var(--border2);border-radius:8px;">
+            <div style="transform:scale(0.65);transform-origin:top left;width:154%;pointer-events:none;background:#fff;padding:8px;">
+              ${item.html}
+            </div>
+          </div>`;
+      } else {
+        contentHtml = `<div style="font-size:12px;line-height:1.8;color:var(--text2);">${item.html}</div>`;
+      }
+    } else {
+      contentHtml = `<div style="font-size:12px;line-height:1.9;color:var(--text2);white-space:pre-wrap;font-family:'DM Sans',sans-serif;">${escapeHtml(item.conteudo)}</div>`;
+    }
+
+    viewer.innerHTML = `
+      <div style="border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:14px;flex-shrink:0;">
+        <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;">${icons[item.tipo]||'📄'} ${escapeHtml(item.titulo)}</div>
+        <div style="font-size:11px;color:var(--text3);">${item.tipo} · ${new Date(item.criadoEm).toLocaleString('pt-BR')} · ${(item.tamanho/1000).toFixed(1)} KB</div>
+        <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;">
+          <button onclick="navigator.clipboard.writeText(${JSON.stringify(item.conteudo)}).then(()=>showToast('✅ Copiado!'))" style="padding:6px 12px;background:var(--surface2);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:11px;">📋 Copiar</button>
+          <button onclick="repoDownload('${id}')" style="padding:6px 12px;background:var(--surface2);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:11px;">💾 .txt</button>
+          <button onclick="repoEditarItem('${id}')" style="padding:6px 12px;background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.3);border-radius:6px;color:#4a9eff;cursor:pointer;font-size:11px;">✏️ Editar</button>
+          <button onclick="compartilharRepoItem('${id}')" style="padding:6px 12px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.3);border-radius:6px;color:#25D366;cursor:pointer;font-size:11px;">📤 Compartilhar</button>
+        </div>
+      </div>
+      <div style="overflow-y:auto;">${contentHtml}</div>`;
+  } catch(e) { console.error('Erro ao visualizar:', e); }
+}
+
+function repoDownload(id) {
+  try {
+    const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+    const item = repo.find(r => r.id === id);
+    if (!item) return;
+    const a = document.createElement('a');
+    a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(item.conteudo);
+    a.download = item.titulo.replace(/[\s/\\:*?"<>|]/g,'_') + '.txt';
+    a.click();
+  } catch(e) {}
+}
+
+function compartilharRepoItem(id) {
+  try {
+    const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+    const item = repo.find(r => r.id === id);
+    if (!item) return;
+    _shareTextoOriginal = item.conteudo;
+    _shareTexto = item.conteudo;
+    const sel = document.getElementById('shareCliente');
+    const clientes = crmCarregar();
+    sel.innerHTML = '<option value="">— Sem destinatário específico —</option>' +
+      clientes.map(c => `<option value="${c.id}">${c.nome}${c.empresa?' — '+c.empresa:''}</option>`).join('');
+    document.getElementById('shareTextarea').value = item.conteudo;
+    shareContar();
+    document.getElementById('modalCompartilhar').style.display = 'flex';
+  } catch(e) {}
+}
+
+function repoExcluir(id) {
+  if (!confirm('Excluir este conteúdo?')) return;
+  try {
+    const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]').filter(r => r.id !== id);
+    localStorage.setItem('fc_repositorio', JSON.stringify(repo));
+    repoRenderizar();
+    repoStats();
+    const viewer = document.getElementById('repoViewer');
+    if (viewer) viewer.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text3);"><div style="font-size:36px;margin-bottom:12px;">🗂️</div><div style="font-size:13px;color:var(--text2);">Selecione um conteúdo para visualizar</div></div>';
+    showToast('🗑 Conteúdo removido.');
+  } catch(e) {}
+}
+
+function repoLimparTudo() {
+  if (!confirm('Excluir TODOS os conteúdos salvos? Esta ação não pode ser desfeita.')) return;
+  localStorage.removeItem('fc_repositorio');
+  repoRenderizar();
+  repoStats();
+  showToast('🗑 Repositório limpo.');
+}
+
+function repoExportar() {
+  try {
+    const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+    if (!repo.length) { showToast('⚠ Nenhum conteúdo para exportar.'); return; }
+    const txt = repo.map(r =>
+      '═'.repeat(60) + '\n' +
+      `[${r.tipo.toUpperCase()}] ${r.titulo}\n` +
+      `Data: ${new Date(r.criadoEm).toLocaleString('pt-BR')}\n` +
+      '─'.repeat(60) + '\n' +
+      r.conteudo + '\n'
+    ).join('\n\n');
+    const a = document.createElement('a');
+    a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt);
+    a.download = 'repositorio_' + new Date().toISOString().split('T')[0] + '.txt';
+    a.click();
+    showToast(`✅ ${repo.length} conteúdos exportados!`);
+  } catch(e) { showToast('❌ Erro ao exportar: ' + e.message); }
 }
 
 function repoEditarItem(id) {

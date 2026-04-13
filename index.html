@@ -1204,6 +1204,9 @@
 
   <div class="nav-section">
     <div class="nav-label">Analytics</div>
+    <div class="nav-item" id="nav-resultados" onclick="navIr('resultados')">
+      <span class="icon">📈</span> Resultados Financeiros
+    </div>
     <div class="nav-item" id="nav-desempenho" onclick="navIr('desempenho')">
       <span class="icon">📊</span> Desempenho
     </div>
@@ -1232,6 +1235,9 @@
     </div>
     <div class="nav-item" id="nav-config" onclick="navIr('config')">
       <span class="icon">⚙️</span> Configurações
+    </div>
+    <div class="nav-item" id="nav-dominio" onclick="navIr('dominio')">
+      <span class="icon">🌐</span> Domínio & Deploy
     </div>
   </div>
 
@@ -1377,6 +1383,7 @@
             <button class="btn btn-ghost" onclick="salvarNoRepositorio('gerador')" style="background:rgba(245,200,66,0.1);border-color:rgba(245,200,66,0.3);color:#f5c842;">💾 Salvar</button>
             <button class="btn btn-ghost" onclick="editarConteudo('gerador')" style="background:rgba(74,158,255,0.1);border-color:rgba(74,158,255,0.3);color:#4a9eff;">✏️ Editar</button>
             <button class="btn btn-ghost" onclick="compartilharConteudo('gerador')" style="background:rgba(37,211,102,0.1);border-color:rgba(37,211,102,0.3);color:#25D366;">📤 Compartilhar</button>
+            <button class="btn btn-ghost" onclick="abrirSeletorFontes()" style="background:rgba(74,158,255,0.08);border-color:rgba(74,158,255,0.3);color:#4a9eff;">📚 Fontes</button>
             <button class="btn btn-ghost" onclick="gerarConteudo()">🔄 Regenerar</button>
             <button class="btn btn-ghost" onclick="salvarNaBiblioteca()">💾 Salvar</button>
             <button class="btn btn-primary" onclick="openAgendar()">📅 Agendar</button>
@@ -1549,6 +1556,7 @@
       <button class="btn btn-ghost" onclick="salvarNoRepositorio('newsletter')" style="color:#f5c842;border-color:rgba(245,200,66,0.3);background:rgba(245,200,66,0.08);">💾 Salvar</button>
       <button class="btn btn-ghost" onclick="editarConteudo('newsletter')" style="color:#4a9eff;border-color:rgba(74,158,255,0.3);background:rgba(74,158,255,0.08);">✏️ Editar</button>
       <button class="btn btn-ghost" onclick="compartilharConteudo('newsletter')" style="color:#25D366;border-color:rgba(37,211,102,0.3);background:rgba(37,211,102,0.08);">📤 Compartilhar</button>
+      <button class="btn btn-ghost" onclick="abrirSeletorFontes()" style="color:#4a9eff;border-color:rgba(74,158,255,0.3);background:rgba(74,158,255,0.08);">📚 Fontes</button>
       <button class="btn btn-primary" onclick="exportarNewspaper()">📄 Exportar PDF</button>
     </div>
   </div>
@@ -2434,6 +2442,327 @@
     </div>
   </div>
 </div>
+
+<!-- ==================== DOMÍNIO & DEPLOY ==================== -->
+<div id="dominioApp" style="display:none;flex:1;flex-direction:column;height:100vh;overflow:hidden;">
+  <div class="topbar">
+    <div class="page-title">🌐 Domínio & <span>Deploy</span></div>
+    <div class="topbar-right">
+      <button class="btn btn-primary" onclick="dominioSalvar()">💾 Salvar Configurações</button>
+    </div>
+  </div>
+  <div style="flex:1;overflow-y:auto;padding:24px;">
+    <div style="max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:20px;">
+
+      <!-- Status atual -->
+      <div style="background:var(--surface2);border:1px solid var(--border2);border-radius:12px;padding:20px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:14px;">📊 Status do Deploy</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+          <div style="background:var(--surface);border-radius:8px;padding:12px;text-align:center;">
+            <div style="font-size:20px;margin-bottom:4px;">🟢</div>
+            <div style="font-size:11px;font-weight:600;color:#2ecc71;">Online</div>
+            <div style="font-size:10px;color:var(--text3);margin-top:2px;">Netlify</div>
+          </div>
+          <div style="background:var(--surface);border-radius:8px;padding:12px;text-align:center;">
+            <div id="dominioStatusUrl" style="font-size:11px;font-weight:600;color:#f5c842;margin-top:4px;word-break:break-all;">fincontent.netlify.app</div>
+            <div style="font-size:10px;color:var(--text3);margin-top:2px;">URL atual</div>
+          </div>
+          <div style="background:var(--surface);border-radius:8px;padding:12px;text-align:center;">
+            <div id="dominioStatusCustom" style="font-size:11px;font-weight:600;color:var(--text3);margin-top:4px;">Não configurado</div>
+            <div style="font-size:10px;color:var(--text3);margin-top:2px;">Domínio próprio</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Configurar domínio próprio -->
+      <div style="background:var(--surface2);border:1px solid var(--border2);border-radius:12px;padding:20px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">🏠 Domínio Próprio (Hostinger)</div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:16px;">Configure seu domínio comprado na Hostinger para apontar para o app</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div>
+            <label class="form-label">Seu domínio (ex: sophosfinanceiro.com.br)</label>
+            <input id="dominioNome" type="text" placeholder="sophosfinanceiro.com.br" class="tema-input" style="min-height:0;padding:9px 12px;">
+          </div>
+          <div>
+            <label class="form-label">Subdomínio (deixe vazio para usar o domínio raiz)</label>
+            <input id="dominioSub" type="text" placeholder="app (opcional — geraria app.seudominio.com)" class="tema-input" style="min-height:0;padding:9px 12px;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Guia passo a passo -->
+      <div style="background:var(--surface2);border:1px solid var(--border2);border-radius:12px;padding:20px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:16px;">📋 Como configurar — Passo a Passo</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+
+          <div style="display:flex;gap:12px;padding:12px;background:var(--surface);border-radius:8px;border-left:3px solid #f5c842;">
+            <div style="width:28px;height:28px;border-radius:50%;background:#f5c842;color:#000;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;">1</div>
+            <div>
+              <div style="font-size:12px;font-weight:600;color:var(--text);">Comprar domínio na Hostinger</div>
+              <div style="font-size:11px;color:var(--text3);margin-top:3px;">Acesse hostinger.com.br → Domínios → Busque e compre seu domínio (ex: sophosfinanceiro.com.br)</div>
+              <a href="https://www.hostinger.com.br/registro-de-dominio" target="_blank" style="font-size:11px;color:#4a9eff;display:inline-block;margin-top:4px;">→ Acessar Hostinger</a>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:12px;padding:12px;background:var(--surface);border-radius:8px;border-left:3px solid #4a9eff;">
+            <div style="width:28px;height:28px;border-radius:50%;background:#4a9eff;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;">2</div>
+            <div>
+              <div style="font-size:12px;font-weight:600;color:var(--text);">Configurar DNS na Hostinger</div>
+              <div style="font-size:11px;color:var(--text3);margin-top:3px;">No painel da Hostinger → Domínios → Gerenciar → DNS / Nameservers → Adicionar registro:</div>
+              <div style="background:#0a0a0a;border-radius:6px;padding:8px 12px;margin-top:8px;font-family:monospace;font-size:11px;color:#2ecc71;">
+                Tipo: CNAME<br>
+                Nome: @ (ou subdomínio)<br>
+                Valor: <span id="dominioNetlifyTarget">fincontent.netlify.app</span><br>
+                TTL: 3600
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:12px;padding:12px;background:var(--surface);border-radius:8px;border-left:3px solid #2ecc71;">
+            <div style="width:28px;height:28px;border-radius:50%;background:#2ecc71;color:#000;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;">3</div>
+            <div>
+              <div style="font-size:12px;font-weight:600;color:var(--text);">Adicionar domínio no Netlify</div>
+              <div style="font-size:11px;color:var(--text3);margin-top:3px;">Acesse app.netlify.com → Seu site → Domain settings → Add custom domain → Digite seu domínio</div>
+              <a href="https://app.netlify.com" target="_blank" style="font-size:11px;color:#4a9eff;display:inline-block;margin-top:4px;">→ Acessar Netlify</a>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:12px;padding:12px;background:var(--surface);border-radius:8px;border-left:3px solid #9b59b6;">
+            <div style="width:28px;height:28px;border-radius:50%;background:#9b59b6;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;">4</div>
+            <div>
+              <div style="font-size:12px;font-weight:600;color:var(--text);">Ativar HTTPS (SSL gratuito)</div>
+              <div style="font-size:11px;color:var(--text3);margin-top:3px;">No Netlify → Domain settings → HTTPS → Verify DNS → Enable Let's Encrypt certificate (automático e gratuito)</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:12px;padding:12px;background:var(--surface);border-radius:8px;border-left:3px solid #e67e22;">
+            <div style="width:28px;height:28px;border-radius:50%;background:#e67e22;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;">5</div>
+            <div>
+              <div style="font-size:12px;font-weight:600;color:var(--text);">Aguardar propagação DNS</div>
+              <div style="font-size:11px;color:var(--text3);margin-top:3px;">Pode levar de 5 minutos a 48 horas. Após isso, seu app estará acessível pelo novo domínio com HTTPS ativo.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GitHub config -->
+      <div style="background:var(--surface2);border:1px solid var(--border2);border-radius:12px;padding:20px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">🔧 Configuração GitHub</div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:14px;">Repositório onde o app está publicado</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div>
+            <label class="form-label">Repositório GitHub</label>
+            <input id="githubRepo" type="text" value="octov888/fincontent" class="tema-input" style="min-height:0;padding:9px 12px;">
+          </div>
+          <div>
+            <label class="form-label">Branch</label>
+            <input id="githubBranch" type="text" value="main" class="tema-input" style="min-height:0;padding:9px 12px;">
+          </div>
+        </div>
+        <div style="margin-top:10px;">
+          <label class="form-label">Token GitHub (salvo de forma segura)</label>
+          <input id="githubToken" type="password" placeholder="ghp_..." class="tema-input" style="min-height:0;padding:9px 12px;">
+          <div style="font-size:10px;color:var(--text3);margin-top:4px;">Salvo apenas no seu navegador (localStorage)</div>
+        </div>
+      </div>
+
+      <!-- Quick links -->
+      <div style="background:var(--surface2);border:1px solid var(--border2);border-radius:12px;padding:20px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:14px;">🔗 Links Rápidos</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+          <a href="https://app.netlify.com" target="_blank" style="padding:10px;background:var(--surface);border:1px solid #00ad9f44;border-radius:8px;text-align:center;text-decoration:none;color:var(--text2);font-size:12px;">
+            <div style="font-size:20px;margin-bottom:4px;">▲</div>Netlify Dashboard
+          </a>
+          <a href="https://github.com/octov888/fincontent" target="_blank" style="padding:10px;background:var(--surface);border:1px solid #33334444;border-radius:8px;text-align:center;text-decoration:none;color:var(--text2);font-size:12px;">
+            <div style="font-size:20px;margin-bottom:4px;">🐙</div>GitHub Repo
+          </a>
+          <a href="https://hpanel.hostinger.com" target="_blank" style="padding:10px;background:var(--surface);border:1px solid #ff4a1744;border-radius:8px;text-align:center;text-decoration:none;color:var(--text2);font-size:12px;">
+            <div style="font-size:20px;margin-bottom:4px;">🏠</div>Hostinger Panel
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==================== RESULTADOS FINANCEIROS ==================== -->
+<div id="resultadosApp" style="display:none;flex:1;flex-direction:column;height:100vh;overflow:hidden;">
+  <div class="topbar">
+    <div class="page-title">📈 Resultados <span>Financeiros</span></div>
+    <div class="topbar-right">
+      <button class="btn btn-ghost" onclick="resultadosNovaEmpresa()" id="btnNovaEmpresa">🏢 Nova Empresa</button>
+      <button class="btn btn-ghost" onclick="resultadosImportar()" id="btnImportar" style="display:none;">📥 Importar Dados</button>
+      <button class="btn btn-primary" onclick="resultadosGerar()" id="btnGerarApres" style="display:none;">✦ Gerar Apresentação</button>
+    </div>
+  </div>
+
+  <div style="flex:1;display:flex;overflow:hidden;">
+
+    <!-- LEFT: Configuração -->
+    <div style="width:300px;min-width:300px;border-right:1px solid var(--border);overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">
+
+      <!-- Selecionar empresa -->
+      <div class="section">
+        <div class="section-title">🏢 Empresa</div>
+        <select id="resultadosEmpresaSel" onchange="resultadosCarregarEmpresa()" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none;font-family:'DM Sans',sans-serif;">
+          <option value="">— Selecione ou crie empresa —</option>
+        </select>
+        <button onclick="resultadosNovaEmpresa()" style="margin-top:6px;width:100%;padding:7px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.3);border-radius:7px;color:#f5c842;font-size:11px;cursor:pointer;">+ Nova Empresa</button>
+      </div>
+
+      <!-- Período -->
+      <div class="section" id="resultadosPeriodoDiv" style="display:none;">
+        <div class="section-title">📅 Período</div>
+        <div style="display:flex;gap:6px;margin-bottom:8px;">
+          <button onclick="resultadosTipoPeriodo('anual')" id="btnAnual" style="flex:1;padding:7px;background:#f5c842;color:#000;border:none;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;">Anual</button>
+          <button onclick="resultadosTipoPeriodo('trimestral')" id="btnTrimestral" style="flex:1;padding:7px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:7px;font-size:11px;cursor:pointer;">Trimestral</button>
+        </div>
+        <div id="resultadosPeriodoAnual">
+          <label class="form-label">Anos (ex: 2022, 2023, 2024)</label>
+          <input id="resultadosAnos" type="text" placeholder="2022,2023,2024" value="2022,2023,2024" class="tema-input" style="min-height:0;padding:8px 12px;">
+        </div>
+        <div id="resultadosPeriodoTrimestral" style="display:none;">
+          <label class="form-label">Trimestres (ex: 1T24, 2T24, 3T24, 4T24)</label>
+          <input id="resultadosTrimestres" type="text" placeholder="1T24,2T24,3T24,4T24" class="tema-input" style="min-height:0;padding:8px 12px;">
+        </div>
+      </div>
+
+      <!-- Dados financeiros -->
+      <div class="section" id="resultadosDadosDiv" style="display:none;">
+        <div class="section-title">📊 Dados Financeiros</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <button onclick="resultadosAbrirImport('dre')" style="width:100%;padding:9px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-size:12px;cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;">
+            <span>📄 DRE — Demonstração de Resultado</span>
+            <span id="dreStatus" style="font-size:10px;color:#e74c3c;">Vazio</span>
+          </button>
+          <button onclick="resultadosAbrirImport('bp')" style="width:100%;padding:9px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-size:12px;cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;">
+            <span>🏦 Balanço Patrimonial</span>
+            <span id="bpStatus" style="font-size:10px;color:#e74c3c;">Vazio</span>
+          </button>
+          <button onclick="resultadosEntradaManual()" style="width:100%;padding:9px;background:rgba(245,200,66,0.08);border:1px solid rgba(245,200,66,0.3);border-radius:8px;color:#f5c842;font-size:12px;cursor:pointer;">
+            ✏️ Inserir dados manualmente
+          </button>
+        </div>
+      </div>
+
+      <!-- Estilo da apresentação -->
+      <div class="section" id="resultadosEstiloDiv" style="display:none;">
+        <div class="section-title">🎨 Estilo</div>
+        <label class="form-label">Padrão visual</label>
+        <select id="resultadosEstilo" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none;font-family:'DM Sans',sans-serif;">
+          <option value="consultoria">🏆 Consultoria Internacional (McKinsey/BCG)</option>
+          <option value="auditoria">📊 Auditoria (Big Four — Deloitte/PwC)</option>
+          <option value="banco">🏦 Banco de Investimento</option>
+          <option value="corporativo">💼 Corporativo Executivo</option>
+        </select>
+        <label class="form-label" style="margin-top:8px;">Idioma do relatório</label>
+        <select id="resultadosIdioma" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none;font-family:'DM Sans',sans-serif;">
+          <option value="pt">🇧🇷 Português</option>
+          <option value="en">🇺🇸 English</option>
+        </select>
+        <label class="form-label" style="margin-top:8px;">Incluir seções</label>
+        <div style="display:flex;flex-direction:column;gap:5px;margin-top:4px;">
+          <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);cursor:pointer;"><input type="checkbox" id="incResumo" checked style="accent-color:#f5c842;"> Resumo Executivo</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);cursor:pointer;"><input type="checkbox" id="incDRE" checked style="accent-color:#f5c842;"> Análise do DRE</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);cursor:pointer;"><input type="checkbox" id="incBP" checked style="accent-color:#f5c842;"> Balanço Patrimonial</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);cursor:pointer;"><input type="checkbox" id="incGraficos" checked style="accent-color:#f5c842;"> Gráficos e Indicadores</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);cursor:pointer;"><input type="checkbox" id="incProjecoes" checked style="accent-color:#f5c842;"> Projeções</label>
+          <label style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);cursor:pointer;"><input type="checkbox" id="incIndices" checked style="accent-color:#f5c842;"> Índices Financeiros</label>
+        </div>
+      </div>
+
+      <button class="gerar-btn" id="btnGerarResultados" style="display:none;" onclick="resultadosGerar()">📈 Gerar Apresentação</button>
+    </div>
+
+    <!-- RIGHT: Output -->
+    <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+      <div style="padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-size:12px;font-weight:600;color:var(--text2);">📊 Apresentação de Resultados</span>
+        <div style="display:flex;gap:6px;" id="resultadosBtns" style="display:none;">
+          <button onclick="resultadosCopiar()" class="btn btn-ghost" style="font-size:11px;display:none;" id="btnResCopiar">📋 Copiar</button>
+          <button onclick="salvarNoRepositorio('resultados')" style="font-size:11px;padding:4px 10px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.3);color:#f5c842;border-radius:6px;cursor:pointer;display:none;" id="btnResSalvar">💾 Salvar</button>
+          <button onclick="compartilharConteudo('resultados')" style="font-size:11px;padding:4px 10px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.3);color:#25D366;border-radius:6px;cursor:pointer;display:none;" id="btnResCompartilhar">📤 Compartilhar</button>
+        </div>
+      </div>
+      <div id="resultadosOutput" style="flex:1;overflow-y:auto;padding:32px 40px;font-size:14px;line-height:2.0;color:var(--text);max-width:900px;">
+        <div style="text-align:center;padding:80px 20px;color:var(--text3);">
+          <div style="font-size:48px;margin-bottom:16px;">📈</div>
+          <div style="font-size:16px;font-weight:600;color:var(--text2);margin-bottom:8px;">Apresentação de Resultados Financeiros</div>
+          <div style="font-size:13px;line-height:1.8;">Selecione ou crie uma empresa,<br>importe os dados do DRE e Balanço,<br>e gere uma apresentação profissional com IA.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Nova Empresa -->
+<div id="modalNovaEmpresa" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:460px;max-height:90vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:20px;">
+      <div style="font-size:16px;font-weight:700;color:var(--text);">🏢 Cadastrar Empresa</div>
+      <button onclick="document.getElementById('modalNovaEmpresa').style.display='none'" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div><label class="form-label">Razão Social *</label><input id="empRazao" type="text" placeholder="Ex: Silva & Associados Ltda" class="tema-input" style="min-height:0;padding:8px 12px;"></div>
+      <div><label class="form-label">Nome Fantasia</label><input id="empFantasia" type="text" placeholder="Ex: Silva Contabilidade" class="tema-input" style="min-height:0;padding:8px 12px;"></div>
+      <div><label class="form-label">CNPJ</label><input id="empCNPJ" type="text" placeholder="00.000.000/0001-00" class="tema-input" style="min-height:0;padding:8px 12px;"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div><label class="form-label">Setor</label>
+          <select id="empSetor" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none;">
+            <option value="contabilidade">Contabilidade</option>
+            <option value="financas">Finanças</option>
+            <option value="industria">Indústria</option>
+            <option value="comercio">Comércio</option>
+            <option value="servicos">Serviços</option>
+            <option value="tecnologia">Tecnologia</option>
+            <option value="saude">Saúde</option>
+            <option value="outros">Outros</option>
+          </select>
+        </div>
+        <div><label class="form-label">Moeda</label>
+          <select id="empMoeda" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none;">
+            <option value="BRL">R$ — Real</option>
+            <option value="USD">$ — Dólar</option>
+            <option value="EUR">€ — Euro</option>
+          </select>
+        </div>
+      </div>
+      <div><label class="form-label">Website</label><input id="empSite" type="text" placeholder="www.empresa.com.br" class="tema-input" style="min-height:0;padding:8px 12px;"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:18px;">
+      <button onclick="resultadosSalvarEmpresa()" style="flex:1;padding:11px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;">✓ Salvar Empresa</button>
+      <button onclick="document.getElementById('modalNovaEmpresa').style.display='none'" style="padding:11px 14px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Importar Dados DRE/BP -->
+<div id="modalImportDados" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;width:100%;max-width:700px;max-height:90vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:16px;">
+      <div id="modalImportTitulo" style="font-size:16px;font-weight:700;color:var(--text);">📄 Importar DRE</div>
+      <button onclick="document.getElementById('modalImportDados').style.display='none'" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+    </div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:14px;">Cole os dados abaixo em formato CSV (vírgula) ou insira manualmente. Exemplo de formato:</div>
+    <div style="background:#0a0a0a;border-radius:8px;padding:10px 14px;font-family:monospace;font-size:11px;color:#2ecc71;margin-bottom:14px;line-height:1.8;">
+      <span id="formatoExemplo">Conta,2022,2023,2024<br>Receita Bruta,1000000,1200000,1500000<br>Deduções,-150000,-180000,-220000<br>Receita Líquida,850000,1020000,1280000</span>
+    </div>
+    <div style="margin-bottom:12px;">
+      <div style="display:flex;gap:8px;margin-bottom:8px;">
+        <button onclick="importarArquivo()" style="padding:7px 14px;background:var(--surface2);border:1px solid var(--border2);border-radius:7px;color:var(--text2);font-size:11px;cursor:pointer;">📂 Carregar arquivo CSV/Excel</button>
+        <input type="file" id="importFileInput" accept=".csv,.xlsx,.xls,.txt" style="display:none" onchange="processarArquivoImport(this)">
+        <button onclick="importarColarCSV()" style="padding:7px 14px;background:var(--surface2);border:1px solid var(--border2);border-radius:7px;color:var(--text2);font-size:11px;cursor:pointer;">📋 Colar CSV</button>
+        <button onclick="importarDemoData()" style="padding:7px 14px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.3);border-radius:7px;color:#f5c842;font-size:11px;cursor:pointer;">✨ Dados de exemplo</button>
+      </div>
+      <textarea id="importTextarea" placeholder="Cole aqui os dados CSV ou insira manualmente..." style="width:100%;min-height:220px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-size:12px;outline:none;resize:vertical;font-family:monospace;"></textarea>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button onclick="confirmarImport()" style="flex:1;padding:11px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;">✓ Confirmar Dados</button>
+      <button onclick="document.getElementById('modalImportDados').style.display='none'" style="padding:11px 14px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
+    </div>
+  </div>
+</div>
 <!-- ==================== ESCREVER LIVRO ==================== -->
 <div id="livroApp" style="display:none;flex:1;flex-direction:column;height:100vh;overflow:hidden;">
   <div class="topbar">
@@ -3264,6 +3593,12 @@ Após o conteúdo principal, adicione uma linha separadora "---HASHTAGS---" e en
 
 Gere um conteúdo original, criativo e que realmente engaje o público. Escreva em português brasileiro.`;
 
+  // Injetar fontes selecionadas no prompt
+  const fonteInstrucao = (typeof fontesGetPromptInstrucao === 'function') ? fontesGetPromptInstrucao() : '';
+  const promptFinalGerador = prompt + fonteInstrucao;
+  const incBiblio = document.getElementById('fontesIncluirBiblio')?.checked !== false;
+
+
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -3276,7 +3611,7 @@ Gere um conteúdo original, criativo e que realmente engaje o público. Escreva 
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1500,
-        messages: [{ role: 'user', content: prompt }]
+        messages: [{ role: 'user', content: (typeof promptFinalGerador !== 'undefined' ? promptFinalGerador : prompt) }]
       })
     });
 
@@ -3295,7 +3630,12 @@ Gere um conteúdo original, criativo e que realmente engaje o público. Escreva 
     state.conteudoGerado = conteudo;
     state.hashtagsGeradas = hashtags;
 
-    document.getElementById('outputBody').innerHTML = `<div class="output-text">${escapeHtml(conteudo)}</div>`;
+    // Add bibliography if selected
+  const biblio = (typeof fontesGetBibliografia === 'function' && incBiblio) ? fontesGetBibliografia() : '';
+  const conteudoFinal = biblio ? conteudo + '\n' + biblio : conteudo;
+  // Archive bibliography in repository
+  if (typeof fontesArquivarConsulta === 'function') fontesArquivarConsulta(tema || 'Conteúdo', conteudo);
+  document.getElementById('outputBody').innerHTML = `<div class="output-text">${escapeHtml(conteudoFinal)}</div>`;
     setOutputStatus('ok', '✓ Gerado');
 
     if (hashtags) {
@@ -3353,7 +3693,7 @@ Crie 7 objetos (um por dia, de segunda a domingo). Temas devem ser variados, rel
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1200,
-        messages: [{ role: 'user', content: prompt }]
+        messages: [{ role: 'user', content: prompt + ((typeof fontesGetPromptInstrucao === 'function') ? fontesGetPromptInstrucao() : '') }]
       })
     });
 
@@ -3676,189 +4016,89 @@ loadState();
 renderAgendados();
 renderCalendar();
 const FONTES_DEFAULT = [
-  { nome:'Banco Central do Brasil', url:'https://www.bcb.gov.br/estatisticas', cat:'Dados Oficiais', regiao:'Brasil', tipo:'Dados', nivel:'Profissional', uso:'PIB, inflação, juros' },
-  { nome:'IMF', url:'https://www.imf.org', cat:'Dados Oficiais', regiao:'Global', tipo:'Dados', nivel:'Profissional', uso:'Relatórios macroeconômicos' },
-  { nome:'World Bank', url:'https://www.worldbank.org', cat:'Dados Oficiais', regiao:'Global', tipo:'Dados', nivel:'Profissional', uso:'Crescimento econômico' },
-  { nome:'OECD', url:'https://www.oecd.org', cat:'Dados Oficiais', regiao:'Global', tipo:'Dados', nivel:'Profissional', uso:'Indicadores comparativos' },
-  { nome:'Trading Economics', url:'https://tradingeconomics.com', cat:'Dados Oficiais', regiao:'Global', tipo:'Dados', nivel:'Profissional', uso:'Indicadores em tempo real' },
-  { nome:'InfoMoney', url:'https://www.infomoney.com.br', cat:'Mercado Financeiro', regiao:'Brasil', tipo:'Notícia/Análise', nivel:'Intermediário', uso:'Ações, FIIs' },
-  { nome:'Seu Dinheiro', url:'https://www.seudinheiro.com', cat:'Mercado Financeiro', regiao:'Brasil', tipo:'Notícia/Análise', nivel:'Intermediário', uso:'Investimentos' },
-  { nome:'Bloomberg', url:'https://www.bloomberg.com', cat:'Mercado Financeiro', regiao:'Global', tipo:'Notícia/Dados', nivel:'Profissional', uso:'Mercados globais' },
-  { nome:'Reuters', url:'https://www.reuters.com', cat:'Mercado Financeiro', regiao:'Global', tipo:'Notícia', nivel:'Profissional', uso:'Macro e commodities' },
-  { nome:'Benzinga', url:'https://www.benzinga.com', cat:'Mercado Financeiro', regiao:'Global', tipo:'Notícia', nivel:'Intermediário', uso:'Trading e ações' },
-  { nome:'Yahoo Finance', url:'https://finance.yahoo.com', cat:'Mercado Financeiro', regiao:'Global', tipo:'Dados', nivel:'Intermediário', uso:'Cotações e notícias' },
-  { nome:'MarketWatch', url:'https://www.marketwatch.com', cat:'Mercado Financeiro', regiao:'Global', tipo:'Notícia', nivel:'Intermediário', uso:'Mercado americano' },
-  { nome:'Seeking Alpha', url:'https://seekingalpha.com', cat:'Mercado Financeiro', regiao:'Global', tipo:'Análise', nivel:'Profissional', uso:'Opiniões de investimento' },
-  { nome:'JOTA', url:'https://www.jota.info/tributos', cat:'Tributário', regiao:'Brasil', tipo:'Jurídico', nivel:'Profissional', uso:'Direito tributário' },
-  { nome:'Reforma Tributária', url:'https://www.reformatributaria.com', cat:'Tributário', regiao:'Brasil', tipo:'Jurídico', nivel:'Profissional', uso:'Legislação tributária' },
-  { nome:'Valor Econômico', url:'https://valor.globo.com', cat:'Tributário/Economia', regiao:'Brasil', tipo:'Notícia/Análise', nivel:'Profissional', uso:'Macro e tributos' },
-  { nome:'Exame', url:'https://exame.com', cat:'Economia/Negócios', regiao:'Brasil', tipo:'Notícia', nivel:'Intermediário', uso:'Empresas e economia' },
-  { nome:'Forbes Brasil', url:'https://forbes.com.br', cat:'Economia/Negócios', regiao:'Brasil', tipo:'Notícia', nivel:'Intermediário', uso:'Empresas e riqueza' },
-  { nome:'Poder360', url:'https://www.poder360.com.br', cat:'Economia/Política', regiao:'Brasil', tipo:'Notícia', nivel:'Profissional', uso:'Política econômica' },
-  { nome:'Financial Times', url:'https://www.ft.com', cat:'Economia Global', regiao:'Global', tipo:'Análise', nivel:'Profissional', uso:'Macro global' },
-  { nome:'The Economist', url:'https://www.economist.com', cat:'Economia Global', regiao:'Global', tipo:'Análise', nivel:'Profissional', uso:'Estratégia econômica' },
-  { nome:'OilPrice', url:'https://oilprice.com', cat:'Commodities', regiao:'Global', tipo:'Notícia', nivel:'Profissional', uso:'Petróleo e energia' },
-  { nome:'S&P Global', url:'https://www.spglobal.com', cat:'Commodities', regiao:'Global', tipo:'Dados/Análise', nivel:'Profissional', uso:'Ratings e commodities' },
-  { nome:'UOL Economia', url:'https://economia.uol.com.br', cat:'Portal Geral', regiao:'Brasil', tipo:'Notícia', nivel:'Intermediário', uso:'Economia diária' },
-  { nome:'G1', url:'https://g1.globo.com', cat:'Portal Geral', regiao:'Brasil', tipo:'Notícia', nivel:'Intermediário', uso:'Notícias gerais' },
-  { nome:'CNN Brasil', url:'https://www.cnnbrasil.com.br', cat:'Portal Geral', regiao:'Brasil', tipo:'Notícia', nivel:'Intermediário', uso:'Economia e política' },
-  { nome:'Folha de S.Paulo', url:'https://www.folha.uol.com.br', cat:'Portal Geral', regiao:'Brasil', tipo:'Notícia', nivel:'Profissional', uso:'Análise econômica' },
-  { nome:'O Globo', url:'https://oglobo.globo.com', cat:'Portal Geral', regiao:'Brasil', tipo:'Notícia', nivel:'Profissional', uso:'Economia e política' },
-  { nome:'Visual Capitalist', url:'https://www.visualcapitalist.com', cat:'Conteúdo Visual', regiao:'Global', tipo:'Visual/Data', nivel:'Intermediário', uso:'Infográficos econômicos' },
-  // Geopolítica
-  { nome:'Foreign Affairs', url:'https://www.foreignaffairs.com', cat:'Geopolítica', regiao:'Global', tipo:'Análise', nivel:'Profissional', uso:'Relações internacionais e estratégia' },
-  { nome:'Council on Foreign Relations', url:'https://www.cfr.org', cat:'Geopolítica', regiao:'Global', tipo:'Análise', nivel:'Profissional', uso:'Política externa e geopolítica' },
-  { nome:'Stratfor', url:'https://worldview.stratfor.com', cat:'Geopolítica', regiao:'Global', tipo:'Análise', nivel:'Profissional', uso:'Inteligência geopolítica' },
-  { nome:'Al Jazeera', url:'https://www.aljazeera.com', cat:'Geopolítica', regiao:'Global', tipo:'Notícia', nivel:'Intermediário', uso:'Oriente Médio e conflitos globais' },
-  { nome:'BBC World', url:'https://www.bbc.com/news/world', cat:'Geopolítica', regiao:'Global', tipo:'Notícia', nivel:'Intermediário', uso:'Notícias globais e geopolítica' },
-  { nome:'The Diplomat', url:'https://thediplomat.com', cat:'Geopolítica', regiao:'Global', tipo:'Análise', nivel:'Profissional', uso:'Ásia-Pacífico e geopolítica' },
-  { nome:'Agência Brasil — Internacional', url:'https://agenciabrasil.ebc.com.br/internacional', cat:'Geopolítica', regiao:'Brasil', tipo:'Notícia', nivel:'Intermediário', uso:'Brasil no cenário internacional' },
-
-  // ─── EUROPA ───────────────────────────────────
-  {
-    id: 'wsj', nome: 'The Wall Street Journal', url: 'https://www.wsj.com',
-    categoria: 'Mercado Financeiro', regiao: 'Global', ativo: true,
-    descricao: 'Referência americana em mercados e negócios',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  {
-    id: 'handelsblatt', nome: 'Handelsblatt', url: 'https://www.handelsblatt.com',
-    categoria: 'Economia/Negócios', regiao: 'Global', ativo: true,
-    descricao: 'Forte cobertura da economia e indústria alemã',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  {
-    id: 'lesechos', nome: 'Les Echos', url: 'https://www.lesechos.fr',
-    categoria: 'Economia/Negócios', regiao: 'Global', ativo: true,
-    descricao: 'Referência francesa em finanças e política econômica',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  {
-    id: 'ilsole24ore', nome: 'Il Sole 24 Ore', url: 'https://www.ilsole24ore.com',
-    categoria: 'Economia/Negócios', regiao: 'Global', ativo: true,
-    descricao: 'Principal jornal econômico da Itália',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  {
-    id: 'politicoeurope', nome: 'Politico Europe', url: 'https://www.politico.eu',
-    categoria: 'Geopolítica', regiao: 'Global', ativo: true,
-    descricao: 'Excelente cobertura da política da União Europeia',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  {
-    id: 'bbcnews', nome: 'BBC News', url: 'https://www.bbc.com/news',
-    categoria: 'Portal Geral', regiao: 'Global', ativo: true,
-    descricao: 'Cobertura ampla de notícias globais',
-    tipo: 'Notícia', uso: 'Notícia'
-  },
-  {
-    id: 'lemonde', nome: 'Le Monde', url: 'https://www.lemonde.fr',
-    categoria: 'Portal Geral', regiao: 'Global', ativo: true,
-    descricao: 'Influente jornal francês de política e sociedade',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  {
-    id: 'elpais', nome: 'El País', url: 'https://www.elpais.com',
-    categoria: 'Economia/Negócios', regiao: 'Global', ativo: true,
-    descricao: 'Principal referência do mundo hispânico',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  // ─── EUA ──────────────────────────────────────
-  {
-    id: 'barrons', nome: "Barron's", url: 'https://www.barrons.com',
-    categoria: 'Mercado Financeiro', regiao: 'Global', ativo: true,
-    descricao: 'Excelente para análise de ações e investimentos',
-    tipo: 'Análise', uso: 'Análise'
-  },
-  {
-    id: 'cnbc', nome: 'CNBC', url: 'https://www.cnbc.com',
-    categoria: 'Mercado Financeiro', regiao: 'Global', ativo: true,
-    descricao: 'Mercado ao vivo, tempo real',
-    tipo: 'Notícia', uso: 'Notícia'
-  },
-  {
-    id: 'nyt', nome: 'The New York Times', url: 'https://www.nytimes.com',
-    categoria: 'Portal Geral', regiao: 'Global', ativo: true,
-    descricao: 'Grande influência em política e mundo',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  {
-    id: 'wapo', nome: 'The Washington Post', url: 'https://www.washingtonpost.com',
-    categoria: 'Portal Geral', regiao: 'Global', ativo: true,
-    descricao: 'Forte em política e governo americano',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  {
-    id: 'foreignpolicy', nome: 'Foreign Policy', url: 'https://foreignpolicy.com',
-    categoria: 'Geopolítica', regiao: 'Global', ativo: true,
-    descricao: 'Tendências em relações internacionais',
-    tipo: 'Análise', uso: 'Análise'
-  },
-  // ─── ÁSIA ─────────────────────────────────────
-  {
-    id: 'nikkeiasia', nome: 'Nikkei Asia', url: 'https://asia.nikkei.com',
-    categoria: 'Economia/Negócios', regiao: 'Global', ativo: true,
-    descricao: 'Melhor cobertura da Ásia em inglês',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  {
-    id: 'nikkei', nome: 'Nikkei', url: 'https://www.nikkei.com',
-    categoria: 'Mercado Financeiro', regiao: 'Global', ativo: true,
-    descricao: 'Economia japonesa — muito respeitado',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  {
-    id: 'scmp', nome: 'South China Morning Post', url: 'https://www.scmp.com',
-    categoria: 'Geopolítica', regiao: 'Global', ativo: true,
-    descricao: 'Principal fonte sobre China e Ásia',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  {
-    id: 'businesstimes', nome: 'The Business Times', url: 'https://www.businesstimes.com.sg',
-    categoria: 'Economia/Negócios', regiao: 'Global', ativo: true,
-    descricao: 'Forte cobertura financeira regional da Ásia',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  {
-    id: 'mint', nome: 'Mint', url: 'https://www.livemint.com',
-    categoria: 'Economia/Negócios', regiao: 'Global', ativo: true,
-    descricao: 'Destaque indiano em economia e finanças',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  {
-    id: 'straits', nome: 'The Straits Times', url: 'https://www.straitstimes.com',
-    categoria: 'Portal Geral', regiao: 'Global', ativo: true,
-    descricao: 'Respeitado jornal de Singapura',
-    tipo: 'Notícia', uso: 'Notícia'
-  },
-  // ─── ORIENTE MÉDIO ────────────────────────────
-  {
-    id: 'arabnews', nome: 'Arab News', url: 'https://www.arabnews.com',
-    categoria: 'Economia/Negócios', regiao: 'Global', ativo: true,
-    descricao: 'Forte cobertura regional do mundo árabe',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  {
-    id: 'almonitor', nome: 'Al-Monitor', url: 'https://www.al-monitor.com',
-    categoria: 'Geopolítica', regiao: 'Global', ativo: true,
-    descricao: 'Especializado em política regional do Oriente Médio',
-    tipo: 'Análise', uso: 'Análise'
-  },
-  {
-    id: 'thenational', nome: 'The National', url: 'https://www.thenationalnews.com',
-    categoria: 'Economia/Negócios', regiao: 'Global', ativo: true,
-    descricao: 'Forte em negócios e política do Golfo',
-    tipo: 'Notícia/Análise', uso: 'Análise'
-  },
-  {
-    id: 'aleqtisadiah', nome: 'Al Eqtisadiah', url: 'https://www.aleqt.com',
-    categoria: 'Mercado Financeiro', regiao: 'Global', ativo: true,
-    descricao: 'Foco financeiro e econômico da Arábia Saudita',
-    tipo: 'Notícia/Dados', uso: 'Dados'
-  },
+  // ─── FINANÇAS E CONTABILIDADE
+  { id: 'bcb', nome: 'Banco Central do Brasil', url: 'https://www.bcb.gov.br/estatisticas', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Brasil', tipo: 'Dados', descricao: 'PIB, inflação, juros e estatísticas oficiais', ativo: true },
+  { id: 'imf', nome: 'IMF', url: 'https://www.imf.org', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Dados', descricao: 'Relatórios macroeconômicos e perspectivas globais', ativo: true },
+  { id: 'worldbank', nome: 'World Bank', url: 'https://www.worldbank.org', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Dados', descricao: 'Crescimento econômico e desenvolvimento', ativo: true },
+  { id: 'oecd', nome: 'OECD', url: 'https://www.oecd.org', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Dados', descricao: 'Indicadores comparativos entre países', ativo: true },
+  { id: 'tradingeconomics', nome: 'Trading Economics', url: 'https://tradingeconomics.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Dados', descricao: 'Indicadores econômicos em tempo real', ativo: true },
+  { id: 'infomoney', nome: 'InfoMoney', url: 'https://www.infomoney.com.br', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Brasil', tipo: 'Notícia/Análise', descricao: 'Ações, FIIs e mercado financeiro brasileiro', ativo: true },
+  { id: 'seudinheiro', nome: 'Seu Dinheiro', url: 'https://www.seudinheiro.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Brasil', tipo: 'Notícia/Análise', descricao: 'Educação financeira e investimentos', ativo: true },
+  { id: 'bloomberg', nome: 'Bloomberg', url: 'https://www.bloomberg.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Notícia/Dados', descricao: 'Mercados globais, bolsa e juros', ativo: true },
+  { id: 'reuters', nome: 'Reuters', url: 'https://www.reuters.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Notícia', descricao: 'Macro, commodities e notícias rápidas', ativo: true },
+  { id: 'benzinga', nome: 'Benzinga', url: 'https://www.benzinga.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Notícia', descricao: 'Trading e mercado de ações', ativo: true },
+  { id: 'yahoofinance', nome: 'Yahoo Finance', url: 'https://finance.yahoo.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Dados', descricao: 'Cotações e notícias de mercado', ativo: true },
+  { id: 'marketwatch', nome: 'MarketWatch', url: 'https://www.marketwatch.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Notícia', descricao: 'Mercado americano e análises', ativo: true },
+  { id: 'seekingalpha', nome: 'Seeking Alpha', url: 'https://seekingalpha.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Análise', descricao: 'Opiniões e análises de investimento', ativo: true },
+  { id: 'jota', nome: 'JOTA', url: 'https://www.jota.info/tributos', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Brasil', tipo: 'Jurídico', descricao: 'Direito tributário e regulatório', ativo: true },
+  { id: 'reformatributaria', nome: 'Reforma Tributária', url: 'https://www.reformatributaria.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Brasil', tipo: 'Jurídico', descricao: 'Legislação tributária e reforma fiscal', ativo: true },
+  { id: 'valoreconomico', nome: 'Valor Econômico', url: 'https://valor.globo.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Brasil', tipo: 'Notícia/Análise', descricao: 'Macro, tributos e economia brasileira', ativo: true },
+  { id: 'exame', nome: 'Exame', url: 'https://exame.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Brasil', tipo: 'Notícia', descricao: 'Empresas, economia e negócios', ativo: true },
+  { id: 'forbesbr', nome: 'Forbes Brasil', url: 'https://forbes.com.br', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Brasil', tipo: 'Notícia', descricao: 'Empresas, riqueza e empreendedorismo', ativo: true },
+  { id: 'poder360', nome: 'Poder360', url: 'https://www.poder360.com.br', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Brasil', tipo: 'Notícia', descricao: 'Política econômica e fiscal', ativo: true },
+  { id: 'ft', nome: 'Financial Times', url: 'https://www.ft.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Análise', descricao: 'Melhor cobertura financeira global', ativo: true },
+  { id: 'economist', nome: 'The Economist', url: 'https://www.economist.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Análise', descricao: 'Análise estratégica de geopolítica e macroeconomia', ativo: true },
+  { id: 'oilprice', nome: 'OilPrice', url: 'https://oilprice.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Notícia', descricao: 'Petróleo, energia e commodities', ativo: true },
+  { id: 'spglobal', nome: 'S&P Global', url: 'https://www.spglobal.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Dados/Análise', descricao: 'Ratings, commodities e análise de mercado', ativo: true },
+  { id: 'wsj', nome: 'The Wall Street Journal', url: 'https://www.wsj.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Referência americana em mercados e negócios', ativo: true },
+  { id: 'barrons', nome: "Barron's", url: 'https://www.barrons.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Análise', descricao: 'Excelente para análise de ações e investimentos', ativo: true },
+  { id: 'cnbc', nome: 'CNBC', url: 'https://www.cnbc.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Notícia', descricao: 'Mercado ao vivo, tempo real', ativo: true },
+  { id: 'handelsblatt', nome: 'Handelsblatt', url: 'https://www.handelsblatt.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Economia e indústria alemã', ativo: true },
+  { id: 'lesechos', nome: 'Les Echos', url: 'https://www.lesechos.fr', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Referência francesa em finanças', ativo: true },
+  { id: 'ilsole24ore', nome: 'Il Sole 24 Ore', url: 'https://www.ilsole24ore.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Principal jornal econômico da Itália', ativo: true },
+  { id: 'nikkei', nome: 'Nikkei', url: 'https://www.nikkei.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Economia japonesa — muito respeitado', ativo: true },
+  { id: 'nikkeiasia', nome: 'Nikkei Asia', url: 'https://asia.nikkei.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Melhor cobertura da Ásia em inglês', ativo: true },
+  { id: 'businesstimes', nome: 'The Business Times', url: 'https://www.businesstimes.com.sg', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Finanças e negócios na Ásia', ativo: true },
+  { id: 'mint', nome: 'Mint', url: 'https://www.livemint.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Economia e finanças da Índia', ativo: true },
+  { id: 'aleqtisadiah', nome: 'Al Eqtisadiah', url: 'https://www.aleqt.com', categoria: 'Finanças e Contabilidade', grupo: 'financas', regiao: 'Global', tipo: 'Notícia/Dados', descricao: 'Foco financeiro da Arábia Saudita', ativo: true },
+  // ─── GEOPOLÍTICA E RELAÇÕES INTERNACIONAIS
+  { id: 'foreignaffairs', nome: 'Foreign Affairs', url: 'https://www.foreignaffairs.com', categoria: 'Geopolítica e Relações Internacionais', grupo: 'geopolitica', regiao: 'Global', tipo: 'Análise', descricao: 'Relações internacionais — alto nível intelectual', ativo: true },
+  { id: 'cfr', nome: 'Council on Foreign Relations', url: 'https://www.cfr.org', categoria: 'Geopolítica e Relações Internacionais', grupo: 'geopolitica', regiao: 'Global', tipo: 'Análise', descricao: 'Política externa e geopolítica', ativo: true },
+  { id: 'stratfor', nome: 'Stratfor', url: 'https://worldview.stratfor.com', categoria: 'Geopolítica e Relações Internacionais', grupo: 'geopolitica', regiao: 'Global', tipo: 'Análise', descricao: 'Inteligência geopolítica global', ativo: true },
+  { id: 'aljazeera', nome: 'Al Jazeera', url: 'https://www.aljazeera.com', categoria: 'Geopolítica e Relações Internacionais', grupo: 'geopolitica', regiao: 'Global', tipo: 'Notícia', descricao: 'Oriente Médio e conflitos globais', ativo: true },
+  { id: 'bbcworld', nome: 'BBC World', url: 'https://www.bbc.com/news/world', categoria: 'Geopolítica e Relações Internacionais', grupo: 'geopolitica', regiao: 'Global', tipo: 'Notícia', descricao: 'Notícias globais e geopolítica', ativo: true },
+  { id: 'thediplomat', nome: 'The Diplomat', url: 'https://thediplomat.com', categoria: 'Geopolítica e Relações Internacionais', grupo: 'geopolitica', regiao: 'Global', tipo: 'Análise', descricao: 'Ásia-Pacífico e geopolítica regional', ativo: true },
+  { id: 'agenciabrasil', nome: 'Agência Brasil — Internacional', url: 'https://agenciabrasil.ebc.com.br/internacional', categoria: 'Geopolítica e Relações Internacionais', grupo: 'geopolitica', regiao: 'Brasil', tipo: 'Notícia', descricao: 'Brasil no cenário internacional', ativo: true },
+  { id: 'politicoeurope', nome: 'Politico Europe', url: 'https://www.politico.eu', categoria: 'Geopolítica e Relações Internacionais', grupo: 'geopolitica', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Excelente cobertura da política da União Europeia', ativo: true },
+  { id: 'foreignpolicy', nome: 'Foreign Policy', url: 'https://foreignpolicy.com', categoria: 'Geopolítica e Relações Internacionais', grupo: 'geopolitica', regiao: 'Global', tipo: 'Análise', descricao: 'Tendências em relações internacionais', ativo: true },
+  { id: 'scmp', nome: 'South China Morning Post', url: 'https://www.scmp.com', categoria: 'Geopolítica e Relações Internacionais', grupo: 'geopolitica', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Principal fonte sobre China e Ásia', ativo: true },
+  { id: 'almonitor', nome: 'Al-Monitor', url: 'https://www.al-monitor.com', categoria: 'Geopolítica e Relações Internacionais', grupo: 'geopolitica', regiao: 'Global', tipo: 'Análise', descricao: 'Especializado no Oriente Médio', ativo: true },
+  // ─── PORTAL DE NOTÍCIAS
+  { id: 'uoleconomia', nome: 'UOL Economia', url: 'https://economia.uol.com.br', categoria: 'Portal de Notícias', grupo: 'portal', regiao: 'Brasil', tipo: 'Notícia', descricao: 'Economia do dia a dia', ativo: true },
+  { id: 'g1', nome: 'G1', url: 'https://g1.globo.com', categoria: 'Portal de Notícias', grupo: 'portal', regiao: 'Brasil', tipo: 'Notícia', descricao: 'Notícias gerais e economia', ativo: true },
+  { id: 'cnnbrasil', nome: 'CNN Brasil', url: 'https://www.cnnbrasil.com.br', categoria: 'Portal de Notícias', grupo: 'portal', regiao: 'Brasil', tipo: 'Notícia', descricao: 'Economia e política ao vivo', ativo: true },
+  { id: 'folha', nome: 'Folha de S.Paulo', url: 'https://www.folha.uol.com.br', categoria: 'Portal de Notícias', grupo: 'portal', regiao: 'Brasil', tipo: 'Notícia', descricao: 'Análise econômica e política', ativo: true },
+  { id: 'oglobo', nome: 'O Globo', url: 'https://oglobo.globo.com', categoria: 'Portal de Notícias', grupo: 'portal', regiao: 'Brasil', tipo: 'Notícia', descricao: 'Economia e política brasileira', ativo: true },
+  { id: 'visualcapitalist', nome: 'Visual Capitalist', url: 'https://www.visualcapitalist.com', categoria: 'Portal de Notícias', grupo: 'portal', regiao: 'Global', tipo: 'Visual/Data', descricao: 'Infográficos econômicos e de dados', ativo: true },
+  { id: 'bbcnews', nome: 'BBC News', url: 'https://www.bbc.com/news', categoria: 'Portal de Notícias', grupo: 'portal', regiao: 'Global', tipo: 'Notícia', descricao: 'Cobertura ampla de notícias globais', ativo: true },
+  { id: 'nyt', nome: 'The New York Times', url: 'https://www.nytimes.com', categoria: 'Portal de Notícias', grupo: 'portal', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Grande influência em política e mundo', ativo: true },
+  { id: 'wapo', nome: 'The Washington Post', url: 'https://www.washingtonpost.com', categoria: 'Portal de Notícias', grupo: 'portal', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Política e governo americano', ativo: true },
+  { id: 'lemonde', nome: 'Le Monde', url: 'https://www.lemonde.fr', categoria: 'Portal de Notícias', grupo: 'portal', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Influente jornal francês', ativo: true },
+  { id: 'elpais', nome: 'El País', url: 'https://www.elpais.com', categoria: 'Portal de Notícias', grupo: 'portal', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Principal referência do mundo hispânico', ativo: true },
+  { id: 'straits', nome: 'The Straits Times', url: 'https://www.straitstimes.com', categoria: 'Portal de Notícias', grupo: 'portal', regiao: 'Global', tipo: 'Notícia', descricao: 'Respeitado jornal de Singapura', ativo: true },
+  { id: 'arabnews', nome: 'Arab News', url: 'https://www.arabnews.com', categoria: 'Portal de Notícias', grupo: 'portal', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Cobertura do mundo árabe', ativo: true },
+  { id: 'thenational', nome: 'The National', url: 'https://www.thenationalnews.com', categoria: 'Portal de Notícias', grupo: 'portal', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Negócios e política do Golfo', ativo: true },
+  { id: 'zawya', nome: 'Zawya', url: 'https://www.zawya.com', categoria: 'Portal de Notícias', grupo: 'portal', regiao: 'Global', tipo: 'Dados', descricao: 'IPOs, investimentos e varejo no Oriente Médio', ativo: true },
+  // ─── VAREJO ALIMENTAR
+  { id: 'supermarketnews', nome: 'Supermarket News', url: 'https://www.supermarketnews.com', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Maior portal do setor supermercadista americano', ativo: true },
+  { id: 'grocerydive', nome: 'Grocery Dive', url: 'https://www.grocerydive.com', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Global', tipo: 'Notícia', descricao: 'Tecnologia, M&A e digital no varejo alimentar', ativo: true },
+  { id: 'progressivegrocer', nome: 'Progressive Grocer', url: 'https://progressivegrocer.com', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Global', tipo: 'Análise', descricao: 'Estratégia, tendências e liderança no varejo', ativo: true },
+  { id: 'winsightgrocery', nome: 'Winsight Grocery Business', url: 'https://www.winsightgrocerybusiness.com', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Global', tipo: 'Dados', descricao: 'Dados de mercado e food retail', ativo: true },
+  { id: 'superhiper', nome: 'SuperHiper', url: 'https://www.abras.com.br/superhiper', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Brasil', tipo: 'Notícia/Dados', descricao: 'ABRAS — principal portal supermercadista brasileiro', ativo: true },
+  { id: 'abras', nome: 'ABRAS', url: 'https://www.abras.com.br', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Brasil', tipo: 'Dados', descricao: 'Ranking e números oficiais do setor', ativo: true },
+  { id: 'savarejo', nome: 'SA Varejo', url: 'https://savarejo.com.br', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Brasil', tipo: 'Análise', descricao: 'Estratégia e varejo alimentar no Brasil', ativo: true },
+  { id: 'mercadoeconsumo', nome: 'Mercado & Consumo', url: 'https://mercadoeconsumo.com.br', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Brasil', tipo: 'Notícia/Análise', descricao: 'Expansão de redes e tendências de consumo', ativo: true },
+  { id: 'retaildetail', nome: 'RetailDetail', url: 'https://www.retaildetail.eu', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Carrefour, Lidl, Aldi, Tesco — varejo europeu', ativo: true },
+  { id: 'thegrocer', nome: 'The Grocer', url: 'https://www.thegrocer.co.uk', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Melhor portal europeu de grocery retail', ativo: true },
+  { id: 'igd', nome: 'IGD', url: 'https://www.igd.com', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Global', tipo: 'Dados', descricao: 'Pesquisa premium do varejo alimentar global', ativo: true },
+  { id: 'esmmagazine', nome: 'ESM Magazine', url: 'https://www.esmmagazine.com', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'FMCG e supermercados europeus', ativo: true },
+  { id: 'retailinasia', nome: 'Retail in Asia', url: 'https://retailinasia.com', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Expansão varejista asiática', ativo: true },
+  { id: 'insideretailasia', nome: 'Inside Retail Asia', url: 'https://insideretail.asia', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Global', tipo: 'Análise', descricao: 'Mercado premium e omnichannel na Ásia', ativo: true },
+  { id: 'arabianbusiness', nome: 'Arabian Business', url: 'https://www.arabianbusiness.com', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Global', tipo: 'Notícia/Análise', descricao: 'Retail GCC e grandes grupos do Golfo', ativo: true },
+  { id: 'mckinseygrocerypdf', nome: 'McKinsey Grocery MENA Reports', url: 'https://www.mckinsey.com/industries/retail/our-insights', categoria: 'Varejo Alimentar', grupo: 'varejo', regiao: 'Global', tipo: 'Análise', descricao: 'Relatórios premium de tendências supermercadistas', ativo: true },
 ];
 
-const BIBLIOTECA_EDITORIAL = {"projeto": "Sophos", "descricao": "Base bibliográfica para geração de conteúdo financeiro automatizado", "versao": "1.0", "total_livros": 55, "categorias": ["contabilidade_financas", "investimentos_mercado_capitais", "administracao_gestao", "desenvolvimento_pessoal_negocios", "tecnologia_informatica", "macro_historia"], "livros": [{"id": "CF001", "titulo": "Estrutura e Análise de Balanços", "autor": "Alexandre Assaf Neto", "categoria": "contabilidade_financas", "subcategoria": "analise_demonstracoes", "editora": "Atlas", "relevancia_fincontent": 10, "temas_conteudo": ["análise de balanços", "índices financeiros", "liquidez", "rentabilidade", "endividamento"], "abnt": "ASSAF NETO, Alexandre. Estrutura e Análise de Balanços. 12. ed. São Paulo: Atlas, 2023.", "link_autor": "https://assafneto.com.br", "pdf_gratuito": false}, {"id": "CF002", "titulo": "Análise Financeira de Balanços", "autor": "Dante C. Matarazzo", "categoria": "contabilidade_financas", "subcategoria": "analise_demonstracoes", "editora": "Atlas", "relevancia_fincontent": 10, "temas_conteudo": ["análise financeira", "balanço patrimonial", "DRE", "índices econômico-financeiros"], "abnt": "MATARAZZO, Dante C. Análise Financeira de Balanços. 7. ed. São Paulo: Atlas, 2010.", "pdf_gratuito": false}, {"id": "CF003", "titulo": "Técnicas de Análise Financeira", "autor": "Erich A. Helfert", "categoria": "contabilidade_financas", "subcategoria": "analise_demonstracoes", "editora": "Bookman", "relevancia_fincontent": 9, "temas_conteudo": ["análise financeira", "fluxo de caixa", "valuation", "decisões de investimento"], "abnt": "HELFERT, Erich A. Técnicas de Análise Financeira. 11. ed. Porto Alegre: Bookman, 2000.", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=techniques+financial+analysis+helfert"}, {"id": "CF004", "titulo": "Princípios de Administração Financeira", "autor": "Lawrence J. Gitman", "categoria": "contabilidade_financas", "subcategoria": "financas_corporativas", "editora": "Pearson", "relevancia_fincontent": 10, "temas_conteudo": ["administração financeira", "capital de giro", "estrutura de capital", "dividendos"], "abnt": "GITMAN, Lawrence J. Princípios de Administração Financeira. 12. ed. São Paulo: Pearson, 2010.", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=principios+administracao+financeira+gitman"}, {"id": "CF005", "titulo": "Administração Financeira — Corporate Finance", "autor": "Ross / Westerfield / Jaffe", "categoria": "contabilidade_financas", "subcategoria": "financas_corporativas", "editora": "Atlas", "relevancia_fincontent": 10, "temas_conteudo": ["finanças corporativas", "custo de capital", "estrutura de capital", "M&A"], "abnt": "ROSS, Stephen A.; WESTERFIELD, Randolph W.; JAFFE, Jeffrey F. Administração Financeira. São Paulo: Atlas, 2008.", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=corporate+finance+ross+westerfield"}, {"id": "CF006", "titulo": "Valuation: Guia Fundamental", "autor": "Roger G. Serra / Marcos Wickert", "categoria": "contabilidade_financas", "subcategoria": "valuation", "editora": "Atlas", "relevancia_fincontent": 10, "temas_conteudo": ["valuation", "fluxo de caixa descontado", "múltiplos de mercado", "avaliação de empresas"], "abnt": "SERRA, Roger G.; WICKERT, Marcos. Valuation: Guia Fundamental. São Paulo: Atlas, 2019.", "pdf_gratuito": false}, {"id": "CF007", "titulo": "Contabilidade Gerencial", "autor": "Ray H. Garrison / Eric W. Noreen", "categoria": "contabilidade_financas", "subcategoria": "contabilidade_gerencial", "editora": "LTC", "relevancia_fincontent": 9, "temas_conteudo": ["contabilidade gerencial", "custos", "orçamento", "controle gerencial"], "abnt": "GARRISON, Ray H.; NOREEN, Eric W. Contabilidade Gerencial. 14. ed. Porto Alegre: LTC, 2013.", "pdf_gratuito": false}, {"id": "CF008", "titulo": "Contabilidade de Custos", "autor": "Eliseu Martins", "categoria": "contabilidade_financas", "subcategoria": "custos", "editora": "Atlas", "relevancia_fincontent": 9, "temas_conteudo": ["custos", "custeio por absorção", "custeio variável", "margem de contribuição"], "abnt": "MARTINS, Eliseu. Contabilidade de Custos. 10. ed. São Paulo: Atlas, 2010.", "pdf_gratuito": false}, {"id": "CF009", "titulo": "Controladoria", "autor": "Armando Catelli", "categoria": "contabilidade_financas", "subcategoria": "controladoria", "editora": "FIPECAFI / Atlas", "relevancia_fincontent": 9, "temas_conteudo": ["controladoria", "gestão econômica", "GECON", "resultado econômico"], "abnt": "CATELLI, Armando. Controladoria: uma abordagem da gestão econômica. 2. ed. São Paulo: FIPECAFI/Atlas, 2001.", "pdf_gratuito": false}, {"id": "CF010", "titulo": "Controladoria Estratégica e Operacional", "autor": "Clóvis Luís Padoveze", "categoria": "contabilidade_financas", "subcategoria": "controladoria", "editora": "Cengage", "relevancia_fincontent": 9, "temas_conteudo": ["controladoria", "KPIs", "balanced scorecard", "planejamento financeiro"], "abnt": "PADOVEZE, Clóvis L. Controladoria Estratégica e Operacional. 3. ed. São Paulo: Cengage, 2019.", "pdf_gratuito": false}, {"id": "CF011", "titulo": "Análise de Crédito", "autor": "Wolfgang K. Schrickel", "categoria": "contabilidade_financas", "subcategoria": "credito", "editora": "Atlas", "relevancia_fincontent": 8, "temas_conteudo": ["análise de crédito", "risco de crédito", "5 C's do crédito", "concessão de empréstimos"], "abnt": "SCHRICKEL, Wolfgang K. Análise de Crédito: Concessão e Gerência de Empréstimos. 5. ed. São Paulo: Atlas, 2000.", "pdf_gratuito": false}, {"id": "CF012", "titulo": "As Decisões de Investimentos", "autor": "Adriano L. Bruni / Rubens Famá", "categoria": "contabilidade_financas", "subcategoria": "investimentos", "editora": "Atlas", "relevancia_fincontent": 9, "temas_conteudo": ["decisões de investimento", "VPL", "TIR", "payback", "capital budgeting"], "abnt": "BRUNI, Adriano L.; FAMÁ, Rubens. As Decisões de Investimentos. São Paulo: Atlas, 2007.", "pdf_gratuito": false}, {"id": "CF013", "titulo": "Mercado Financeiro", "autor": "Alexandre Assaf Neto", "categoria": "contabilidade_financas", "subcategoria": "mercado_capitais", "editora": "Atlas", "relevancia_fincontent": 10, "temas_conteudo": ["mercado financeiro", "renda fixa", "renda variável", "derivativos", "B3"], "abnt": "ASSAF NETO, Alexandre. Mercado Financeiro. 14. ed. São Paulo: Atlas, 2023.", "link_autor": "https://assafneto.com.br", "pdf_gratuito": false}, {"id": "CF014", "titulo": "Fundamentos dos Mercados Futuros e de Opções", "autor": "John C. Hull", "categoria": "contabilidade_financas", "subcategoria": "derivativos", "editora": "BM&F", "relevancia_fincontent": 9, "temas_conteudo": ["derivativos", "opções", "futuros", "swaps", "hedge"], "abnt": "HULL, John C. Fundamentos dos Mercados Futuros e de Opções. 8. ed. São Paulo: BM&F, 2016.", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=options+futures+other+derivatives+hull"}, {"id": "CF015", "titulo": "Blockchain Básico", "autor": "Frankenberg", "categoria": "contabilidade_financas", "subcategoria": "fintech", "editora": "Novatec/Apress", "relevancia_fincontent": 8, "temas_conteudo": ["blockchain", "criptomoedas", "DeFi", "tokenização de ativos"], "abnt": "FRANKENBERG. Blockchain Básico. São Paulo: Novatec/Apress, 2019.", "pdf_gratuito": false}, {"id": "CF016", "titulo": "Indicadores de Desempenho", "autor": "Andresa S. N. Francischini / Paulino G. Francischini", "categoria": "contabilidade_financas", "subcategoria": "gestao_desempenho", "editora": "Alta Books", "relevancia_fincontent": 10, "temas_conteudo": ["KPIs", "indicadores de desempenho", "OKRs", "gestão por objetivos", "métricas empresariais"], "abnt": "FRANCISCHINI, Andresa S. N.; FRANCISCHINI, Paulino G. Indicadores de Desempenho. São Paulo: Alta Books, 2020.", "pdf_gratuito": false}, {"id": "INV001", "titulo": "O Investidor Inteligente", "autor": "Benjamin Graham", "categoria": "investimentos_mercado_capitais", "subcategoria": "value_investing", "editora": "HarperCollins Brasil", "relevancia_fincontent": 10, "temas_conteudo": ["value investing", "margem de segurança", "análise fundamentalista", "Mr. Market", "investimento em ações"], "abnt": "GRAHAM, Benjamin. O Investidor Inteligente. São Paulo: HarperCollins Brasil, 2020.", "link_autor": "https://en.wikipedia.org/wiki/Benjamin_Graham", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=intelligent+investor+graham"}, {"id": "INV002", "titulo": "Warren Buffett e a Análise de Balanços", "autor": "Mary Buffett / David Clark", "categoria": "investimentos_mercado_capitais", "subcategoria": "value_investing", "editora": "Sextante", "relevancia_fincontent": 10, "temas_conteudo": ["Warren Buffett", "análise de balanços", "vantagem competitiva durável", "value investing"], "abnt": "BUFFETT, Mary; CLARK, David. Warren Buffett e a Análise de Balanços. São Paulo: Sextante, 2010.", "link_autor": "https://marybuffett.com", "pdf_gratuito": false}, {"id": "INV003", "titulo": "O Tao de Warren Buffett", "autor": "Mary Buffett / David Clark", "categoria": "investimentos_mercado_capitais", "subcategoria": "value_investing", "editora": "Sextante", "relevancia_fincontent": 9, "temas_conteudo": ["Warren Buffett", "filosofia de investimento", "paciência", "longo prazo"], "abnt": "BUFFETT, Mary; CLARK, David. O Tao de Warren Buffett. São Paulo: Sextante, 2007.", "pdf_gratuito": false}, {"id": "INV004", "titulo": "Dinheiro e Vida", "autor": "Joe Dominguez / Vicki Robin", "categoria": "investimentos_mercado_capitais", "subcategoria": "financas_pessoais", "editora": "Sextante", "relevancia_fincontent": 9, "temas_conteudo": ["independência financeira", "FIRE", "relação com dinheiro", "consumo consciente"], "abnt": "DOMINGUEZ, Joe; ROBIN, Vicki. Dinheiro e Vida. São Paulo: Sextante, 2022.", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=your+money+or+your+life+robin"}, {"id": "INV005", "titulo": "Antifrágil: Coisas que se Beneficiam com o Caos", "autor": "Nassim Nicholas Taleb", "categoria": "investimentos_mercado_capitais", "subcategoria": "filosofia_financeira", "editora": "Best Business", "relevancia_fincontent": 10, "temas_conteudo": ["antifragilidade", "risco", "incerteza", "cisne negro", "gestão de portfólio"], "abnt": "TALEB, Nassim N. Antifrágil: coisas que se beneficiam com o caos. São Paulo: Best Business, 2012.", "link_autor": "https://www.fooledbyrandomness.com", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=antifragile+taleb"}, {"id": "ADM001", "titulo": "Mapas Estratégicos", "autor": "Robert S. Kaplan / David P. Norton", "categoria": "administracao_gestao", "subcategoria": "estrategia", "editora": "Campus", "relevancia_fincontent": 9, "temas_conteudo": ["estratégia", "balanced scorecard", "KPIs", "mapa estratégico", "gestão por resultados"], "abnt": "KAPLAN, Robert S.; NORTON, David P. Mapas Estratégicos. Rio de Janeiro: Campus, 2004.", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=strategy+maps+kaplan+norton"}, {"id": "ADM002", "titulo": "A Quinta Disciplina", "autor": "Peter M. Senge", "categoria": "administracao_gestao", "subcategoria": "gestao_organizacional", "editora": "Best Seller", "relevancia_fincontent": 8, "temas_conteudo": ["organizações que aprendem", "pensamento sistêmico", "aprendizado organizacional"], "abnt": "SENGE, Peter M. A Quinta Disciplina. 29. ed. Rio de Janeiro: Best Seller, 2010.", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=fifth+discipline+peter+senge"}, {"id": "ADM003", "titulo": "A Bíblia da Consultoria", "autor": "Alan Weiss", "categoria": "administracao_gestao", "subcategoria": "consultoria", "editora": "Autêntica Business", "relevancia_fincontent": 8, "temas_conteudo": ["consultoria", "proposta de valor", "precificação", "gestão de clientes"], "abnt": "WEISS, Alan. A Bíblia da Consultoria. São Paulo: Autêntica Business, 2019.", "link_autor": "https://alanweiss.com", "pdf_gratuito": false}, {"id": "ADM004", "titulo": "Planejamento Estratégico para Pequenas Empresas", "autor": "Arnaldo Rosa de Andrade", "categoria": "administracao_gestao", "subcategoria": "estrategia_pme", "editora": "Atlas", "relevancia_fincontent": 9, "temas_conteudo": ["planejamento estratégico", "PMEs", "análise SWOT", "plano de negócios"], "abnt": "ANDRADE, Arnaldo R. Planejamento Estratégico para Pequenas Empresas. São Paulo: Atlas, 2016.", "pdf_gratuito": false}, {"id": "ADM005", "titulo": "Sistemas de Informação Gerenciais", "autor": "Kenneth C. Laudon / Jane P. Laudon", "categoria": "administracao_gestao", "subcategoria": "ti_negocios", "editora": "Pearson", "relevancia_fincontent": 8, "temas_conteudo": ["sistemas de informação", "ERP", "BI", "tecnologia empresarial", "transformação digital"], "abnt": "LAUDON, Kenneth C.; LAUDON, Jane P. Sistemas de Informação Gerenciais. 14. ed. São Paulo: Pearson, 2014.", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=management+information+systems+laudon"}, {"id": "DP001", "titulo": "As Armas da Persuasão 2.0", "autor": "Robert B. Cialdini", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "persuasao_influencia", "editora": "Sextante", "relevancia_fincontent": 10, "temas_conteudo": ["persuasão", "influência", "copywriting", "comportamento do consumidor", "psicologia da decisão"], "abnt": "CIALDINI, Robert B. As Armas da Persuasão 2.0. São Paulo: Sextante, 2022.", "link_autor": "https://www.influenceatwork.com", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=influence+cialdini"}, {"id": "DP002", "titulo": "O Ego é Seu Inimigo", "autor": "Ryan Holiday", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "mentalidade", "editora": "Objetiva", "relevancia_fincontent": 8, "temas_conteudo": ["ego", "humildade", "liderança", "disciplina"], "abnt": "HOLIDAY, Ryan. O Ego é Seu Inimigo. Rio de Janeiro: Objetiva, 2016.", "link_autor": "https://ryanholiday.net", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=ego+is+the+enemy+ryan+holiday"}, {"id": "DP003", "titulo": "Diário Estoico", "autor": "Ryan Holiday / Stephen Hanselman", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "estoicismo", "editora": "Objetiva", "relevancia_fincontent": 8, "temas_conteudo": ["estoicismo", "disciplina", "resiliência", "Marco Aurélio", "Epicteto", "Sêneca"], "abnt": "HOLIDAY, Ryan; HANSELMAN, Stephen. Diário Estoico. Rio de Janeiro: Objetiva, 2017.", "link_autor": "https://ryanholiday.net", "pdf_gratuito": false}, {"id": "DP004", "titulo": "As 48 Leis do Poder", "autor": "Robert Greene", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "poder_estrategia", "editora": "Rocco", "relevancia_fincontent": 8, "temas_conteudo": ["poder", "estratégia", "influência", "política corporativa", "negociação"], "abnt": "GREENE, Robert. As 48 Leis do Poder. Rio de Janeiro: Rocco.", "link_autor": "https://powerseductionandwar.com", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=48+laws+of+power+greene"}, {"id": "DP005", "titulo": "As Leis da Natureza Humana", "autor": "Robert Greene", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "comportamento_humano", "editora": "Rocco", "relevancia_fincontent": 9, "temas_conteudo": ["psicologia humana", "comportamento", "tomada de decisão", "vieses", "emoções"], "abnt": "GREENE, Robert. As Leis da Natureza Humana. Rio de Janeiro: Rocco, 2019.", "pdf_gratuito": false}, {"id": "DP006", "titulo": "O Poder do Hábito", "autor": "Charles Duhigg", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "habitos_produtividade", "editora": "Objetiva", "relevancia_fincontent": 8, "temas_conteudo": ["hábitos", "comportamento", "rotina", "mudança de hábito", "produtividade"], "abnt": "DUHIGG, Charles. O Poder do Hábito. Rio de Janeiro: Objetiva, 2012.", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=power+of+habit+duhigg"}, {"id": "DP007", "titulo": "7 Estratégias para a Riqueza e a Felicidade", "autor": "Jim Rohn", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "financas_pessoais", "editora": "Alaúde", "relevancia_fincontent": 8, "temas_conteudo": ["riqueza", "sucesso", "disciplina financeira", "filosofia de vida"], "abnt": "ROHN, Jim. 7 Estratégias para a Riqueza & a Felicidade. São Paulo: Alaúde.", "link_autor": "https://www.jimrohn.com", "pdf_gratuito": false}, {"id": "DP008", "titulo": "Responsabilidade Extrema", "autor": "Jocko Willink / Leif Babin", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "lideranca", "editora": "CDG", "relevancia_fincontent": 9, "temas_conteudo": ["liderança", "ownership", "accountability", "tomada de decisão", "gestão de equipes"], "abnt": "WILLINK, Jocko; BABIN, Leif. Responsabilidade Extrema. São Paulo: CDG, 2020.", "link_autor": "https://echelonfront.com", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=extreme+ownership+willink"}, {"id": "DP009", "titulo": "O Líder 360°", "autor": "John C. Maxwell", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "lideranca", "editora": "Thomas Nelson Brasil", "relevancia_fincontent": 8, "temas_conteudo": ["liderança 360°", "influência", "gestão de pessoas", "desenvolvimento de líderes"], "abnt": "MAXWELL, John C. O Líder 360°. São Paulo: Thomas Nelson Brasil, 2007.", "link_autor": "https://www.johnmaxwell.com", "pdf_gratuito": false}, {"id": "DP010", "titulo": "Encontre Seu Porquê", "autor": "Simon Sinek / David Mead / Peter Docker", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "proposito", "editora": "Portfolio-Penguin", "relevancia_fincontent": 8, "temas_conteudo": ["propósito", "Golden Circle", "por quê", "cultura organizacional"], "abnt": "SINEK, Simon; MEAD, David; DOCKER, Peter. Encontre Seu Porquê. São Paulo: Portfolio-Penguin.", "link_autor": "https://simonsinek.com", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=find+your+why+simon+sinek"}, {"id": "DP011", "titulo": "O Coach de um Trilhão de Dólares", "autor": "Eric Schmidt / Jonathan Rosenberg / Alan Eagle", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "coaching_lideranca", "editora": "Sextante", "relevancia_fincontent": 8, "temas_conteudo": ["coaching", "liderança Silicon Valley", "Bill Campbell", "gestão de talentos"], "abnt": "SCHMIDT, Eric; ROSENBERG, Jonathan; EAGLE, Alan. O Coach de um Trilhão de Dólares. São Paulo: Sextante, 2020.", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=trillion+dollar+coach+schmidt"}, {"id": "DP012", "titulo": "A Geração Ansiosa", "autor": "Jonathan Haidt", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "comportamento_social", "editora": "Cia. das Letras", "relevancia_fincontent": 8, "temas_conteudo": ["ansiedade", "geração Z", "redes sociais", "saúde mental", "comportamento digital"], "abnt": "HAIDT, Jonathan. A Geração Ansiosa. São Paulo: Cia. das Letras, 2024.", "link_autor": "https://jonathanhaidt.com", "pdf_gratuito": false}, {"id": "DP013", "titulo": "Seja Útil", "autor": "Arnold Schwarzenegger", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "mentalidade", "editora": "Portfolio-Penguin", "relevancia_fincontent": 7, "temas_conteudo": ["disciplina", "propósito", "trabalho duro", "superação", "mentalidade vencedora"], "abnt": "SCHWARZENEGGER, Arnold. Seja Útil. São Paulo: Portfolio-Penguin, 2023.", "pdf_gratuito": false}, {"id": "DP014", "titulo": "Liberte-se dos Seus Medos", "autor": "Napoleon Hill", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "mentalidade", "editora": "Thomas Nelson", "relevancia_fincontent": 7, "temas_conteudo": ["medos", "superação", "autoconfiança", "sucesso"], "abnt": "HILL, Napoleon. Liberte-se dos Seus Medos. São Paulo: Thomas Nelson.", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=napoleon+hill+overcome+fear"}, {"id": "DP015", "titulo": "O Poder da Autodisciplina", "autor": "Giovanni Dienstmann", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "habitos_produtividade", "editora": "Universo dos Livros", "relevancia_fincontent": 7, "temas_conteudo": ["autodisciplina", "foco", "produtividade", "meditação"], "abnt": "DIENSTMANN, Giovanni. O Poder da Autodisciplina. São Paulo: Universo dos Livros.", "link_autor": "https://liveanddare.com", "pdf_gratuito": false}, {"id": "DP016", "titulo": "Maquiavel — O Príncipe", "autor": "Nicolau Maquiavel", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "poder_politica", "editora": "Domínio Público", "relevancia_fincontent": 7, "temas_conteudo": ["poder", "política", "liderança", "estratégia"], "abnt": "MAQUIAVEL, Nicolau. O Príncipe. [Domínio público].", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=o+principe+maquiavel"}, {"id": "DP017", "titulo": "A Arte da Guerra", "autor": "Sun Tzu", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "estrategia", "editora": "Domínio Público", "relevancia_fincontent": 7, "temas_conteudo": ["estratégia", "concorrência", "planejamento", "vantagem competitiva"], "abnt": "SUN TZU. A Arte da Guerra. [Domínio público].", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=arte+da+guerra+sun+tzu"}, {"id": "DP018", "titulo": "Sobre a Brevidade da Vida", "autor": "Sêneca", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "estoicismo", "editora": "L&PM", "relevancia_fincontent": 7, "temas_conteudo": ["estoicismo", "tempo", "produtividade", "filosofia prática"], "abnt": "SÊNECA, Lúcio A. Sobre a Brevidade da Vida. Porto Alegre: L&PM.", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=brevidade+da+vida+seneca"}, {"id": "DP019", "titulo": "33 Estratégias de Guerra", "autor": "Robert Greene", "categoria": "desenvolvimento_pessoal_negocios", "subcategoria": "estrategia", "editora": "Rocco", "relevancia_fincontent": 7, "temas_conteudo": ["estratégia", "guerra", "concorrência"], "abnt": "GREENE, Robert. 33 Estratégias de Guerra. Rio de Janeiro: Rocco, 2007.", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=33+strategies+of+war+greene"}, {"id": "MAC001", "titulo": "Sapiens: Uma Breve História da Humanidade", "autor": "Yuval Noah Harari", "categoria": "macro_historia", "subcategoria": "historia_economia", "editora": "L&PM", "relevancia_fincontent": 10, "temas_conteudo": ["história do dinheiro", "capitalismo", "revolução industrial", "economia global", "futuro"], "abnt": "HARARI, Yuval N. Sapiens: Uma breve história da humanidade. Porto Alegre: L&PM, 2015.", "link_autor": "https://www.ynharari.com", "pdf_gratuito": true, "link_pdf": "https://archive.org/search?query=sapiens+harari"}, {"id": "TEC001", "titulo": "Matemática com Python", "autor": "Barucke Marcondes", "categoria": "tecnologia_informatica", "subcategoria": "programacao", "editora": "Novatec", "relevancia_fincontent": 9, "temas_conteudo": ["Python", "matemática financeira", "análise de dados", "automação"], "abnt": "MARCONDES, Barucke. Matemática com Python. São Paulo: Novatec, 2022.", "pdf_gratuito": false}, {"id": "TEC002", "titulo": "Sistemas de Informações Contábeis", "autor": "Clóvis Luís Padoveze", "categoria": "tecnologia_informatica", "subcategoria": "sistemas_contabeis", "editora": "Atlas", "relevancia_fincontent": 8, "temas_conteudo": ["ERP", "sistemas contábeis", "TI aplicada à contabilidade", "BI financeiro"], "abnt": "PADOVEZE, Clóvis L. Sistemas de Informações Contábeis. 3. ed. São Paulo: Atlas, 2015.", "pdf_gratuito": false}], "prompts_sistema": {"system_prompt_base": "Você é um especialista em conteúdo financeiro de alta qualidade para o mercado brasileiro. IMPORTANTE: Nunca mencione que o conteúdo foi gerado por IA, inteligência artificial, Claude ou qualquer ferramenta tecnológica. Escreva sempre como um especialista humano. Sua base de conhecimento inclui contabilidade, finanças corporativas, mercado de capitais, comportamento do investidor, gestão empresarial e macroeconomia. Você cita referências acadêmicas quando relevante (ABNT). Seu tom é inteligente, direto e acessível. Você nunca inventa dados ou estatísticas. Adapte o nível técnico ao público informado no prompt.", "templates": {"newsletter_b2c": "Escreva uma newsletter financeira de {palavra_count} palavras sobre {tema}. Público: investidor pessoa física brasileiro, classe média, 30-50 anos. Estrutura: 1) Gancho (2 parágrafos provocativos), 2) Contexto, 3) Análise principal (3-4 parágrafos), 4) Takeaway prático (3 bullet points), 5) CTA. Tom: {tom}. Referências: {referencias}.", "artigo_b2b": "Escreva um artigo técnico de {palavra_count} palavras sobre {tema} para CFOs e gestores financeiros de médias empresas brasileiras. Estrutura: 1) Resumo executivo, 2) Contexto, 3) Desenvolvimento em 3 seções, 4) Implementação prática, 5) Conclusão. Tom: técnico, executivo.", "post_linkedin": "Crie um post LinkedIn de 200-250 palavras sobre {tema_financeiro}. 1ª linha = gancho forte, 2-4 parágrafos curtos, pergunta final. Tom: {tom}. Baseado em: {referencia}. Máx 3 hashtags.", "relatorio_executivo": "Produza um relatório executivo de {palavra_count} palavras sobre o cenário financeiro brasileiro em {mes_ano}. Seções: Resumo executivo, Macro (SELIC/Câmbio/Inflação), Mercado de Capitais, Crédito e PMEs, Tendências FinTech, 5 Recomendações. Tom: analítico, baseado em dados."}}, "calendario_editorial_q2_2026": {"abril": {"tema_mes": "Fundamentos e Mentalidade Financeira", "pautas": [{"semana": 1, "tipo": "newsletter", "titulo": "O que Benjamin Graham ensinaria sobre a B3 em 2026?", "refs_ids": ["INV001", "INV002", "CF013"]}, {"semana": 2, "tipo": "artigo", "titulo": "Valuation na prática: como precificar uma PME brasileira", "refs_ids": ["CF006", "CF002", "CF004"]}, {"semana": 3, "tipo": "newsletter", "titulo": "Antifrágil financeiro: patrimônio que cresce nas crises", "refs_ids": ["INV005", "INV001", "CF014"]}, {"semana": 4, "tipo": "newsletter_premium", "titulo": "KPIs que todo CFO deveria acompanhar em 2026", "refs_ids": ["CF016", "ADM001", "CF009"]}]}, "maio": {"tema_mes": "Comportamento, Tecnologia e Mercado", "pautas": [{"semana": 1, "tipo": "newsletter", "titulo": "Por que seu cérebro sabota seus investimentos?", "refs_ids": ["DP001", "INV005", "DP005"]}, {"semana": 2, "tipo": "artigo", "titulo": "IA e automação na análise financeira em 2026", "refs_ids": ["TEC001", "TEC002", "CF015"]}, {"semana": 3, "tipo": "newsletter", "titulo": "Dinheiro, poder e humanidade: o que a história revela", "refs_ids": ["MAC001", "INV005", "CF014"]}, {"semana": 4, "tipo": "newsletter_premium", "titulo": "Análise de crédito: como bancos decidem emprestar", "refs_ids": ["CF011", "CF002"]}]}, "junho": {"tema_mes": "Estratégia, Liderança e Crescimento", "pautas": [{"semana": 1, "tipo": "newsletter", "titulo": "Responsabilidade extrema nas finanças: lições para o CFO", "refs_ids": ["DP008", "DP002", "DP009"]}, {"semana": 2, "tipo": "artigo", "titulo": "Planejamento estratégico financeiro para PMEs: guia completo", "refs_ids": ["ADM004", "CF016", "CF007"]}, {"semana": 3, "tipo": "newsletter", "titulo": "As leis da natureza humana que sabotam seu negócio", "refs_ids": ["DP005", "DP001", "DP006"]}, {"semana": 4, "tipo": "newsletter_premium", "titulo": "Relatório especial: finanças empresariais brasileiras em 2026", "refs_ids": ["CF001", "CF004", "CF002", "CF010"]}]}}, "script_uso": {"descricao": "Exemplo de uso do JSON como base para chamadas à API da Anthropic", "codigo_python": "import json, anthropic\n\nwith open('fincontent_biblioteca.json') as f:\n    biblioteca = json.load(f)\n\nclient = anthropic.Anthropic(api_key='SUA_CHAVE')\n\ndef buscar_refs(ids):\n    return [l for l in biblioteca['livros'] if l['id'] in ids]\n\ndef gerar_conteudo(pauta):\n    refs = buscar_refs(pauta['refs_ids'])\n    refs_str = '\\n'.join([r['abnt'] for r in refs])\n    temas = ', '.join([t for r in refs for t in r['temas_conteudo']])\n    \n    template = biblioteca['prompts_sistema']['templates'][pauta['tipo'].replace('_premium', '_b2c' if 'newsletter' in pauta['tipo'] else '_b2b')]\n    prompt = template.format(\n        palavra_count=600,\n        tema=pauta['titulo'],\n        tom='educativo e direto',\n        referencias=refs_str,\n        mes_ano='Junho 2026'\n    )\n    \n    response = client.messages.create(\n        model='claude-sonnet-4-6',\n        max_tokens=2000,\n        system=biblioteca['prompts_sistema']['system_prompt_base'],\n        messages=[{'role': 'user', 'content': prompt}]\n    )\n    return response.content[0].text\n\npauta_teste = biblioteca['calendario_editorial_q2_2026']['abril']['pautas'][0]\nconteudo = gerar_conteudo(pauta_teste)\nprint(conteudo)"}};
+const BIBLIOTECA_EDITORIAL = {"projeto":"Sophos","descricao":"Base bibliográfica para geração de conteúdo financeiro automatizado","versao":"1.0","total_livros":55,"categorias":["contabilidade_financas","investimentos_mercado_capitais","administracao_gestao","desenvolvimento_pessoal_negocios","tecnologia_informatica","macro_historia"],"livros":[{"id":"CF001","titulo":"Estrutura e Análise de Balanços","autor":"Alexandre Assaf Neto","categoria":"contabilidade_financas","subcategoria":"analise_demonstracoes","editora":"Atlas","relevancia_fincontent":10,"temas_conteudo":["análise de balanços","índices financeiros","liquidez","rentabilidade","endividamento"],"abnt":"ASSAF NETO, Alexandre. Estrutura e Análise de Balanços. 12. ed. São Paulo: Atlas, 2023.","link_autor":"https://assafneto.com.br","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF002","titulo":"Análise Financeira de Balanços","autor":"Dante C. Matarazzo","categoria":"contabilidade_financas","subcategoria":"analise_demonstracoes","editora":"Atlas","relevancia_fincontent":10,"temas_conteudo":["análise financeira","balanço patrimonial","DRE","índices econômico-financeiros"],"abnt":"MATARAZZO, Dante C. Análise Financeira de Balanços. 7. ed. São Paulo: Atlas, 2010.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF003","titulo":"Técnicas de Análise Financeira","autor":"Erich A. Helfert","categoria":"contabilidade_financas","subcategoria":"analise_demonstracoes","editora":"Bookman","relevancia_fincontent":9,"temas_conteudo":["análise financeira","fluxo de caixa","valuation","decisões de investimento"],"abnt":"HELFERT, Erich A. Técnicas de Análise Financeira. 11. ed. Porto Alegre: Bookman, 2000.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=techniques+financial+analysis+helfert","app_categoria":"Finanças e Contabilidade"},{"id":"CF004","titulo":"Princípios de Administração Financeira","autor":"Lawrence J. Gitman","categoria":"contabilidade_financas","subcategoria":"financas_corporativas","editora":"Pearson","relevancia_fincontent":10,"temas_conteudo":["administração financeira","capital de giro","estrutura de capital","dividendos"],"abnt":"GITMAN, Lawrence J. Princípios de Administração Financeira. 12. ed. São Paulo: Pearson, 2010.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=principios+administracao+financeira+gitman","app_categoria":"Finanças e Contabilidade"},{"id":"CF005","titulo":"Administração Financeira — Corporate Finance","autor":"Ross / Westerfield / Jaffe","categoria":"contabilidade_financas","subcategoria":"financas_corporativas","editora":"Atlas","relevancia_fincontent":10,"temas_conteudo":["finanças corporativas","custo de capital","estrutura de capital","M&A"],"abnt":"ROSS, Stephen A.; WESTERFIELD, Randolph W.; JAFFE, Jeffrey F. Administração Financeira. São Paulo: Atlas, 2008.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=corporate+finance+ross+westerfield","app_categoria":"Finanças e Contabilidade"},{"id":"CF006","titulo":"Valuation: Guia Fundamental","autor":"Roger G. Serra / Marcos Wickert","categoria":"contabilidade_financas","subcategoria":"valuation","editora":"Atlas","relevancia_fincontent":10,"temas_conteudo":["valuation","fluxo de caixa descontado","múltiplos de mercado","avaliação de empresas"],"abnt":"SERRA, Roger G.; WICKERT, Marcos. Valuation: Guia Fundamental. São Paulo: Atlas, 2019.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF007","titulo":"Contabilidade Gerencial","autor":"Ray H. Garrison / Eric W. Noreen","categoria":"contabilidade_financas","subcategoria":"contabilidade_gerencial","editora":"LTC","relevancia_fincontent":9,"temas_conteudo":["contabilidade gerencial","custos","orçamento","controle gerencial"],"abnt":"GARRISON, Ray H.; NOREEN, Eric W. Contabilidade Gerencial. 14. ed. Porto Alegre: LTC, 2013.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF008","titulo":"Contabilidade de Custos","autor":"Eliseu Martins","categoria":"contabilidade_financas","subcategoria":"custos","editora":"Atlas","relevancia_fincontent":9,"temas_conteudo":["custos","custeio por absorção","custeio variável","margem de contribuição"],"abnt":"MARTINS, Eliseu. Contabilidade de Custos. 10. ed. São Paulo: Atlas, 2010.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF009","titulo":"Controladoria","autor":"Armando Catelli","categoria":"contabilidade_financas","subcategoria":"controladoria","editora":"FIPECAFI / Atlas","relevancia_fincontent":9,"temas_conteudo":["controladoria","gestão econômica","GECON","resultado econômico"],"abnt":"CATELLI, Armando. Controladoria: uma abordagem da gestão econômica. 2. ed. São Paulo: FIPECAFI/Atlas, 2001.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF010","titulo":"Controladoria Estratégica e Operacional","autor":"Clóvis Luís Padoveze","categoria":"contabilidade_financas","subcategoria":"controladoria","editora":"Cengage","relevancia_fincontent":9,"temas_conteudo":["controladoria","KPIs","balanced scorecard","planejamento financeiro"],"abnt":"PADOVEZE, Clóvis L. Controladoria Estratégica e Operacional. 3. ed. São Paulo: Cengage, 2019.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF011","titulo":"Análise de Crédito","autor":"Wolfgang K. Schrickel","categoria":"contabilidade_financas","subcategoria":"credito","editora":"Atlas","relevancia_fincontent":8,"temas_conteudo":["análise de crédito","risco de crédito","5 C's do crédito","concessão de empréstimos"],"abnt":"SCHRICKEL, Wolfgang K. Análise de Crédito: Concessão e Gerência de Empréstimos. 5. ed. São Paulo: Atlas, 2000.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF012","titulo":"As Decisões de Investimentos","autor":"Adriano L. Bruni / Rubens Famá","categoria":"contabilidade_financas","subcategoria":"investimentos","editora":"Atlas","relevancia_fincontent":9,"temas_conteudo":["decisões de investimento","VPL","TIR","payback","capital budgeting"],"abnt":"BRUNI, Adriano L.; FAMÁ, Rubens. As Decisões de Investimentos. São Paulo: Atlas, 2007.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF013","titulo":"Mercado Financeiro","autor":"Alexandre Assaf Neto","categoria":"contabilidade_financas","subcategoria":"mercado_capitais","editora":"Atlas","relevancia_fincontent":10,"temas_conteudo":["mercado financeiro","renda fixa","renda variável","derivativos","B3"],"abnt":"ASSAF NETO, Alexandre. Mercado Financeiro. 14. ed. São Paulo: Atlas, 2023.","link_autor":"https://assafneto.com.br","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF014","titulo":"Fundamentos dos Mercados Futuros e de Opções","autor":"John C. Hull","categoria":"contabilidade_financas","subcategoria":"derivativos","editora":"BM&F","relevancia_fincontent":9,"temas_conteudo":["derivativos","opções","futuros","swaps","hedge"],"abnt":"HULL, John C. Fundamentos dos Mercados Futuros e de Opções. 8. ed. São Paulo: BM&F, 2016.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=options+futures+other+derivatives+hull","app_categoria":"Finanças e Contabilidade"},{"id":"CF015","titulo":"Blockchain Básico","autor":"Frankenberg","categoria":"contabilidade_financas","subcategoria":"fintech","editora":"Novatec/Apress","relevancia_fincontent":8,"temas_conteudo":["blockchain","criptomoedas","DeFi","tokenização de ativos"],"abnt":"FRANKENBERG. Blockchain Básico. São Paulo: Novatec/Apress, 2019.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF016","titulo":"Indicadores de Desempenho","autor":"Andresa S. N. Francischini / Paulino G. Francischini","categoria":"contabilidade_financas","subcategoria":"gestao_desempenho","editora":"Alta Books","relevancia_fincontent":10,"temas_conteudo":["KPIs","indicadores de desempenho","OKRs","gestão por objetivos","métricas empresariais"],"abnt":"FRANCISCHINI, Andresa S. N.; FRANCISCHINI, Paulino G. Indicadores de Desempenho. São Paulo: Alta Books, 2020.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"INV001","titulo":"O Investidor Inteligente","autor":"Benjamin Graham","categoria":"investimentos_mercado_capitais","subcategoria":"value_investing","editora":"HarperCollins Brasil","relevancia_fincontent":10,"temas_conteudo":["value investing","margem de segurança","análise fundamentalista","Mr. Market","investimento em ações"],"abnt":"GRAHAM, Benjamin. O Investidor Inteligente. São Paulo: HarperCollins Brasil, 2020.","link_autor":"https://en.wikipedia.org/wiki/Benjamin_Graham","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=intelligent+investor+graham","app_categoria":"Finanças e Contabilidade"},{"id":"INV002","titulo":"Warren Buffett e a Análise de Balanços","autor":"Mary Buffett / David Clark","categoria":"investimentos_mercado_capitais","subcategoria":"value_investing","editora":"Sextante","relevancia_fincontent":10,"temas_conteudo":["Warren Buffett","análise de balanços","vantagem competitiva durável","value investing"],"abnt":"BUFFETT, Mary; CLARK, David. Warren Buffett e a Análise de Balanços. São Paulo: Sextante, 2010.","link_autor":"https://marybuffett.com","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"INV003","titulo":"O Tao de Warren Buffett","autor":"Mary Buffett / David Clark","categoria":"investimentos_mercado_capitais","subcategoria":"value_investing","editora":"Sextante","relevancia_fincontent":9,"temas_conteudo":["Warren Buffett","filosofia de investimento","paciência","longo prazo"],"abnt":"BUFFETT, Mary; CLARK, David. O Tao de Warren Buffett. São Paulo: Sextante, 2007.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"INV004","titulo":"Dinheiro e Vida","autor":"Joe Dominguez / Vicki Robin","categoria":"investimentos_mercado_capitais","subcategoria":"financas_pessoais","editora":"Sextante","relevancia_fincontent":9,"temas_conteudo":["independência financeira","FIRE","relação com dinheiro","consumo consciente"],"abnt":"DOMINGUEZ, Joe; ROBIN, Vicki. Dinheiro e Vida. São Paulo: Sextante, 2022.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=your+money+or+your+life+robin","app_categoria":"Finanças e Contabilidade"},{"id":"INV005","titulo":"Antifrágil: Coisas que se Beneficiam com o Caos","autor":"Nassim Nicholas Taleb","categoria":"investimentos_mercado_capitais","subcategoria":"filosofia_financeira","editora":"Best Business","relevancia_fincontent":10,"temas_conteudo":["antifragilidade","risco","incerteza","cisne negro","gestão de portfólio"],"abnt":"TALEB, Nassim N. Antifrágil: coisas que se beneficiam com o caos. São Paulo: Best Business, 2012.","link_autor":"https://www.fooledbyrandomness.com","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=antifragile+taleb","app_categoria":"Finanças e Contabilidade"},{"id":"ADM001","titulo":"Mapas Estratégicos","autor":"Robert S. Kaplan / David P. Norton","categoria":"administracao_gestao","subcategoria":"estrategia","editora":"Campus","relevancia_fincontent":9,"temas_conteudo":["estratégia","balanced scorecard","KPIs","mapa estratégico","gestão por resultados"],"abnt":"KAPLAN, Robert S.; NORTON, David P. Mapas Estratégicos. Rio de Janeiro: Campus, 2004.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=strategy+maps+kaplan+norton","app_categoria":"Finanças e Contabilidade"},{"id":"ADM002","titulo":"A Quinta Disciplina","autor":"Peter M. Senge","categoria":"administracao_gestao","subcategoria":"gestao_organizacional","editora":"Best Seller","relevancia_fincontent":8,"temas_conteudo":["organizações que aprendem","pensamento sistêmico","aprendizado organizacional"],"abnt":"SENGE, Peter M. A Quinta Disciplina. 29. ed. Rio de Janeiro: Best Seller, 2010.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=fifth+discipline+peter+senge","app_categoria":"Finanças e Contabilidade"},{"id":"ADM003","titulo":"A Bíblia da Consultoria","autor":"Alan Weiss","categoria":"administracao_gestao","subcategoria":"consultoria","editora":"Autêntica Business","relevancia_fincontent":8,"temas_conteudo":["consultoria","proposta de valor","precificação","gestão de clientes"],"abnt":"WEISS, Alan. A Bíblia da Consultoria. São Paulo: Autêntica Business, 2019.","link_autor":"https://alanweiss.com","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"ADM004","titulo":"Planejamento Estratégico para Pequenas Empresas","autor":"Arnaldo Rosa de Andrade","categoria":"administracao_gestao","subcategoria":"estrategia_pme","editora":"Atlas","relevancia_fincontent":9,"temas_conteudo":["planejamento estratégico","PMEs","análise SWOT","plano de negócios"],"abnt":"ANDRADE, Arnaldo R. Planejamento Estratégico para Pequenas Empresas. São Paulo: Atlas, 2016.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"ADM005","titulo":"Sistemas de Informação Gerenciais","autor":"Kenneth C. Laudon / Jane P. Laudon","categoria":"administracao_gestao","subcategoria":"ti_negocios","editora":"Pearson","relevancia_fincontent":8,"temas_conteudo":["sistemas de informação","ERP","BI","tecnologia empresarial","transformação digital"],"abnt":"LAUDON, Kenneth C.; LAUDON, Jane P. Sistemas de Informação Gerenciais. 14. ed. São Paulo: Pearson, 2014.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=management+information+systems+laudon","app_categoria":"Finanças e Contabilidade"},{"id":"DP001","titulo":"As Armas da Persuasão 2.0","autor":"Robert B. Cialdini","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"persuasao_influencia","editora":"Sextante","relevancia_fincontent":10,"temas_conteudo":["persuasão","influência","copywriting","comportamento do consumidor","psicologia da decisão"],"abnt":"CIALDINI, Robert B. As Armas da Persuasão 2.0. São Paulo: Sextante, 2022.","link_autor":"https://www.influenceatwork.com","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=influence+cialdini","app_categoria":"Autodesenvolvimento"},{"id":"DP002","titulo":"O Ego é Seu Inimigo","autor":"Ryan Holiday","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"mentalidade","editora":"Objetiva","relevancia_fincontent":8,"temas_conteudo":["ego","humildade","liderança","disciplina"],"abnt":"HOLIDAY, Ryan. O Ego é Seu Inimigo. Rio de Janeiro: Objetiva, 2016.","link_autor":"https://ryanholiday.net","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=ego+is+the+enemy+ryan+holiday","app_categoria":"Autodesenvolvimento"},{"id":"DP003","titulo":"Diário Estoico","autor":"Ryan Holiday / Stephen Hanselman","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"estoicismo","editora":"Objetiva","relevancia_fincontent":8,"temas_conteudo":["estoicismo","disciplina","resiliência","Marco Aurélio","Epicteto","Sêneca"],"abnt":"HOLIDAY, Ryan; HANSELMAN, Stephen. Diário Estoico. Rio de Janeiro: Objetiva, 2017.","link_autor":"https://ryanholiday.net","pdf_gratuito":false,"app_categoria":"Autodesenvolvimento"},{"id":"DP004","titulo":"As 48 Leis do Poder","autor":"Robert Greene","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"poder_estrategia","editora":"Rocco","relevancia_fincontent":8,"temas_conteudo":["poder","estratégia","influência","política corporativa","negociação"],"abnt":"GREENE, Robert. As 48 Leis do Poder. Rio de Janeiro: Rocco.","link_autor":"https://powerseductionandwar.com","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=48+laws+of+power+greene","app_categoria":"Autodesenvolvimento"},{"id":"DP005","titulo":"As Leis da Natureza Humana","autor":"Robert Greene","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"comportamento_humano","editora":"Rocco","relevancia_fincontent":9,"temas_conteudo":["psicologia humana","comportamento","tomada de decisão","vieses","emoções"],"abnt":"GREENE, Robert. As Leis da Natureza Humana. Rio de Janeiro: Rocco, 2019.","pdf_gratuito":false,"app_categoria":"Autodesenvolvimento"},{"id":"DP006","titulo":"O Poder do Hábito","autor":"Charles Duhigg","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"habitos_produtividade","editora":"Objetiva","relevancia_fincontent":8,"temas_conteudo":["hábitos","comportamento","rotina","mudança de hábito","produtividade"],"abnt":"DUHIGG, Charles. O Poder do Hábito. Rio de Janeiro: Objetiva, 2012.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=power+of+habit+duhigg","app_categoria":"Autodesenvolvimento"},{"id":"DP007","titulo":"7 Estratégias para a Riqueza e a Felicidade","autor":"Jim Rohn","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"financas_pessoais","editora":"Alaúde","relevancia_fincontent":8,"temas_conteudo":["riqueza","sucesso","disciplina financeira","filosofia de vida"],"abnt":"ROHN, Jim. 7 Estratégias para a Riqueza & a Felicidade. São Paulo: Alaúde.","link_autor":"https://www.jimrohn.com","pdf_gratuito":false,"app_categoria":"Autodesenvolvimento"},{"id":"DP008","titulo":"Responsabilidade Extrema","autor":"Jocko Willink / Leif Babin","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"lideranca","editora":"CDG","relevancia_fincontent":9,"temas_conteudo":["liderança","ownership","accountability","tomada de decisão","gestão de equipes"],"abnt":"WILLINK, Jocko; BABIN, Leif. Responsabilidade Extrema. São Paulo: CDG, 2020.","link_autor":"https://echelonfront.com","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=extreme+ownership+willink","app_categoria":"Autodesenvolvimento"},{"id":"DP009","titulo":"O Líder 360°","autor":"John C. Maxwell","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"lideranca","editora":"Thomas Nelson Brasil","relevancia_fincontent":8,"temas_conteudo":["liderança 360°","influência","gestão de pessoas","desenvolvimento de líderes"],"abnt":"MAXWELL, John C. O Líder 360°. São Paulo: Thomas Nelson Brasil, 2007.","link_autor":"https://www.johnmaxwell.com","pdf_gratuito":false,"app_categoria":"Autodesenvolvimento"},{"id":"DP010","titulo":"Encontre Seu Porquê","autor":"Simon Sinek / David Mead / Peter Docker","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"proposito","editora":"Portfolio-Penguin","relevancia_fincontent":8,"temas_conteudo":["propósito","Golden Circle","por quê","cultura organizacional"],"abnt":"SINEK, Simon; MEAD, David; DOCKER, Peter. Encontre Seu Porquê. São Paulo: Portfolio-Penguin.","link_autor":"https://simonsinek.com","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=find+your+why+simon+sinek","app_categoria":"Autodesenvolvimento"},{"id":"DP011","titulo":"O Coach de um Trilhão de Dólares","autor":"Eric Schmidt / Jonathan Rosenberg / Alan Eagle","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"coaching_lideranca","editora":"Sextante","relevancia_fincontent":8,"temas_conteudo":["coaching","liderança Silicon Valley","Bill Campbell","gestão de talentos"],"abnt":"SCHMIDT, Eric; ROSENBERG, Jonathan; EAGLE, Alan. O Coach de um Trilhão de Dólares. São Paulo: Sextante, 2020.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=trillion+dollar+coach+schmidt","app_categoria":"Autodesenvolvimento"},{"id":"DP012","titulo":"A Geração Ansiosa","autor":"Jonathan Haidt","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"comportamento_social","editora":"Cia. das Letras","relevancia_fincontent":8,"temas_conteudo":["ansiedade","geração Z","redes sociais","saúde mental","comportamento digital"],"abnt":"HAIDT, Jonathan. A Geração Ansiosa. São Paulo: Cia. das Letras, 2024.","link_autor":"https://jonathanhaidt.com","pdf_gratuito":false,"app_categoria":"Autodesenvolvimento"},{"id":"DP013","titulo":"Seja Útil","autor":"Arnold Schwarzenegger","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"mentalidade","editora":"Portfolio-Penguin","relevancia_fincontent":7,"temas_conteudo":["disciplina","propósito","trabalho duro","superação","mentalidade vencedora"],"abnt":"SCHWARZENEGGER, Arnold. Seja Útil. São Paulo: Portfolio-Penguin, 2023.","pdf_gratuito":false,"app_categoria":"Autodesenvolvimento"},{"id":"DP014","titulo":"Liberte-se dos Seus Medos","autor":"Napoleon Hill","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"mentalidade","editora":"Thomas Nelson","relevancia_fincontent":7,"temas_conteudo":["medos","superação","autoconfiança","sucesso"],"abnt":"HILL, Napoleon. Liberte-se dos Seus Medos. São Paulo: Thomas Nelson.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=napoleon+hill+overcome+fear","app_categoria":"Autodesenvolvimento"},{"id":"DP015","titulo":"O Poder da Autodisciplina","autor":"Giovanni Dienstmann","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"habitos_produtividade","editora":"Universo dos Livros","relevancia_fincontent":7,"temas_conteudo":["autodisciplina","foco","produtividade","meditação"],"abnt":"DIENSTMANN, Giovanni. O Poder da Autodisciplina. São Paulo: Universo dos Livros.","link_autor":"https://liveanddare.com","pdf_gratuito":false,"app_categoria":"Autodesenvolvimento"},{"id":"DP016","titulo":"Maquiavel — O Príncipe","autor":"Nicolau Maquiavel","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"poder_politica","editora":"Domínio Público","relevancia_fincontent":7,"temas_conteudo":["poder","política","liderança","estratégia"],"abnt":"MAQUIAVEL, Nicolau. O Príncipe. [Domínio público].","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=o+principe+maquiavel","app_categoria":"Autodesenvolvimento"},{"id":"DP017","titulo":"A Arte da Guerra","autor":"Sun Tzu","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"estrategia","editora":"Domínio Público","relevancia_fincontent":7,"temas_conteudo":["estratégia","concorrência","planejamento","vantagem competitiva"],"abnt":"SUN TZU. A Arte da Guerra. [Domínio público].","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=arte+da+guerra+sun+tzu","app_categoria":"Autodesenvolvimento"},{"id":"DP018","titulo":"Sobre a Brevidade da Vida","autor":"Sêneca","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"estoicismo","editora":"L&PM","relevancia_fincontent":7,"temas_conteudo":["estoicismo","tempo","produtividade","filosofia prática"],"abnt":"SÊNECA, Lúcio A. Sobre a Brevidade da Vida. Porto Alegre: L&PM.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=brevidade+da+vida+seneca","app_categoria":"Autodesenvolvimento"},{"id":"DP019","titulo":"33 Estratégias de Guerra","autor":"Robert Greene","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"estrategia","editora":"Rocco","relevancia_fincontent":7,"temas_conteudo":["estratégia","guerra","concorrência"],"abnt":"GREENE, Robert. 33 Estratégias de Guerra. Rio de Janeiro: Rocco, 2007.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=33+strategies+of+war+greene","app_categoria":"Autodesenvolvimento"},{"id":"MAC001","titulo":"Sapiens: Uma Breve História da Humanidade","autor":"Yuval Noah Harari","categoria":"macro_historia","subcategoria":"historia_economia","editora":"L&PM","relevancia_fincontent":10,"temas_conteudo":["história do dinheiro","capitalismo","revolução industrial","economia global","futuro"],"abnt":"HARARI, Yuval N. Sapiens: Uma breve história da humanidade. Porto Alegre: L&PM, 2015.","link_autor":"https://www.ynharari.com","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=sapiens+harari","app_categoria":"História"},{"id":"TEC001","titulo":"Matemática com Python","autor":"Barucke Marcondes","categoria":"tecnologia_informatica","subcategoria":"programacao","editora":"Novatec","relevancia_fincontent":9,"temas_conteudo":["Python","matemática financeira","análise de dados","automação"],"abnt":"MARCONDES, Barucke. Matemática com Python. São Paulo: Novatec, 2022.","pdf_gratuito":false,"app_categoria":"Tecnologia"},{"id":"TEC002","titulo":"Sistemas de Informações Contábeis","autor":"Clóvis Luís Padoveze","categoria":"tecnologia_informatica","subcategoria":"sistemas_contabeis","editora":"Atlas","relevancia_fincontent":8,"temas_conteudo":["ERP","sistemas contábeis","TI aplicada à contabilidade","BI financeiro"],"abnt":"PADOVEZE, Clóvis L. Sistemas de Informações Contábeis. 3. ed. São Paulo: Atlas, 2015.","pdf_gratuito":false,"app_categoria":"Tecnologia"}],"prompts_sistema":{"system_prompt_base":"Você é um especialista em conteúdo financeiro de alta qualidade para o mercado brasileiro. IMPORTANTE: Nunca mencione que o conteúdo foi gerado por IA, inteligência artificial, Claude ou qualquer ferramenta tecnológica. Escreva sempre como um especialista humano. Sua base de conhecimento inclui contabilidade, finanças corporativas, mercado de capitais, comportamento do investidor, gestão empresarial e macroeconomia. Você cita referências acadêmicas quando relevante (ABNT). Seu tom é inteligente, direto e acessível. Você nunca inventa dados ou estatísticas. Adapte o nível técnico ao público informado no prompt.","templates":{"newsletter_b2c":"Escreva uma newsletter financeira de {palavra_count} palavras sobre {tema}. Público: investidor pessoa física brasileiro, classe média, 30-50 anos. Estrutura: 1) Gancho (2 parágrafos provocativos), 2) Contexto, 3) Análise principal (3-4 parágrafos), 4) Takeaway prático (3 bullet points), 5) CTA. Tom: {tom}. Referências: {referencias}.","artigo_b2b":"Escreva um artigo técnico de {palavra_count} palavras sobre {tema} para CFOs e gestores financeiros de médias empresas brasileiras. Estrutura: 1) Resumo executivo, 2) Contexto, 3) Desenvolvimento em 3 seções, 4) Implementação prática, 5) Conclusão. Tom: técnico, executivo.","post_linkedin":"Crie um post LinkedIn de 200-250 palavras sobre {tema_financeiro}. 1ª linha = gancho forte, 2-4 parágrafos curtos, pergunta final. Tom: {tom}. Baseado em: {referencia}. Máx 3 hashtags.","relatorio_executivo":"Produza um relatório executivo de {palavra_count} palavras sobre o cenário financeiro brasileiro em {mes_ano}. Seções: Resumo executivo, Macro (SELIC/Câmbio/Inflação), Mercado de Capitais, Crédito e PMEs, Tendências FinTech, 5 Recomendações. Tom: analítico, baseado em dados."}},"calendario_editorial_q2_2026":{"abril":{"tema_mes":"Fundamentos e Mentalidade Financeira","pautas":[{"semana":1,"tipo":"newsletter","titulo":"O que Benjamin Graham ensinaria sobre a B3 em 2026?","refs_ids":["INV001","INV002","CF013"]},{"semana":2,"tipo":"artigo","titulo":"Valuation na prática: como precificar uma PME brasileira","refs_ids":["CF006","CF002","CF004"]},{"semana":3,"tipo":"newsletter","titulo":"Antifrágil financeiro: patrimônio que cresce nas crises","refs_ids":["INV005","INV001","CF014"]},{"semana":4,"tipo":"newsletter_premium","titulo":"KPIs que todo CFO deveria acompanhar em 2026","refs_ids":["CF016","ADM001","CF009"]}]},"maio":{"tema_mes":"Comportamento, Tecnologia e Mercado","pautas":[{"semana":1,"tipo":"newsletter","titulo":"Por que seu cérebro sabota seus investimentos?","refs_ids":["DP001","INV005","DP005"]},{"semana":2,"tipo":"artigo","titulo":"IA e automação na análise financeira em 2026","refs_ids":["TEC001","TEC002","CF015"]},{"semana":3,"tipo":"newsletter","titulo":"Dinheiro, poder e humanidade: o que a história revela","refs_ids":["MAC001","INV005","CF014"]},{"semana":4,"tipo":"newsletter_premium","titulo":"Análise de crédito: como bancos decidem emprestar","refs_ids":["CF011","CF002"]}]},"junho":{"tema_mes":"Estratégia, Liderança e Crescimento","pautas":[{"semana":1,"tipo":"newsletter","titulo":"Responsabilidade extrema nas finanças: lições para o CFO","refs_ids":["DP008","DP002","DP009"]},{"semana":2,"tipo":"artigo","titulo":"Planejamento estratégico financeiro para PMEs: guia completo","refs_ids":["ADM004","CF016","CF007"]},{"semana":3,"tipo":"newsletter","titulo":"As leis da natureza humana que sabotam seu negócio","refs_ids":["DP005","DP001","DP006"]},{"semana":4,"tipo":"newsletter_premium","titulo":"Relatório especial: finanças empresariais brasileiras em 2026","refs_ids":["CF001","CF004","CF002","CF010"]}]}},"script_uso":{"descricao":"Exemplo de uso do JSON como base para chamadas à API da Anthropic","codigo_python":"import json, anthropic\n\nwith open('fincontent_biblioteca.json') as f:\n    biblioteca = json.load(f)\n\nclient = anthropic.Anthropic(api_key='SUA_CHAVE')\n\ndef buscar_refs(ids):\n    return [l for l in biblioteca['livros'] if l['id'] in ids]\n\ndef gerar_conteudo(pauta):\n    refs = buscar_refs(pauta['refs_ids'])\n    refs_str = '\\n'.join([r['abnt'] for r in refs])\n    temas = ', '.join([t for r in refs for t in r['temas_conteudo']])\n    \n    template = biblioteca['prompts_sistema']['templates'][pauta['tipo'].replace('_premium', '_b2c' if 'newsletter' in pauta['tipo'] else '_b2b')]\n    prompt = template.format(\n        palavra_count=600,\n        tema=pauta['titulo'],\n        tom='educativo e direto',\n        referencias=refs_str,\n        mes_ano='Junho 2026'\n    )\n    \n    response = client.messages.create(\n        model='claude-sonnet-4-6',\n        max_tokens=2000,\n        system=biblioteca['prompts_sistema']['system_prompt_base'],\n        messages=[{'role': 'user', 'content': prompt}]\n    )\n    return response.content[0].text\n\npauta_teste = biblioteca['calendario_editorial_q2_2026']['abril']['pautas'][0]\nconteudo = gerar_conteudo(pauta_teste)\nprint(conteudo)"}};
 
 
 loadFontes();
@@ -3955,7 +4195,9 @@ function navIr(destino) {
      document.getElementById('enviosApp'),
      document.getElementById('repositorioApp'),
      document.getElementById('imagensApp'),
-     document.getElementById('categoriasApp')]
+     document.getElementById('categoriasApp'),
+     document.getElementById('dominioApp'),
+     document.getElementById('resultadosApp')]
       .forEach(el => { if (el) el.style.display = 'none'; });
   }
 
@@ -4074,6 +4316,16 @@ function navIr(destino) {
     case 'telegram':
       show(document.getElementById('telegramApp'), 'column');
       setTimeout(() => initTelegramApp(), 100);
+      break;
+
+    case 'dominio':
+      show(document.getElementById('dominioApp'), 'column');
+      setTimeout(() => dominioInit(), 100);
+      break;
+
+    case 'resultados':
+      show(document.getElementById('resultadosApp'), 'column');
+      setTimeout(() => resultadosInit(), 100);
       break;
 
     case 'desempenho':
@@ -4924,6 +5176,10 @@ JSON EXATO a retornar (sem texto antes ou depois):
     await new Promise(r => setTimeout(r, 600)); // mostra 100% por um instante
 
     npArticles = parsed;
+    // Archive bibliography if sources selected
+    if (typeof fontesArquivarConsulta === 'function' && _fontesSelecionadas?.size > 0) {
+      fontesArquivarConsulta('Newsletter ' + (document.getElementById('npEdicao')?.value || ''), parsed.art1?.manchete || '');
+    }
     // Salvar manchete no histórico
     salvarManchete(parsed, document.getElementById('npEdicao').value, tema1);
     // Arquivar fontes usadas nesta edição
@@ -5498,6 +5754,59 @@ function exportarHTML() {
     </div>
   </div>
 </div>
+
+<!-- ==================== MODAL SELETOR DE FONTES ==================== -->
+<div id="modalFontes" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:2000;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;width:100%;max-width:780px;margin:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <div style="font-size:16px;font-weight:700;color:var(--text);">📚 Selecionar Fontes de Consulta</div>
+      <button onclick="fecharSeletorFontes()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+    </div>
+
+    <div style="font-size:12px;color:var(--text3);margin-bottom:14px;">Selecione as fontes que a IA deve consultar ao gerar o conteúdo. As fontes selecionadas serão citadas na bibliografia.</div>
+
+    <!-- Opções de bibliografia -->
+    <div style="display:flex;gap:12px;margin-bottom:16px;padding:12px;background:var(--surface2);border-radius:8px;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12px;color:var(--text2);">
+        <input type="checkbox" id="fontesIncluirBiblio" checked style="accent-color:#f5c842;">
+        <span>Incluir bibliografia no conteúdo gerado</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12px;color:var(--text2);">
+        <input type="checkbox" id="fontesArquivarBiblio" checked style="accent-color:#f5c842;">
+        <span>Arquivar base de consulta no repositório</span>
+      </label>
+    </div>
+
+    <!-- Filtros -->
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+      <input id="fontesBusca" type="text" placeholder="🔍 Buscar fonte..." onkeyup="fontesFiltrar()" style="flex:1;min-width:200px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:7px 12px;color:var(--text);font-size:12px;outline:none;">
+      <select id="fontesFiltroCategoria" onchange="fontesFiltrar()" style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:7px 12px;color:var(--text);font-size:12px;outline:none;">
+        <option value="">Todas as categorias</option>
+        <option value="Mercado Financeiro">Mercado Financeiro</option>
+        <option value="Economia/Negócios">Economia/Negócios</option>
+        <option value="Geopolítica">Geopolítica</option>
+        <option value="Supermercados">Supermercados</option>
+        <option value="Portal Geral">Portal Geral</option>
+        <option value="Dados Oficiais">Dados Oficiais</option>
+        <option value="Contabilidade">Contabilidade</option>
+        <option value="Tributário">Tributário</option>
+      </select>
+      <button onclick="fontesSelecionarTodas()" style="padding:7px 12px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-size:11px;cursor:pointer;">☑ Todas visíveis</button>
+      <button onclick="fontesLimparSelecao()" style="padding:7px 12px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-size:11px;cursor:pointer;">✕ Limpar</button>
+    </div>
+
+    <!-- Contador -->
+    <div id="fontesContador" style="font-size:11px;color:#f5c842;margin-bottom:10px;"></div>
+
+    <!-- Lista de fontes -->
+    <div id="fontesListaModal" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:6px;max-height:380px;overflow-y:auto;padding-right:4px;"></div>
+
+    <div style="display:flex;gap:8px;margin-top:16px;">
+      <button onclick="confirmarFontes()" style="flex:1;padding:11px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:14px;">✓ Confirmar Seleção</button>
+      <button onclick="fecharSeletorFontes()" style="padding:11px 16px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
+    </div>
+  </div>
+</div>
 </body></html>`;
 
   navigator.clipboard.writeText(fullHtml).then(() => {
@@ -5510,7 +5819,11 @@ function imprimirNewsletter() {
   const content = document.getElementById('npOutput').innerHTML;
   if (!content) return;
   const win = window.open('', '_blank');
-  win.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><style>@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&display=swap');*{margin:0;padding:0;box-sizing:border-box;}body{background:#e8e4dc;padding:20px;font-family:Georgia,serif;}.newsletter{background:#fff;max-width:800px;margin:0 auto;}.np-masthead{padding:16px 24px 12px;text-align:center;}.np-title{font-size:48px;font-weight:900;color:#fff;line-height:1;}.np-tagline{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-top:4px;}.np-top-bar{display:flex;justify-content:space-between;font-size:10px;margin-bottom:8px;font-family:Arial;border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:6px;color:rgba(255,255,255,0.6);}.np-edition-bar{color:#fff;font-size:10px;font-family:Arial;padding:4px 24px;display:flex;justify-content:space-between;}.np-body{padding:16px 20px;}.np-headline-section{border-bottom:2px solid #1a1a1a;padding-bottom:16px;margin-bottom:16px;}.np-headline-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;font-family:Arial;font-weight:700;margin-bottom:4px;}.np-headline{font-size:26px;font-weight:900;line-height:1.15;margin-bottom:8px;border-bottom:1px solid #ccc;padding-bottom:8px;}.np-lead{font-size:13px;font-style:italic;color:#333;margin-bottom:10px;line-height:1.5;border-left:3px solid;padding-left:10px;}.np-article-text{font-size:12px;line-height:1.75;color:#222;column-count:2;column-gap:20px;column-rule:1px solid #ddd;text-align:justify;}.np-quote{background:#f5f5f0;border-left:4px solid;padding:10px 14px;margin:10px 0;font-size:13px;font-style:italic;line-height:1.5;break-inside:avoid;}.np-columns{display:grid;grid-template-columns:1fr 1fr;gap:16px;border-top:2px solid #1a1a1a;padding-top:14px;margin-bottom:14px;}.np-column{border-right:1px solid #ccc;padding-right:14px;}.np-column:last-child{border-right:none;padding-right:0;}.np-col-headline{font-size:14px;font-weight:900;line-height:1.2;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid #1a1a1a;}.np-col-text{font-size:11px;line-height:1.65;text-align:justify;color:#333;}.np-footer-article{border-top:2px solid #1a1a1a;padding-top:12px;}.np-footer-columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}.np-footer-col{font-size:11px;line-height:1.6;color:#333;border-right:1px solid #ddd;padding-right:12px;text-align:justify;}.np-footer-col:last-child{border-right:none;}.np-section-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;font-family:Arial;font-weight:700;margin-bottom:4px;}.np-paper-footer{color:#aaa;padding:8px 24px;font-size:9px;font-family:Arial;display:flex;justify-content:space-between;}@media print{body{padding:0;background:#fff;}}</style></head><body>${content}
+  win.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><style>@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&display=swap');*{margin:0;padding:0;box-sizing:border-box;}body{background:#e8e4dc;padding:20px;font-family:Georgia,serif;}.newsletter{background:#fff;max-width:800px;margin:0 auto;}.np-masthead{padding:16px 24px 12px;text-align:center;}.np-title{font-size:48px;font-weight:900;color:#fff;line-height:1;}.np-tagline{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-top:4px;}.np-top-bar{display:flex;justify-content:space-between;font-size:10px;margin-bottom:8px;font-family:Arial;border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:6px;color:rgba(255,255,255,0.6);}.np-edition-bar{color:#fff;font-size:10px;font-family:Arial;padding:4px 24px;display:flex;justify-content:space-between;}.np-body{padding:16px 20px;}.np-headline-section{border-bottom:2px solid #1a1a1a;padding-bottom:16px;margin-bottom:16px;}.np-headline-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;font-family:Arial;font-weight:700;margin-bottom:4px;}.np-headline{font-size:26px;font-weight:900;line-height:1.15;margin-bottom:8px;border-bottom:1px solid #ccc;padding-bottom:8px;}.np-lead{font-size:13px;font-style:italic;color:#333;margin-bottom:10px;line-height:1.5;border-left:3px solid;padding-left:10px;}.np-article-text{font-size:12px;line-height:1.75;color:#222;column-count:2;column-gap:20px;column-rule:1px solid #ddd;text-align:justify;}.np-quote{background:#f5f5f0;border-left:4px solid;padding:10px 14px;margin:10px 0;font-size:13px;font-style:italic;line-height:1.5;break-inside:avoid;}.np-columns{display:grid;grid-template-columns:1fr 1fr;gap:16px;border-top:2px solid #1a1a1a;padding-top:14px;margin-bottom:14px;}.np-column{border-right:1px solid #ccc;padding-right:14px;}.np-column:last-child{border-right:none;padding-right:0;}.np-col-headline{font-size:14px;font-weight:900;line-height:1.2;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid #1a1a1a;}.np-col-text{font-size:11px;line-height:1.65;text-align:justify;color:#333;}.np-footer-article{border-top:2px solid #1a1a1a;padding-top:12px;}.np-footer-columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}.np-footer-col{font-size:11px;line-height:1.6;color:#333;border-right:1px solid #ddd;padding-right:12px;text-align:justify;}.np-footer-col:last-child{border-right:none;}.np-section-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;font-family:Arial;font-weight:700;margin-bottom:4px;}.np-paper-footer{color:#aaa;padding:8px 24px;font-size:9px;font-family:Arial;display:flex;justify-content:space-between;}@media print{body{padding:0;background:#fff;}}</style></head><body>${content}</body></html>`);
+  win.document.close();
+}
+</script>
+
 <!-- ==================== MODAL COMPARTILHAR ==================== -->
 <div id="modalCompartilhar" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:2000;align-items:center;justify-content:center;padding:20px;">
   <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:620px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;">
@@ -5649,7 +5962,40 @@ function imprimirNewsletter() {
     </div>
   </div>
 </div>
-</body></html>`);
+
+<!-- ==================== MODAL SELETOR DE FONTES ==================== -->
+<div id="modalFontes" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:2000;align-items:flex-start;justify-content:center;padding:16px;overflow-y:auto;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;width:100%;max-width:820px;margin:auto;display:flex;flex-direction:column;gap:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="font-size:16px;font-weight:700;color:var(--text);">📚 Fontes &amp; Base Bibliográfica</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:2px;">Selecione por categoria quais fontes a IA deve usar ao gerar conteúdo</div>
+      </div>
+      <button onclick="fecharSeletorFontes()" style="background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;">✕</button>
+    </div>
+    <div style="display:flex;gap:14px;padding:10px 14px;background:var(--surface2);border-radius:10px;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12px;color:var(--text2);"><input type="checkbox" id="fontesIncluirBiblio" checked style="accent-color:#f5c842;"> Incluir referências no conteúdo gerado</label>
+      <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12px;color:var(--text2);"><input type="checkbox" id="fontesArquivarBiblio" checked style="accent-color:#f5c842;"> Arquivar base de consulta no repositório</label>
+      <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12px;color:var(--text2);"><input type="checkbox" id="fontesIncluirLivros" checked style="accent-color:#f5c842;"> Incluir livros da Biblioteca Editorial</label>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;" id="fontesCategoriaTabs"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <input id="fontesBusca" type="text" placeholder="🔍 Buscar fonte ou livro..." onkeyup="fontesFiltrar()" style="flex:1;min-width:180px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none;">
+      <button onclick="fontesSelecionarTodas()" style="padding:7px 12px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-size:11px;cursor:pointer;">☑ Selecionar tudo</button>
+      <button onclick="fontesLimparSelecao()" style="padding:7px 12px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-size:11px;cursor:pointer;">✕ Limpar</button>
+      <span id="fontesContador" style="font-size:11px;color:#f5c842;align-self:center;white-space:nowrap;"></span>
+    </div>
+    <div id="fontesListaModal" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:5px;max-height:300px;overflow-y:auto;padding-right:4px;"></div>
+    <div id="fontesLivrosDiv" style="display:none;">
+      <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;">📖 Livros da Biblioteca Editorial</div>
+      <div id="fontesLivrosLista" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:5px;max-height:180px;overflow-y:auto;"></div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button onclick="confirmarFontes()" style="flex:1;padding:11px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:14px;">✓ Confirmar Seleção</button>
+      <button onclick="fecharSeletorFontes()" style="padding:11px 16px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
+    </div>
+  </div>
+</div>
   win.document.close();
   setTimeout(() => win.print(), 800);
   closeModal('modalExportar');
@@ -6181,8 +6527,11 @@ async function livroGerar() {
   };
 
   try {
-    const result = await chamarAPIComXHR(apiKey, prompts[opcao], 3000);
-    if (output) output.textContent = result;
+    const _promptLivro = prompts[opcao] + _fontesExtra;
+    const result = await chamarAPIComXHR(apiKey, _promptLivro, 3000);
+    const _biblioLivro = (_incBiblio && typeof fontesGetBibliografia === 'function') ? fontesGetBibliografia() : '';
+    if (typeof fontesArquivarConsulta === 'function' && result) fontesArquivarConsulta('Livro', result);
+    if (output) output.textContent = result + _biblioLivro;
     if (status) { status.textContent = '✓ Gerado'; status.style.background = 'rgba(46,204,113,0.15)'; status.style.color = '#2ecc71'; }
     showToast('✅ Conteúdo do livro gerado!');
   } catch(err) {
@@ -6255,9 +6604,16 @@ async function apresGerar() {
 
   const prompt = `Crie um ${formatoTexto} para uma apresentação com as seguintes especificações:\n- Título: "${titulo || tema}"\n- Tema/Objetivo: ${tema}\n- Público: ${publico}\n- Número de slides: ${slides}\n\nPara cada slide inclua: número, título, conteúdo principal (bullets ou texto), e notas do apresentador.\nFormato: profissional, visual e objetivo.${refs ? `\n\nBaseie-se nestas referências: ${refs}` : ''}`;
 
+  // Inject selected sources into prompt
+  const _fontesExtra = (typeof fontesGetPromptInstrucao === 'function') ? fontesGetPromptInstrucao() : '';
+  const _fontesExtraApres = (typeof fontesGetPromptInstrucao === 'function') ? fontesGetPromptInstrucao() : '';
+  const _incBiblioApres = document.getElementById('fontesIncluirBiblio')?.checked !== false;
+  const _incBiblio = document.getElementById('fontesIncluirBiblio')?.checked !== false;
   try {
-    const result = await chamarAPIComXHR(apiKey, prompt, 2500);
-    if (output) output.textContent = result;
+    const result = await chamarAPIComXHR(apiKey, prompt + _fontesExtraApres, 2500);
+    const _biblioApres = (_incBiblioApres && typeof fontesGetBibliografia === 'function') ? fontesGetBibliografia() : '';
+    if (typeof fontesArquivarConsulta === 'function' && result) fontesArquivarConsulta('Apresentação', result);
+    if (output) output.textContent = result + _biblioApres;
     if (status) { status.textContent = '✓ Gerado'; status.style.background = 'rgba(46,204,113,0.15)'; status.style.color = '#2ecc71'; }
     showToast('✅ Apresentação gerada!');
   } catch(err) {
@@ -6328,8 +6684,12 @@ async function docGerar() {
   const prompt = `Crie um ${tipos[tipo] || tipo} profissional com as seguintes especificações:\n- Título: "${titulo || tema}"\n- Conteúdo: ${tema}\n- Tamanho: ${tamanhos[tamanho]}\n- Tom: ${tom}\n\nFormate como um documento Word profissional com: cabeçalho, sumário executivo (quando aplicável), seções bem estruturadas com títulos, parágrafos claros e objetivos, e conclusão.\nUse formatação em Markdown para estruturar o documento.${refs ? `\n\nReferências para embasar: ${refs}` : ''}`;
 
   try {
-    const result = await chamarAPIComXHR(apiKey, prompt, 3000);
-    if (output) output.textContent = result;
+    const _fontesExtraDoc = (typeof fontesGetPromptInstrucao === 'function') ? fontesGetPromptInstrucao() : '';
+    const _incBiblioDoc = document.getElementById('fontesIncluirBiblio')?.checked !== false;
+    const result = await chamarAPIComXHR(apiKey, prompt + _fontesExtraDoc, 3000);
+    const _biblioDoc = (_incBiblioDoc && typeof fontesGetBibliografia === 'function') ? fontesGetBibliografia() : '';
+    if (typeof fontesArquivarConsulta === 'function' && result) fontesArquivarConsulta('Documento', result);
+    if (output) output.textContent = result + _biblioDoc;
     if (status) { status.textContent = '✓ Gerado'; status.style.background = 'rgba(46,204,113,0.15)'; status.style.color = '#2ecc71'; }
     showToast('✅ Documento gerado!');
   } catch(err) {
@@ -6792,6 +7152,7 @@ function compartilharConteudo(modulo) {
     livro: () => document.getElementById('livroOutput')?.textContent || '',
     apresentacao: () => document.getElementById('apresOutput')?.textContent || '',
     documento: () => document.getElementById('docOutput')?.textContent || '',
+    resultados: () => document.getElementById('resultadosOutput')?.textContent || '',
   };
 
   const texto = (fontes[modulo] ? fontes[modulo]() : '').trim();
@@ -7006,6 +7367,7 @@ function salvarNoRepositorio(modulo) {
     livro: () => document.getElementById('livroOutput')?.textContent || '',
     apresentacao: () => document.getElementById('apresOutput')?.textContent || '',
     documento: () => document.getElementById('docOutput')?.textContent || '',
+    resultados: () => document.getElementById('resultadosOutput')?.textContent || '',
   };
 
   const texto = (fontes[modulo] ? fontes[modulo]() : '').trim();
@@ -7445,6 +7807,8 @@ const CATEGORIAS_DEFAULT = [
   { id: 'pitagoricos', nome: 'Pitagóricos', icone: '📐', cor: '#3f51b5', grupo: 'espiritualidade', fixo: true },
   { id: 'vedanta', nome: 'Vedanta', icone: '🕉️', cor: '#ff5722', grupo: 'espiritualidade', fixo: true },
   { id: 'vajrayana', nome: 'Vajrayana', icone: '💎', cor: '#795548', grupo: 'espiritualidade', fixo: true },
+  // Varejo Alimentar
+  { id: 'supermercados', nome: 'Supermercados & Varejo Alimentar', icone: '🛒', cor: '#27ae60', grupo: 'varejo', fixo: true },
 ];
 
 const GRUPO_LABELS = {
@@ -7457,6 +7821,7 @@ const GRUPO_LABELS = {
   viagens: '✈️ Viagens e Cultura',
   tecnologia: '💻 Tecnologia',
   outros: '📦 Outros',
+  varejo: '🛒 Varejo Alimentar',
 };
 
 let _catCorSelecionada = '#f5c842';
@@ -7597,6 +7962,633 @@ function catGetOptions(selecionadas) {
   ).join('');
 }
 
+
+// =============================================
+// ITEM 4: DOMÍNIO & DEPLOY
+// =============================================
+function dominioInit() {
+  const cfg = JSON.parse(localStorage.getItem('fc_dominio') || '{}');
+  if (cfg.nome) document.getElementById('dominioNome').value = cfg.nome;
+  if (cfg.sub) document.getElementById('dominioSub').value = cfg.sub;
+  if (cfg.repo) document.getElementById('githubRepo').value = cfg.repo;
+  if (cfg.branch) document.getElementById('githubBranch').value = cfg.branch;
+  const tok = localStorage.getItem('fc_gh_token') || localStorage.getItem('fc_github_token') || '';
+  if (tok) document.getElementById('githubToken').value = tok;
+  // Update status
+  const dominio = cfg.nome || '';
+  const sub = cfg.sub || '';
+  const url = dominio ? (sub ? sub + '.' + dominio : dominio) : '';
+  if (url) {
+    document.getElementById('dominioStatusCustom').textContent = 'https://' + url;
+    document.getElementById('dominioStatusCustom').style.color = '#2ecc71';
+    document.getElementById('dominioNetlifyTarget') && (document.getElementById('dominioNetlifyTarget').textContent = 'fincontent.netlify.app');
+  }
+}
+
+function dominioSalvar() {
+  const cfg = {
+    nome: document.getElementById('dominioNome')?.value.trim(),
+    sub: document.getElementById('dominioSub')?.value.trim(),
+    repo: document.getElementById('githubRepo')?.value.trim(),
+    branch: document.getElementById('githubBranch')?.value.trim(),
+  };
+  const tok = document.getElementById('githubToken')?.value.trim();
+  if (tok) localStorage.setItem('fc_gh_token', tok);
+  localStorage.setItem('fc_dominio', JSON.stringify(cfg));
+  showToast('✅ Configurações de domínio salvas!');
+  dominioInit();
+}
+
+// =============================================
+// ITEM 5: RESULTADOS FINANCEIROS
+// =============================================
+let _resEmpresaAtual = null;
+let _resDreData = null;
+let _resBpData = null;
+let _resImportTipo = 'dre';
+let _resTipoPeriodo = 'anual';
+
+function resultadosInit() {
+  resultadosCarregarEmpresas();
+  const emp = JSON.parse(localStorage.getItem('fc_res_empresa_atual') || 'null');
+  if (emp) {
+    _resEmpresaAtual = emp;
+    document.getElementById('resultadosEmpresaSel').value = emp.id;
+    resultadosMostrarSecoes();
+  }
+}
+
+function resultadosCarregarEmpresas() {
+  const empresas = JSON.parse(localStorage.getItem('fc_empresas') || '[]');
+  const sel = document.getElementById('resultadosEmpresaSel');
+  if (!sel) return;
+  sel.innerHTML = '<option value="">— Selecione ou crie empresa —</option>' +
+    empresas.map(e => `<option value="${e.id}">${e.fantasia || e.razao} ${e.cnpj ? '('+e.cnpj+')' : ''}</option>`).join('');
+}
+
+function resultadosCarregarEmpresa() {
+  const id = document.getElementById('resultadosEmpresaSel')?.value;
+  if (!id) { _resEmpresaAtual = null; return; }
+  const empresas = JSON.parse(localStorage.getItem('fc_empresas') || '[]');
+  _resEmpresaAtual = empresas.find(e => e.id === id);
+  if (_resEmpresaAtual) {
+    localStorage.setItem('fc_res_empresa_atual', JSON.stringify(_resEmpresaAtual));
+    resultadosMostrarSecoes();
+    showToast(`🏢 ${_resEmpresaAtual.fantasia || _resEmpresaAtual.razao} selecionada`);
+  }
+}
+
+function resultadosMostrarSecoes() {
+  ['resultadosPeriodoDiv','resultadosDadosDiv','resultadosEstiloDiv'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'block';
+  });
+  const btn = document.getElementById('btnGerarResultados');
+  if (btn) btn.style.display = 'block';
+  const btnImp = document.getElementById('btnImportar');
+  if (btnImp) btnImp.style.display = 'block';
+  const btnGer = document.getElementById('btnGerarApres');
+  if (btnGer) btnGer.style.display = 'block';
+}
+
+function resultadosTipoPeriodo(tipo) {
+  _resTipoPeriodo = tipo;
+  document.getElementById('btnAnual').style.background = tipo === 'anual' ? '#f5c842' : 'var(--surface2)';
+  document.getElementById('btnAnual').style.color = tipo === 'anual' ? '#000' : 'var(--text2)';
+  document.getElementById('btnTrimestral').style.background = tipo === 'trimestral' ? '#f5c842' : 'var(--surface2)';
+  document.getElementById('btnTrimestral').style.color = tipo === 'trimestral' ? '#000' : 'var(--text2)';
+  document.getElementById('resultadosPeriodoAnual').style.display = tipo === 'anual' ? 'block' : 'none';
+  document.getElementById('resultadosPeriodoTrimestral').style.display = tipo === 'trimestral' ? 'block' : 'none';
+}
+
+function resultadosNovaEmpresa() {
+  document.getElementById('modalNovaEmpresa').style.display = 'flex';
+  setTimeout(() => document.getElementById('empRazao').focus(), 100);
+}
+
+function resultadosSalvarEmpresa() {
+  const razao = document.getElementById('empRazao')?.value.trim();
+  if (!razao) { showToast('⚠ Razão Social obrigatória'); return; }
+  const empresa = {
+    id: 'emp_' + Date.now(),
+    razao,
+    fantasia: document.getElementById('empFantasia')?.value.trim() || razao,
+    cnpj: document.getElementById('empCNPJ')?.value.trim() || '',
+    setor: document.getElementById('empSetor')?.value || 'outros',
+    moeda: document.getElementById('empMoeda')?.value || 'BRL',
+    site: document.getElementById('empSite')?.value.trim() || '',
+    criadoEm: new Date().toISOString()
+  };
+  const empresas = JSON.parse(localStorage.getItem('fc_empresas') || '[]');
+  empresas.push(empresa);
+  localStorage.setItem('fc_empresas', JSON.stringify(empresas));
+  _resEmpresaAtual = empresa;
+  localStorage.setItem('fc_res_empresa_atual', JSON.stringify(empresa));
+  document.getElementById('modalNovaEmpresa').style.display = 'none';
+  resultadosCarregarEmpresas();
+  document.getElementById('resultadosEmpresaSel').value = empresa.id;
+  resultadosMostrarSecoes();
+  showToast(`✅ Empresa "${empresa.fantasia}" cadastrada!`);
+}
+
+function resultadosAbrirImport(tipo) {
+  _resImportTipo = tipo;
+  const titulo = tipo === 'dre' ? '📄 Importar DRE — Demonstração de Resultado' : '🏦 Importar Balanço Patrimonial';
+  document.getElementById('modalImportTitulo').textContent = titulo;
+  const periodos = _resTipoPeriodo === 'anual'
+    ? (document.getElementById('resultadosAnos')?.value || '2022,2023,2024')
+    : (document.getElementById('resultadosTrimestres')?.value || '1T24,2T24,3T24,4T24');
+
+  const cols = periodos.split(',').map(p => p.trim()).join(',');
+  if (tipo === 'dre') {
+    document.getElementById('formatoExemplo').innerHTML =
+      `Conta,${cols}<br>Receita Bruta,1000000,1200000,1500000<br>Deduções de Receita,-150000,-180000,-220000<br>Receita Líquida,850000,1020000,1280000<br>CPV,-400000,-480000,-600000<br>Lucro Bruto,450000,540000,680000<br>Despesas Operacionais,-200000,-240000,-290000<br>EBITDA,250000,300000,390000<br>Depreciação,-30000,-35000,-40000<br>EBIT,220000,265000,350000<br>Resultado Financeiro,-20000,-25000,-30000<br>Lucro Antes do IR,200000,240000,320000<br>IR e CSLL,-68000,-81600,-108800<br>Lucro Líquido,132000,158400,211200`;
+  } else {
+    document.getElementById('formatoExemplo').innerHTML =
+      `Conta,${cols}<br>Ativo Total,2000000,2400000,3000000<br>Ativo Circulante,800000,960000,1200000<br>Caixa e Equivalentes,200000,280000,400000<br>Contas a Receber,400000,480000,580000<br>Estoques,200000,200000,220000<br>Ativo Não Circulante,1200000,1440000,1800000<br>Imobilizado,900000,1050000,1300000<br>Passivo Total,2000000,2400000,3000000<br>Passivo Circulante,500000,580000,700000<br>Passivo Não Circulante,600000,700000,850000<br>Patrimônio Líquido,900000,1120000,1450000`;
+  }
+
+  const saved = tipo === 'dre' ? _resDreData : _resBpData;
+  if (saved) {
+    const rows = Object.entries(saved).map(([conta, vals]) =>
+      conta + ',' + Object.values(vals).join(','));
+    document.getElementById('importTextarea').value = 'Conta,' + cols + '\n' + rows.join('\n');
+  } else {
+    document.getElementById('importTextarea').value = '';
+  }
+  document.getElementById('modalImportDados').style.display = 'flex';
+}
+
+function importarArquivo() {
+  document.getElementById('importFileInput').click();
+}
+
+function processarArquivoImport(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('importTextarea').value = e.target.result;
+    showToast('✅ Arquivo carregado!');
+  };
+  reader.readAsText(file, 'UTF-8');
+}
+
+function importarColarCSV() {
+  navigator.clipboard.readText().then(text => {
+    document.getElementById('importTextarea').value = text;
+    showToast('✅ Colado da área de transferência!');
+  }).catch(() => {
+    showToast('Cole o texto no campo manualmente');
+    document.getElementById('importTextarea').focus();
+  });
+}
+
+function importarDemoData() {
+  const periodos = _resTipoPeriodo === 'anual'
+    ? (document.getElementById('resultadosAnos')?.value || '2022,2023,2024')
+    : (document.getElementById('resultadosTrimestres')?.value || '1T24,2T24,3T24,4T24');
+  const cols = periodos.split(',').map(p => p.trim());
+  const emp = _resEmpresaAtual?.fantasia || 'Empresa Exemplo';
+
+  if (_resImportTipo === 'dre') {
+    const vals = [[1000000,1200000,1500000],[-150000,-180000,-220000],[850000,1020000,1280000],[-400000,-480000,-600000],[450000,540000,680000],[-200000,-240000,-290000],[250000,300000,390000],[-30000,-35000,-40000],[220000,265000,350000],[-20000,-25000,-30000],[200000,240000,320000],[-68000,-81600,-108800],[132000,158400,211200]];
+    const contas = ['Receita Bruta','Deduções de Receita','Receita Líquida','CPV','Lucro Bruto','Despesas Operacionais','EBITDA','Depreciação','EBIT','Resultado Financeiro','Lucro Antes do IR','IR e CSLL','Lucro Líquido'];
+    let csv = 'Conta,' + cols.join(',') + '\n';
+    contas.forEach((c, i) => { csv += c + ',' + cols.map((_, j) => vals[i]?.[j] || 0).join(',') + '\n'; });
+    document.getElementById('importTextarea').value = csv;
+  } else {
+    const vals = [[2000000,2400000,3000000],[800000,960000,1200000],[200000,280000,400000],[400000,480000,580000],[200000,200000,220000],[1200000,1440000,1800000],[900000,1050000,1300000],[2000000,2400000,3000000],[500000,580000,700000],[600000,700000,850000],[900000,1120000,1450000]];
+    const contas = ['Ativo Total','Ativo Circulante','Caixa e Equivalentes','Contas a Receber','Estoques','Ativo Não Circulante','Imobilizado','Passivo Total','Passivo Circulante','Passivo Não Circulante','Patrimônio Líquido'];
+    let csv = 'Conta,' + cols.join(',') + '\n';
+    contas.forEach((c, i) => { csv += c + ',' + cols.map((_, j) => vals[i]?.[j] || 0).join(',') + '\n'; });
+    document.getElementById('importTextarea').value = csv;
+  }
+  showToast('✅ Dados de exemplo carregados!');
+}
+
+function confirmarImport() {
+  const texto = document.getElementById('importTextarea')?.value.trim();
+  if (!texto) { showToast('⚠ Insira os dados primeiro'); return; }
+  try {
+    const linhas = texto.split('\n').filter(l => l.trim());
+    const header = linhas[0].split(',').map(h => h.trim());
+    const periodos = header.slice(1);
+    const data = {};
+    for (let i = 1; i < linhas.length; i++) {
+      const cols = linhas[i].split(',');
+      const conta = cols[0].trim();
+      if (!conta) continue;
+      data[conta] = {};
+      periodos.forEach((p, j) => {
+        data[conta][p] = parseFloat(cols[j+1]?.replace(/\./g,'').replace(',','.')) || 0;
+      });
+    }
+    if (_resImportTipo === 'dre') {
+      _resDreData = { periodos, data };
+      document.getElementById('dreStatus').textContent = `✅ ${Object.keys(data).length} contas`;
+      document.getElementById('dreStatus').style.color = '#2ecc71';
+    } else {
+      _resBpData = { periodos, data };
+      document.getElementById('bpStatus').textContent = `✅ ${Object.keys(data).length} contas`;
+      document.getElementById('bpStatus').style.color = '#2ecc71';
+    }
+    document.getElementById('modalImportDados').style.display = 'none';
+    showToast(`✅ ${_resImportTipo.toUpperCase()} importado: ${Object.keys(data).length} linhas`);
+  } catch(e) {
+    showToast('❌ Erro ao processar: verifique o formato CSV');
+  }
+}
+
+function resultadosEntradaManual() {
+  showToast('💡 Use "Dados de exemplo" no modal de importação como base e edite os valores!');
+  resultadosAbrirImport('dre');
+}
+
+function resultadosImportar() {
+  resultadosAbrirImport(_resDreData ? 'bp' : 'dre');
+}
+
+async function resultadosGerar() {
+  if (!_resEmpresaAtual) { showToast('⚠ Selecione ou cadastre uma empresa primeiro!'); return; }
+  if (!_resDreData && !_resBpData) { showToast('⚠ Importe pelo menos o DRE ou Balanço Patrimonial!'); return; }
+
+  const apiKey = getApiKey();
+  if (!apiKey || apiKey.length < 20) { showToast('⚠ Configure a API Key nas Configurações'); return; }
+
+  const btn = document.getElementById('btnGerarResultados');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Gerando...'; }
+
+  const output = document.getElementById('resultadosOutput');
+  output.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text3);"><div style="font-size:32px;margin-bottom:12px;">⏳</div><div>Analisando dados e gerando apresentação...</div></div>';
+
+  const estilo = document.getElementById('resultadosEstilo')?.value || 'consultoria';
+  const idioma = document.getElementById('resultadosIdioma')?.value || 'pt';
+  const moeda = _resEmpresaAtual.moeda || 'BRL';
+  const simbolo = moeda === 'BRL' ? 'R$' : moeda === 'USD' ? '$' : '€';
+  const emp = _resEmpresaAtual;
+
+  const periodos = _resDreData?.periodos || _resBpData?.periodos || [];
+  const incResumo = document.getElementById('incResumo')?.checked;
+  const incDRE = document.getElementById('incDRE')?.checked;
+  const incBP = document.getElementById('incBP')?.checked;
+  const incGraficos = document.getElementById('incGraficos')?.checked;
+  const incProjecoes = document.getElementById('incProjecoes')?.checked;
+  const incIndices = document.getElementById('incIndices')?.checked;
+
+  const estiloDesc = {
+    consultoria: 'McKinsey/BCG — estruturado, direto, foco em insight estratégico',
+    auditoria: 'Big Four (Deloitte/PwC/EY/KPMG) — rigoroso, técnico, compliance',
+    banco: 'Banco de investimento — foco em valuation e retorno',
+    corporativo: 'Relatório executivo corporativo — executivo, profissional'
+  }[estilo];
+
+  const dreResumo = _resDreData ? JSON.stringify(_resDreData.data).substring(0, 2000) : 'Não fornecido';
+  const bpResumo = _resBpData ? JSON.stringify(_resBpData.data).substring(0, 2000) : 'Não fornecido';
+
+  const prompt = `Você é um analista financeiro sênior de ${estiloDesc}.
+
+EMPRESA: ${emp.razao} (${emp.fantasia || emp.razao})
+SETOR: ${emp.setor || 'Não informado'}
+MOEDA: ${simbolo} (${moeda})
+PERÍODOS: ${periodos.join(', ')}
+TIPO: ${_resTipoPeriodo === 'anual' ? 'Análise Anual' : 'Análise Trimestral'}
+
+DRE (Demonstração de Resultado):
+${dreResumo}
+
+BALANÇO PATRIMONIAL:
+${bpResumo}
+
+Gere uma apresentação de resultados financeiros completa e profissional em ${idioma === 'pt' ? 'Português do Brasil' : 'English'} com:
+
+${incResumo ? `## 📋 RESUMO EXECUTIVO
+- Principais destaques do período
+- Performance vs expectativas
+- Mensagem-chave da gestão
+` : ''}
+${incDRE ? `## 📊 ANÁLISE DO DRE
+- Evolução da Receita Líquida com % de crescimento
+- Margem Bruta, EBITDA e Margem Líquida por período
+- Variações significativas com análise de causa
+- Comparativo YoY ou QoQ
+` : ''}
+${incBP ? `## 🏦 BALANÇO PATRIMONIAL
+- Estrutura de capital (dívida vs patrimônio)
+- Liquidez corrente e imediata
+- Evolução do Patrimônio Líquido
+` : ''}
+${incIndices ? `## 📐 INDICADORES FINANCEIROS
+- EBITDA e Margem EBITDA (%)
+- ROE (Retorno sobre PL)
+- ROA (Retorno sobre Ativos)
+- Dívida/EBITDA
+- Liquidez Corrente
+` : ''}
+${incGraficos ? `## 📈 ANÁLISE GRÁFICA (descreva os gráficos recomendados)
+- Gráfico de barras: evolução da receita
+- Gráfico de linhas: margens ao longo do tempo
+- Waterfall: composição do resultado
+` : ''}
+${incProjecoes ? `## 🔮 PROJEÇÕES E PERSPECTIVAS
+- Tendência baseada nos dados históricos
+- Premissas de crescimento
+- Cenários (base, otimista, pessimista)
+` : ''}
+
+## ⚠️ RISCOS E OPORTUNIDADES
+- Principais riscos identificados
+- Oportunidades de melhoria
+
+Use formatação clara com seções bem definidas, números concretos dos dados fornecidos, e análise de qualidade profissional.`;
+
+  // Inject selected sources
+  const fonteExtra = (typeof fontesGetPromptInstrucao === 'function') ? fontesGetPromptInstrucao() : '';
+  const incBiblioRes = document.getElementById('fontesIncluirBiblio')?.checked !== false;
+  const promptComFontes = prompt + fonteExtra;
+
+  try {
+    const resultado = await chamarAPIComXHR(apiKey, promptComFontes, 3000);
+    // Add bibliography if selected
+    const biblioRes = (typeof fontesGetBibliografia === 'function' && incBiblioRes) ? fontesGetBibliografia() : '';
+    const resultadoFinal = biblioRes ? resultado + '\n' + biblioRes : resultado;
+    if (typeof fontesArquivarConsulta === 'function') fontesArquivarConsulta('Resultados ' + (emp.fantasia||emp.razao), resultado);
+    output.innerHTML = `<div style="white-space:pre-wrap;font-size:13px;line-height:1.9;color:var(--text);font-family:'DM Sans',sans-serif;">${escapeHtml(resultadoFinal)}</div>`;
+
+    // Show action buttons
+    ['btnResCopiar','btnResSalvar','btnResCompartilhar'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'inline-flex';
+    });
+    showToast('✅ Apresentação gerada!');
+
+    // Register in repository auto
+    repoSalvar('apresentacao',
+      `Resultados ${emp.fantasia||emp.razao} — ${periodos.join('/')}`,
+      resultado, { empresa: emp.id, periodos, tipo: 'resultados_financeiros' }, null);
+
+  } catch(e) {
+    output.innerHTML = `<div style="color:#e74c3c;padding:20px;">❌ Erro: ${escapeHtml(e.message)}</div>`;
+  }
+
+  if (btn) { btn.disabled = false; btn.textContent = '📈 Gerar Apresentação'; }
+}
+
+function resultadosCopiar() {
+  const txt = document.getElementById('resultadosOutput')?.textContent || '';
+  navigator.clipboard.writeText(txt).then(() => showToast('✅ Copiado!'));
+}
+
+
+// =============================================
+// SISTEMA DE SELEÇÃO DE FONTES — v2
+// =============================================
+let _fontesSelecionadas = new Set();
+let _livrosSelecionados = new Set();
+let _fontesListaFiltrada = [];
+let _fontesCatAtiva = '';
+
+const FONTES_CAT_ICONS = {
+  'Finanças e Contabilidade': '💰',
+  'Geopolítica e Relações Internacionais': '🌍',
+  'Portal de Notícias': '📰',
+  'Varejo Alimentar': '🛒',
+};
+
+function abrirSeletorFontes() {
+  fontesConstruirTabs();
+  fontesFiltrar();
+  fontesRenderizarLivros();
+  document.getElementById('modalFontes').style.display = 'flex';
+}
+
+function fecharSeletorFontes() {
+  document.getElementById('modalFontes').style.display = 'none';
+}
+
+function fontesGetTodas() {
+  try {
+    const local = JSON.parse(localStorage.getItem('fc_fontes_extras') || '[]');
+    const defaultIds = new Set(FONTES_DEFAULT.map(f => f.id));
+    const extras = local.filter(f => !defaultIds.has(f.id));
+    return [...FONTES_DEFAULT, ...extras].filter(f => f.ativo !== false);
+  } catch(e) { return [...FONTES_DEFAULT]; }
+}
+
+function fontesGetPorCategoria(cat) {
+  return fontesGetTodas().filter(f => f.categoria === cat);
+}
+
+function fontesGetCategorias() {
+  return [...new Set(fontesGetTodas().map(f => f.categoria))].sort();
+}
+
+function fontesConstruirTabs() {
+  const container = document.getElementById('fontesCategoriaTabs');
+  if (!container) return;
+  const cats = fontesGetCategorias();
+  const all_btn = `<button onclick="fontesMudarCat('')" id="fontesCat_todas" style="padding:6px 12px;border:1px solid var(--border2);border-radius:20px;font-size:11px;cursor:pointer;background:${_fontesCatAtiva===''?'var(--accent)':'var(--surface2)'};color:${_fontesCatAtiva===''?'#000':'var(--text2)'};">🌐 Todas (${fontesGetTodas().length})</button>`;
+  const tabs = cats.map(cat => {
+    const icon = FONTES_CAT_ICONS[cat] || '📁';
+    const count = fontesGetPorCategoria(cat).length;
+    const active = _fontesCatAtiva === cat;
+    return `<button onclick="fontesMudarCat('${cat}')" id="fontesCat_${cat.replace(/\s/g,'_')}" style="padding:6px 12px;border:1px solid var(--border2);border-radius:20px;font-size:11px;cursor:pointer;background:${active?'var(--accent)':'var(--surface2)'};color:${active?'#000':'var(--text2)'};">${icon} ${cat} (${count})</button>`;
+  });
+  container.innerHTML = all_btn + tabs.join('');
+}
+
+function fontesMudarCat(cat) {
+  _fontesCatAtiva = cat;
+  fontesConstruirTabs();
+  fontesFiltrar();
+}
+
+function fontesFiltrar() {
+  const busca = (document.getElementById('fontesBusca')?.value || '').toLowerCase();
+  let fontes = fontesGetTodas();
+  if (_fontesCatAtiva) fontes = fontes.filter(f => f.categoria === _fontesCatAtiva);
+  if (busca) fontes = fontes.filter(f =>
+    f.nome?.toLowerCase().includes(busca) ||
+    f.descricao?.toLowerCase().includes(busca) ||
+    f.categoria?.toLowerCase().includes(busca)
+  );
+  _fontesListaFiltrada = fontes;
+  fontesRenderizarLista();
+  // Also filter livros if searching
+  if (busca) fontesRenderizarLivros(busca);
+}
+
+function fontesRenderizarLista() {
+  const container = document.getElementById('fontesListaModal');
+  if (!container) return;
+  const total = fontesGetTodas().length;
+  const livrosCount = _livrosSelecionados.size;
+  const el = document.getElementById('fontesContador');
+  if (el) el.textContent = `${_fontesSelecionadas.size} fontes + ${livrosCount} livros selecionados`;
+
+  if (!_fontesListaFiltrada.length) {
+    container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--text3);font-size:13px;">Nenhuma fonte encontrada</div>';
+    return;
+  }
+
+  container.innerHTML = _fontesListaFiltrada.map(f => {
+    const sel = _fontesSelecionadas.has(f.id);
+    const icon = FONTES_CAT_ICONS[f.categoria] || '📁';
+    return `<label style="display:flex;align-items:flex-start;gap:8px;padding:7px 10px;background:${sel?'rgba(245,200,66,0.08)':'var(--surface2)'};border:1px solid ${sel?'rgba(245,200,66,0.3)':'var(--border2)'};border-radius:8px;cursor:pointer;">
+      <input type="checkbox" value="${f.id}" ${sel?'checked':''} onchange="fonteToggle('${f.id}')" style="accent-color:#f5c842;margin-top:3px;flex-shrink:0;">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:12px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:4px;">${icon} ${escapeHtml(f.nome)}</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:1px;">${escapeHtml(f.categoria||'')} · ${escapeHtml(f.regiao||'')} · ${escapeHtml(f.tipo||'')}</div>
+        ${f.descricao?`<div style="font-size:10px;color:var(--text2);margin-top:1px;">${escapeHtml(f.descricao)}</div>`:''}
+      </div>
+      <a href="${f.url}" target="_blank" onclick="event.stopPropagation()" style="font-size:10px;color:#4a9eff;flex-shrink:0;padding-top:2px;">↗</a>
+    </label>`;
+  }).join('');
+}
+
+function fontesRenderizarLivros(busca) {
+  const div = document.getElementById('fontesLivrosDiv');
+  const lista = document.getElementById('fontesLivrosLista');
+  const incLivros = document.getElementById('fontesIncluirLivros')?.checked;
+  if (!div || !lista || !incLivros) { if(div) div.style.display='none'; return; }
+
+  try {
+    let livros = BIBLIOTECA_EDITORIAL?.livros || [];
+    if (busca) livros = livros.filter(l =>
+      l.titulo?.toLowerCase().includes(busca) ||
+      l.autor?.toLowerCase().includes(busca) ||
+      l.app_categoria?.toLowerCase().includes(busca)
+    );
+    if (_fontesCatAtiva) {
+      // Map cat to biblioteca cat
+      const catMap = {
+        'Finanças e Contabilidade': ['contabilidade_financas','investimentos_mercado_capitais','administracao_gestao'],
+        'Autodesenvolvimento': ['desenvolvimento_pessoal_negocios'],
+        'História': ['macro_historia'],
+        'Tecnologia': ['tecnologia_informatica'],
+      };
+      const bibCats = catMap[_fontesCatAtiva];
+      if (bibCats) livros = livros.filter(l => bibCats.includes(l.categoria));
+      else livros = [];
+    }
+    if (!livros.length) { div.style.display='none'; return; }
+    div.style.display = 'block';
+    lista.innerHTML = livros.map(l => {
+      const sel = _livrosSelecionados.has(l.id);
+      return `<label style="display:flex;align-items:flex-start;gap:7px;padding:7px 9px;background:${sel?'rgba(74,158,255,0.08)':'var(--surface2)'};border:1px solid ${sel?'rgba(74,158,255,0.3)':'var(--border2)'};border-radius:7px;cursor:pointer;font-size:11px;">
+        <input type="checkbox" ${sel?'checked':''} onchange="livroToggle('${l.id}')" style="accent-color:#4a9eff;margin-top:2px;flex-shrink:0;">
+        <div>
+          <div style="font-weight:600;color:var(--text);">${escapeHtml(l.titulo)}</div>
+          <div style="color:var(--text3);margin-top:1px;">${escapeHtml(l.autor)} · ${escapeHtml(l.app_categoria||l.categoria)}</div>
+        </div>
+      </label>`;
+    }).join('');
+  } catch(e) { div.style.display='none'; }
+}
+
+function fonteToggle(id) {
+  _fontesSelecionadas.has(id) ? _fontesSelecionadas.delete(id) : _fontesSelecionadas.add(id);
+  fontesRenderizarLista();
+}
+
+function livroToggle(id) {
+  _livrosSelecionados.has(id) ? _livrosSelecionados.delete(id) : _livrosSelecionados.add(id);
+  fontesRenderizarLivros();
+}
+
+function fontesSelecionarTodas() {
+  _fontesListaFiltrada.forEach(f => _fontesSelecionadas.add(f.id));
+  // Also select visible livros
+  try {
+    document.querySelectorAll('#fontesLivrosLista input[type=checkbox]').forEach(cb => {
+      if (!cb.checked) {
+        cb.checked = true;
+        const id = cb.closest('label').querySelector('input').value;
+        if(id) _livrosSelecionados.add(id);
+      }
+    });
+  } catch(e) {}
+  fontesRenderizarLista();
+  fontesRenderizarLivros();
+}
+
+function fontesLimparSelecao() {
+  _fontesSelecionadas.clear();
+  _livrosSelecionados.clear();
+  fontesRenderizarLista();
+  fontesRenderizarLivros();
+}
+
+function confirmarFontes() {
+  const total = _fontesSelecionadas.size + _livrosSelecionados.size;
+  fecharSeletorFontes();
+  if (total > 0) {
+    showToast(`✅ ${_fontesSelecionadas.size} fonte(s) + ${_livrosSelecionados.size} livro(s) selecionados!`);
+  } else {
+    showToast('ℹ Nenhuma fonte selecionada — IA usará conhecimento geral.');
+  }
+}
+
+function fontesGetPromptInstrucao() {
+  let instrucao = '';
+  if (_fontesSelecionadas.size > 0) {
+    const fontes = fontesGetTodas().filter(f => _fontesSelecionadas.has(f.id));
+    const por_cat = {};
+    fontes.forEach(f => {
+      const cat = f.categoria || 'Outros';
+      if (!por_cat[cat]) por_cat[cat] = [];
+      por_cat[cat].push(`${f.nome} (${f.url})`);
+    });
+    instrucao += '\n\nFONTES DE CONSULTA SELECIONADAS:\n';
+    Object.entries(por_cat).forEach(([cat, lista]) => {
+      instrucao += `\n${cat}:\n` + lista.map(n => `- ${n}`).join('\n');
+    });
+  }
+  if (_livrosSelecionados.size > 0 && typeof BIBLIOTECA_EDITORIAL !== 'undefined') {
+    const livros = (BIBLIOTECA_EDITORIAL.livros || []).filter(l => _livrosSelecionados.has(l.id));
+    if (livros.length > 0) {
+      instrucao += '\n\nBASE BIBLIOGRÁFICA:\n' + livros.map(l => `- ${l.abnt||l.titulo+' — '+l.autor}`).join('\n');
+    }
+  }
+  if (instrucao) instrucao += '\n\nBase seu conteúdo nessas fontes quando relevante, citando-as naturalmente no texto.';
+  return instrucao;
+}
+
+function fontesGetBibliografia() {
+  const incl = document.getElementById('fontesIncluirBiblio')?.checked !== false;
+  if (!incl) return '';
+  let bib = '';
+  const data = new Date().toLocaleDateString('pt-BR');
+
+  if (_fontesSelecionadas.size > 0) {
+    const fontes = fontesGetTodas().filter(f => _fontesSelecionadas.has(f.id));
+    bib += '\n\n─────────────────────────────────────\nFONTES CONSULTADAS\n─────────────────────────────────────\n';
+    fontes.forEach((f, i) => { bib += `${i+1}. ${f.nome}. Disponível em: ${f.url}. Acesso em: ${data}.\n`; });
+  }
+  if (_livrosSelecionados.size > 0 && typeof BIBLIOTECA_EDITORIAL !== 'undefined') {
+    const livros = (BIBLIOTECA_EDITORIAL.livros || []).filter(l => _livrosSelecionados.has(l.id));
+    if (livros.length > 0) {
+      bib += '\nREFERÊNCIAS BIBLIOGRÁFICAS\n';
+      livros.forEach((l, i) => { bib += `${i+1}. ${l.abnt || l.titulo + '. ' + l.autor + '.'}\n`; });
+    }
+  }
+  return bib;
+}
+
+function fontesArquivarConsulta(titulo) {
+  const arquivar = document.getElementById('fontesArquivarBiblio')?.checked !== false;
+  if (!arquivar || (_fontesSelecionadas.size === 0 && _livrosSelecionados.size === 0)) return;
+  const fontes = fontesGetTodas().filter(f => _fontesSelecionadas.has(f.id));
+  let registro = `BASE DE CONSULTA — ${titulo}\nData: ${new Date().toLocaleString('pt-BR')}\n\n`;
+  if (fontes.length) registro += `FONTES WEB (${fontes.length}):\n` + fontes.map(f => `• ${f.nome} — ${f.url}\n  ${f.descricao||''}`).join('\n') + '\n\n';
+  if (_livrosSelecionados.size > 0 && typeof BIBLIOTECA_EDITORIAL !== 'undefined') {
+    const livros = (BIBLIOTECA_EDITORIAL.livros || []).filter(l => _livrosSelecionados.has(l.id));
+    if (livros.length) registro += `LIVROS (${livros.length}):\n` + livros.map(l => `• ${l.titulo} — ${l.autor}`).join('\n');
+  }
+  if (typeof repoSalvar === 'function') repoSalvar('artigo', `📚 Referências: ${titulo}`, registro, {tipo:'bibliografia'}, null);
+}
+
+
 </script>
 
 <!-- ==================== MODAL COMPARTILHAR ==================== -->
@@ -7734,6 +8726,59 @@ function catGetOptions(selecionadas) {
     <div style="display:flex;gap:8px;justify-content:flex-end;">
       <button onclick="editarSalvar()" style="padding:10px 24px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;">✓ Salvar alterações</button>
       <button onclick="document.getElementById('modalEditar').style.display='none'" style="padding:10px 16px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL SELETOR DE FONTES ==================== -->
+<div id="modalFontes" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:2000;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;width:100%;max-width:780px;margin:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <div style="font-size:16px;font-weight:700;color:var(--text);">📚 Selecionar Fontes de Consulta</div>
+      <button onclick="fecharSeletorFontes()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+    </div>
+
+    <div style="font-size:12px;color:var(--text3);margin-bottom:14px;">Selecione as fontes que a IA deve consultar ao gerar o conteúdo. As fontes selecionadas serão citadas na bibliografia.</div>
+
+    <!-- Opções de bibliografia -->
+    <div style="display:flex;gap:12px;margin-bottom:16px;padding:12px;background:var(--surface2);border-radius:8px;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12px;color:var(--text2);">
+        <input type="checkbox" id="fontesIncluirBiblio" checked style="accent-color:#f5c842;">
+        <span>Incluir bibliografia no conteúdo gerado</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12px;color:var(--text2);">
+        <input type="checkbox" id="fontesArquivarBiblio" checked style="accent-color:#f5c842;">
+        <span>Arquivar base de consulta no repositório</span>
+      </label>
+    </div>
+
+    <!-- Filtros -->
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+      <input id="fontesBusca" type="text" placeholder="🔍 Buscar fonte..." onkeyup="fontesFiltrar()" style="flex:1;min-width:200px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:7px 12px;color:var(--text);font-size:12px;outline:none;">
+      <select id="fontesFiltroCategoria" onchange="fontesFiltrar()" style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:7px 12px;color:var(--text);font-size:12px;outline:none;">
+        <option value="">Todas as categorias</option>
+        <option value="Mercado Financeiro">Mercado Financeiro</option>
+        <option value="Economia/Negócios">Economia/Negócios</option>
+        <option value="Geopolítica">Geopolítica</option>
+        <option value="Supermercados">Supermercados</option>
+        <option value="Portal Geral">Portal Geral</option>
+        <option value="Dados Oficiais">Dados Oficiais</option>
+        <option value="Contabilidade">Contabilidade</option>
+        <option value="Tributário">Tributário</option>
+      </select>
+      <button onclick="fontesSelecionarTodas()" style="padding:7px 12px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-size:11px;cursor:pointer;">☑ Todas visíveis</button>
+      <button onclick="fontesLimparSelecao()" style="padding:7px 12px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-size:11px;cursor:pointer;">✕ Limpar</button>
+    </div>
+
+    <!-- Contador -->
+    <div id="fontesContador" style="font-size:11px;color:#f5c842;margin-bottom:10px;"></div>
+
+    <!-- Lista de fontes -->
+    <div id="fontesListaModal" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:6px;max-height:380px;overflow-y:auto;padding-right:4px;"></div>
+
+    <div style="display:flex;gap:8px;margin-top:16px;">
+      <button onclick="confirmarFontes()" style="flex:1;padding:11px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:14px;">✓ Confirmar Seleção</button>
+      <button onclick="fecharSeletorFontes()" style="padding:11px 16px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
     </div>
   </div>
 </div>

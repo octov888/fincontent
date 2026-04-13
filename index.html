@@ -1184,6 +1184,19 @@
     <div class="nav-item" id="nav-telegram" onclick="navIr('telegram')">
       <span class="icon">✈️</span> Telegram
     </div>
+    <div class="nav-item" id="nav-envios" onclick="navIr('envios')">
+      <span class="icon">📤</span> Envios em Bloco
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Repositório</div>
+    <div class="nav-item" id="nav-repositorio" onclick="navIr('repositorio')">
+      <span class="icon">🗂️</span> Conteúdos Salvos
+    </div>
+    <div class="nav-item" id="nav-imagens" onclick="navIr('imagens')">
+      <span class="icon">🖼️</span> Banco de Imagens
+    </div>
   </div>
 
   <div class="nav-section">
@@ -1889,6 +1902,199 @@
 
 
 
+
+<!-- ==================== ENVIOS EM BLOCO ==================== -->
+<div id="enviosApp" style="display:none;flex:1;flex-direction:column;height:100vh;overflow:hidden;">
+  <div class="topbar">
+    <div class="page-title">📤 Envios em <span>Bloco</span></div>
+    <div class="topbar-right">
+      <button class="btn btn-primary" onclick="envioExecutar()" id="btnEnvioExecutar">🚀 Executar Envio</button>
+    </div>
+  </div>
+  <div style="flex:1;display:flex;overflow:hidden;">
+    <div style="width:320px;min-width:320px;border-right:1px solid var(--border);overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;">
+
+      <div class="section">
+        <div class="section-title">📋 Conteúdo a Enviar</div>
+        <label class="form-label">Tipo de conteúdo</label>
+        <select id="envioTipoConteudo" onchange="envioCarregarConteudos()" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none;font-family:'DM Sans',sans-serif;">
+          <option value="">— Selecione o tipo —</option>
+          <option value="newsletter">📰 Newsletter</option>
+          <option value="artigo">📄 Artigo</option>
+          <option value="apresentacao">📊 Apresentação</option>
+          <option value="livro">📖 Trecho de Livro</option>
+          <option value="documento">📑 Documento</option>
+          <option value="personalizado">✍️ Mensagem Personalizada</option>
+        </select>
+        <div id="envioConteudoDiv" style="margin-top:8px;display:none;">
+          <label class="form-label">Selecionar conteúdo salvo</label>
+          <select id="envioConteudoSelecionado" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none;font-family:'DM Sans',sans-serif;">
+            <option value="">— Selecione —</option>
+          </select>
+        </div>
+        <div id="envioMensagemDiv" style="margin-top:8px;">
+          <label class="form-label">Mensagem / Introdução</label>
+          <textarea id="envioMensagem" placeholder="Escreva uma introdução ou a mensagem completa...&#10;&#10;Use {nome} para personalizar." style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-size:12px;outline:none;resize:vertical;min-height:100px;font-family:'DM Sans',sans-serif;"></textarea>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">👥 Destinatários</div>
+        <label class="form-label">Selecionar grupo</label>
+        <select id="envioGrupo" onchange="envioAtualizarDestinatarios()" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none;font-family:'DM Sans',sans-serif;">
+          <option value="todos">Todos os clientes</option>
+          <option value="ativos">Somente ativos</option>
+          <option value="leads">Somente leads</option>
+          <option value="contador">Contadores</option>
+          <option value="empresario">Empresários</option>
+          <option value="investidor">Investidores</option>
+          <option value="gestor">Gestores Financeiros</option>
+          <option value="individual">Cliente individual</option>
+        </select>
+        <div id="envioClienteIndDiv" style="display:none;margin-top:8px;">
+          <select id="envioClienteInd" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none;font-family:'DM Sans',sans-serif;">
+            <option value="">— Selecione o cliente —</option>
+          </select>
+        </div>
+        <div id="envioContagem" style="margin-top:8px;font-size:11px;color:#f5c842;">👥 0 destinatários</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">📱 Canais de Envio</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:var(--text2);padding:8px;background:rgba(37,211,102,0.06);border:1px solid rgba(37,211,102,0.2);border-radius:8px;">
+            <input type="checkbox" id="envioCanWpp" checked style="accent-color:#25D366;">
+            <span>💬 WhatsApp</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:var(--text2);padding:8px;background:rgba(0,136,204,0.06);border:1px solid rgba(0,136,204,0.2);border-radius:8px;">
+            <input type="checkbox" id="envioCanTel" style="accent-color:#0088cc;">
+            <span>✈️ Telegram</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:var(--text2);padding:8px;background:rgba(245,200,66,0.06);border:1px solid rgba(245,200,66,0.2);border-radius:8px;">
+            <input type="checkbox" id="envioCanEmail" style="accent-color:#f5c842;">
+            <span>📧 E-mail</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+      <div style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+        <span style="font-size:12px;font-weight:600;color:var(--text2);">📋 Lista de Envios</span>
+        <span id="envioStatus" style="font-size:11px;padding:3px 10px;border-radius:8px;background:var(--surface3);color:var(--text3);">Aguardando configuração</span>
+      </div>
+      <div id="enviosLista" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px;">
+        <div style="text-align:center;padding:60px 20px;color:var(--text3);">
+          <div style="font-size:40px;margin-bottom:12px;">📤</div>
+          <div style="font-size:14px;font-weight:600;color:var(--text2);">Configure o conteúdo e os destinatários</div>
+          <div style="font-size:12px;margin-top:8px;">Os links de envio serão gerados automaticamente</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== REPOSITÓRIO ==================== -->
+<div id="repositorioApp" style="display:none;flex:1;flex-direction:column;height:100vh;overflow:hidden;">
+  <div class="topbar">
+    <div class="page-title">🗂️ Conteúdos <span>Salvos</span></div>
+    <div class="topbar-right">
+      <button class="btn btn-ghost" onclick="repoExportar()">📥 Exportar tudo</button>
+      <button class="btn btn-ghost" onclick="repoLimparTudo()" style="color:#e74c3c;border-color:rgba(231,76,60,0.3);">🗑 Limpar</button>
+    </div>
+  </div>
+  <div style="flex:1;display:flex;overflow:hidden;">
+    <div style="width:240px;min-width:240px;border-right:1px solid var(--border);overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px;">
+      <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Filtrar por tipo</div>
+      <button onclick="repoFiltrar('')" id="repoFiltroTodos" style="width:100%;padding:8px 12px;background:var(--accent);color:#000;border:none;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;text-align:left;">📁 Todos</button>
+      <button onclick="repoFiltrar('newsletter')" id="repoFiltroNewsletter" style="width:100%;padding:8px 12px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;text-align:left;">📰 Newsletters</button>
+      <button onclick="repoFiltrar('artigo')" id="repoFiltroArtigo" style="width:100%;padding:8px 12px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;text-align:left;">📄 Artigos</button>
+      <button onclick="repoFiltrar('apresentacao')" id="repoFiltroApres" style="width:100%;padding:8px 12px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;text-align:left;">📊 Apresentações</button>
+      <button onclick="repoFiltrar('livro')" id="repoFiltroLivro" style="width:100%;padding:8px 12px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;text-align:left;">📖 Livros</button>
+      <button onclick="repoFiltrar('documento')" id="repoFiltroDoc" style="width:100%;padding:8px 12px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;text-align:left;">📑 Documentos</button>
+      <button onclick="repoFiltrar('gerador')" id="repoFiltroGerador" style="width:100%;padding:8px 12px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;text-align:left;">✨ Gerador IA</button>
+      <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">
+        <div id="repoStats" style="font-size:11px;color:var(--text3);line-height:1.8;"></div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+      <div style="padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0;">
+        <input id="repoBusca" type="text" placeholder="🔍 Buscar nos conteúdos..." onkeyup="repoBuscar()" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none;">
+      </div>
+      <div id="repoLista" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px;"></div>
+    </div>
+    <div id="repoViewer" style="width:420px;min-width:380px;border-left:1px solid var(--border);overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;">
+      <div style="text-align:center;padding:60px 20px;color:var(--text3);">
+        <div style="font-size:36px;margin-bottom:12px;">🗂️</div>
+        <div style="font-size:13px;color:var(--text2);">Selecione um conteúdo para visualizar</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== BANCO DE IMAGENS ==================== -->
+<div id="imagensApp" style="display:none;flex:1;flex-direction:column;height:100vh;overflow:hidden;">
+  <div class="topbar">
+    <div class="page-title">🖼️ Banco de <span>Imagens</span></div>
+    <div class="topbar-right">
+      <button class="btn btn-primary" onclick="document.getElementById('imgUploadInput').click()">+ Adicionar Imagens</button>
+      <input type="file" id="imgUploadInput" multiple accept="image/*" style="display:none" onchange="imgUpload(this)">
+    </div>
+  </div>
+  <div style="flex:1;display:flex;overflow:hidden;">
+    <div style="width:220px;min-width:220px;border-right:1px solid var(--border);overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:6px;">
+      <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Categorias</div>
+      <button onclick="imgFiltrar('')" id="imgCatTodos" style="width:100%;padding:8px 12px;background:var(--accent);color:#000;border:none;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;text-align:left;">🖼️ Todas</button>
+      <button onclick="imgFiltrar('graficos')" class="imgCatBtn" style="width:100%;padding:8px 12px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;text-align:left;">📊 Gráficos e Dados</button>
+      <button onclick="imgFiltrar('logos')" class="imgCatBtn" style="width:100%;padding:8px 12px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;text-align:left;">🏢 Logos e Marcas</button>
+      <button onclick="imgFiltrar('financas')" class="imgCatBtn" style="width:100%;padding:8px 12px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;text-align:left;">💰 Finanças</button>
+      <button onclick="imgFiltrar('negocios')" class="imgCatBtn" style="width:100%;padding:8px 12px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;text-align:left;">🏗️ Negócios</button>
+      <button onclick="imgFiltrar('pessoas')" class="imgCatBtn" style="width:100%;padding:8px 12px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;text-align:left;">👤 Pessoas</button>
+      <button onclick="imgFiltrar('tecnologia')" class="imgCatBtn" style="width:100%;padding:8px 12px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;text-align:left;">💻 Tecnologia</button>
+      <button onclick="imgFiltrar('outros')" class="imgCatBtn" style="width:100%;padding:8px 12px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;text-align:left;">📦 Outros</button>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
+        <div id="imgStats" style="font-size:11px;color:var(--text3);line-height:1.8;"></div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+      <div style="padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;gap:8px;">
+        <input id="imgBusca" type="text" placeholder="🔍 Buscar imagens..." onkeyup="imgBuscar()" style="flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none;">
+        <select id="imgOrdem" onchange="imgRenderizar()" style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none;">
+          <option value="recente">Mais recentes</option>
+          <option value="nome">Por nome</option>
+        </select>
+      </div>
+      <div id="imgGrid" style="flex:1;overflow-y:auto;padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;align-content:start;"></div>
+    </div>
+  </div>
+
+  <!-- Modal adicionar imagem -->
+  <div id="modalImgAdd" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;align-items:center;justify-content:center;">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:420px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px;">
+        <div style="font-size:15px;font-weight:700;color:var(--text);">Adicionar Imagem</div>
+        <button onclick="document.getElementById('modalImgAdd').style.display='none'" style="background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;">✕</button>
+      </div>
+      <img id="imgPreviewModal" src="" style="width:100%;max-height:200px;object-fit:contain;border-radius:8px;background:var(--surface2);margin-bottom:12px;">
+      <label class="form-label">Nome / Descrição</label>
+      <input id="imgNomeModal" type="text" class="tema-input" placeholder="Ex: Gráfico PIB Brasil 2024" style="min-height:0;padding:8px 12px;margin-bottom:10px;">
+      <label class="form-label">Categoria</label>
+      <select id="imgCatModal" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none;margin-bottom:14px;">
+        <option value="graficos">📊 Gráficos e Dados</option>
+        <option value="logos">🏢 Logos e Marcas</option>
+        <option value="financas">💰 Finanças</option>
+        <option value="negocios">🏗️ Negócios</option>
+        <option value="pessoas">👤 Pessoas</option>
+        <option value="tecnologia">💻 Tecnologia</option>
+        <option value="outros">📦 Outros</option>
+      </select>
+      <div style="display:flex;gap:8px;">
+        <button onclick="imgSalvar()" style="flex:1;padding:10px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;">✓ Salvar</button>
+        <button onclick="document.getElementById('modalImgAdd').style.display='none'" style="padding:10px 14px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- ==================== CRM CLIENTES ==================== -->
 <div id="clientesApp" style="display:none;flex:1;flex-direction:column;height:100vh;overflow:hidden;">
   <div class="topbar">
@@ -3512,7 +3718,10 @@ function navIr(destino) {
      document.getElementById('documentoApp'),
      document.getElementById('clientesApp'),
      document.getElementById('whatsappApp'),
-     document.getElementById('telegramApp')]
+     document.getElementById('telegramApp'),
+     document.getElementById('enviosApp'),
+     document.getElementById('repositorioApp'),
+     document.getElementById('imagensApp')]
       .forEach(el => { if (el) el.style.display = 'none'; });
   }
 
@@ -3601,6 +3810,21 @@ function navIr(destino) {
     case 'clientes':
       show(document.getElementById('clientesApp'), 'column');
       setTimeout(() => initClientesApp(), 100);
+      break;
+
+    case 'envios':
+      show(document.getElementById('enviosApp'), 'column');
+      setTimeout(() => initEnviosApp(), 100);
+      break;
+
+    case 'repositorio':
+      show(document.getElementById('repositorioApp'), 'column');
+      setTimeout(() => repoInit(), 100);
+      break;
+
+    case 'imagens':
+      show(document.getElementById('imagensApp'), 'column');
+      setTimeout(() => imgInit(), 100);
       break;
 
     case 'whatsapp':
@@ -5539,6 +5763,10 @@ function livroCopiar() {
 
 function livroSalvar() {
   const txt = document.getElementById('livroOutput')?.textContent || '';
+  if (txt && txt.length > 50) {
+    const titulo = document.getElementById('livroTitulo')?.value || 'Livro';
+    repoSalvar('livro', titulo, txt);
+  }
   const titulo = document.getElementById('livroTitulo')?.value.trim() || 'livro';
   if (!txt.trim()) { showToast('⚠ Nada para salvar.'); return; }
   const a = document.createElement('a');
@@ -6207,6 +6435,403 @@ function shareViaClipboard() {
     document.getElementById('modalCompartilhar').style.display = 'none';
   });
 }
+
+// =============================================
+// REPOSITÓRIO DE CONTEÚDOS
+// =============================================
+function repoSalvar(tipo, titulo, conteudo, extra) {
+  if (!conteudo || conteudo.trim().length < 10) return;
+  const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+  const item = {
+    id: 'r' + Date.now(),
+    tipo,
+    titulo: titulo || 'Sem título',
+    conteudo,
+    extra: extra || {},
+    criadoEm: new Date().toISOString(),
+    tamanho: conteudo.length
+  };
+  repo.unshift(item);
+  // Manter max 200 itens
+  if (repo.length > 200) repo.splice(200);
+  localStorage.setItem('fc_repositorio', JSON.stringify(repo));
+  return item.id;
+}
+
+function repoCarregar(tipo, busca) {
+  let repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+  if (tipo) repo = repo.filter(r => r.tipo === tipo);
+  if (busca) {
+    const b = busca.toLowerCase();
+    repo = repo.filter(r => r.titulo?.toLowerCase().includes(b) || r.conteudo?.toLowerCase().includes(b));
+  }
+  return repo;
+}
+
+function repoInit() {
+  repoFiltrar('');
+  repoStats();
+}
+
+function repoStats() {
+  const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+  const tipos = {};
+  repo.forEach(r => { tipos[r.tipo] = (tipos[r.tipo] || 0) + 1; });
+  const el = document.getElementById('repoStats');
+  if (el) el.innerHTML = `Total: <strong>${repo.length}</strong><br>` +
+    Object.entries(tipos).map(([t,c]) => `${t}: ${c}`).join('<br>');
+}
+
+let _repoFiltroAtual = '';
+function repoFiltrar(tipo) {
+  _repoFiltroAtual = tipo;
+  // Atualizar botões
+  document.querySelectorAll('[id^="repoFiltro"]').forEach(b => {
+    b.style.background = 'var(--surface2)';
+    b.style.color = 'var(--text2)';
+    b.style.border = '1px solid var(--border2)';
+  });
+  const ativo = document.getElementById('repoFiltro' + (tipo ? tipo.charAt(0).toUpperCase() + tipo.slice(1) : 'Todos'));
+  if (ativo) { ativo.style.background = 'var(--accent)'; ativo.style.color = '#000'; ativo.style.border = 'none'; }
+  repoRenderizar();
+}
+
+function repoBuscar() {
+  repoRenderizar();
+}
+
+function repoRenderizar() {
+  const busca = document.getElementById('repoBusca')?.value || '';
+  const lista = repoCarregar(_repoFiltroAtual, busca);
+  const container = document.getElementById('repoLista');
+  if (!container) return;
+  if (!lista.length) {
+    container.innerHTML = '<div style="text-align:center;padding:60px;color:var(--text3);"><div style="font-size:36px;margin-bottom:12px;">📭</div><div>Nenhum conteúdo salvo ainda</div><div style="font-size:12px;margin-top:6px;">Os conteúdos gerados aparecem aqui automaticamente</div></div>';
+    return;
+  }
+  const icons = { newsletter:'📰', artigo:'📄', apresentacao:'📊', livro:'📖', documento:'📑', gerador:'✨' };
+  container.innerHTML = lista.map(r => `
+    <div onclick="repoVisualizar('${r.id}')" style="background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:12px 14px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)'">
+      <div style="font-size:20px;flex-shrink:0;">${icons[r.tipo] || '📄'}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(r.titulo)}</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px;">${r.tipo} · ${new Date(r.criadoEm).toLocaleDateString('pt-BR')} · ${(r.tamanho/1000).toFixed(1)}KB</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(r.conteudo.substring(0,80))}...</div>
+      </div>
+      <button onclick="event.stopPropagation();repoExcluir('${r.id}')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;flex-shrink:0;" title="Excluir">🗑</button>
+    </div>`).join('');
+}
+
+function repoVisualizar(id) {
+  const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+  const item = repo.find(r => r.id === id);
+  if (!item) return;
+  const viewer = document.getElementById('repoViewer');
+  if (!viewer) return;
+  const icons = { newsletter:'📰', artigo:'📄', apresentacao:'📊', livro:'📖', documento:'📑', gerador:'✨' };
+  viewer.innerHTML = `
+    <div style="border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:14px;">
+      <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;">${icons[item.tipo]||'📄'} ${escapeHtml(item.titulo)}</div>
+      <div style="font-size:11px;color:var(--text3);">${item.tipo} · ${new Date(item.criadoEm).toLocaleString('pt-BR')} · ${(item.tamanho/1000).toFixed(1)} KB</div>
+      <div style="display:flex;gap:6px;margin-top:10px;">
+        <button onclick="navigator.clipboard.writeText(${JSON.stringify(item.conteudo)}).then(()=>showToast('✅ Copiado!'))" style="padding:6px 12px;background:var(--surface2);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:11px;">📋 Copiar</button>
+        <button onclick="repoDownload('${id}')" style="padding:6px 12px;background:var(--surface2);border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;font-size:11px;">💾 .txt</button>
+        <button onclick="compartilharRepoItem('${id}')" style="padding:6px 12px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.3);border-radius:6px;color:#25D366;cursor:pointer;font-size:11px;">📤 Compartilhar</button>
+      </div>
+    </div>
+    <div style="font-size:12px;line-height:1.9;color:var(--text2);white-space:pre-wrap;">${escapeHtml(item.conteudo)}</div>`;
+}
+
+function repoDownload(id) {
+  const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+  const item = repo.find(r => r.id === id);
+  if (!item) return;
+  const a = document.createElement('a');
+  a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(item.conteudo);
+  a.download = item.titulo.replace(/\s+/g,'_') + '.txt';
+  a.click();
+}
+
+function compartilharRepoItem(id) {
+  const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+  const item = repo.find(r => r.id === id);
+  if (!item) return;
+  _shareTexto = item.conteudo;
+  const sel = document.getElementById('shareCliente');
+  const clientes = crmCarregar();
+  sel.innerHTML = '<option value="">— Selecione um cliente —</option>' +
+    clientes.map(c => `<option value="${c.id}">${c.nome}${c.empresa?' — '+c.empresa:''}</option>`).join('');
+  document.getElementById('sharePreviewText').textContent = item.conteudo.substring(0, 200) + '...';
+  document.getElementById('modalCompartilhar').style.display = 'flex';
+}
+
+function repoExcluir(id) {
+  if (!confirm('Excluir este conteúdo?')) return;
+  const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]').filter(r => r.id !== id);
+  localStorage.setItem('fc_repositorio', JSON.stringify(repo));
+  repoRenderizar();
+  repoStats();
+  document.getElementById('repoViewer').innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text3);"><div style="font-size:36px;margin-bottom:12px;">🗂️</div><div style="font-size:13px;color:var(--text2);">Selecione um conteúdo para visualizar</div></div>';
+  showToast('🗑 Conteúdo removido.');
+}
+
+function repoLimparTudo() {
+  if (!confirm('Excluir TODOS os conteúdos salvos? Esta ação não pode ser desfeita.')) return;
+  localStorage.removeItem('fc_repositorio');
+  repoRenderizar();
+  repoStats();
+  showToast('🗑 Repositório limpo.');
+}
+
+function repoExportar() {
+  const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+  if (!repo.length) { showToast('⚠ Nenhum conteúdo para exportar.'); return; }
+  const txt = repo.map(r =>
+    '═'.repeat(60) + '\n' +
+    `[${r.tipo.toUpperCase()}] ${r.titulo}\n` +
+    `Data: ${new Date(r.criadoEm).toLocaleString('pt-BR')}\n` +
+    '─'.repeat(60) + '\n' +
+    r.conteudo + '\n'
+  ).join('\n\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt);
+  a.download = 'repositorio_fincontent_' + new Date().toISOString().split('T')[0] + '.txt';
+  a.click();
+  showToast(`✅ ${repo.length} conteúdos exportados!`);
+}
+
+// =============================================
+// ENVIOS EM BLOCO
+// =============================================
+function initEnviosApp() {
+  envioAtualizarDestinatarios();
+  // Carregar clientes no select individual
+  const sel = document.getElementById('envioClienteInd');
+  if (sel) {
+    const clientes = crmCarregar();
+    sel.innerHTML = '<option value="">— Selecione —</option>' +
+      clientes.map(c => `<option value="${c.id}">${c.nome}${c.empresa?' — '+c.empresa:''}</option>`).join('');
+  }
+}
+
+function envioCarregarConteudos() {
+  const tipo = document.getElementById('envioTipoConteudo')?.value;
+  const div = document.getElementById('envioConteudoDiv');
+  const sel = document.getElementById('envioConteudoSelecionado');
+  if (!tipo || tipo === 'personalizado') { if(div) div.style.display = 'none'; return; }
+  const repo = repoCarregar(tipo);
+  if (sel) sel.innerHTML = '<option value="">— Selecione —</option>' +
+    repo.map(r => `<option value="${r.id}">${escapeHtml(r.titulo)} (${new Date(r.criadoEm).toLocaleDateString('pt-BR')})</option>`).join('');
+  if (div) div.style.display = repo.length ? 'block' : 'none';
+  if (!repo.length) showToast('⚠ Nenhum ' + tipo + ' salvo ainda. Gere e salve conteúdos primeiro.');
+}
+
+function envioAtualizarDestinatarios() {
+  const grupo = document.getElementById('envioGrupo')?.value || 'todos';
+  const divInd = document.getElementById('envioClienteIndDiv');
+  if (divInd) divInd.style.display = grupo === 'individual' ? 'block' : 'none';
+  const lista = envioGetDestinatarios();
+  const el = document.getElementById('envioContagem');
+  if (el) el.textContent = `👥 ${lista.length} destinatário${lista.length !== 1 ? 's' : ''}`;
+}
+
+function envioGetDestinatarios() {
+  const grupo = document.getElementById('envioGrupo')?.value || 'todos';
+  let clientes = crmCarregar();
+  if (grupo === 'ativos') return clientes.filter(c => c.status === 'ativo');
+  if (grupo === 'leads') return clientes.filter(c => c.status === 'lead');
+  if (grupo === 'individual') {
+    const id = document.getElementById('envioClienteInd')?.value;
+    return id ? clientes.filter(c => c.id === id) : [];
+  }
+  const segmentos = ['contador','empresario','investidor','gestor'];
+  if (segmentos.includes(grupo)) return clientes.filter(c => c.segmento === grupo);
+  return clientes;
+}
+
+function envioGetTexto() {
+  const tipo = document.getElementById('envioTipoConteudo')?.value;
+  const selId = document.getElementById('envioConteudoSelecionado')?.value;
+  const msgExtra = document.getElementById('envioMensagem')?.value.trim() || '';
+  if (selId) {
+    const repo = JSON.parse(localStorage.getItem('fc_repositorio') || '[]');
+    const item = repo.find(r => r.id === selId);
+    if (item) return msgExtra ? msgExtra + '\n\n' + item.conteudo : item.conteudo;
+  }
+  return msgExtra;
+}
+
+function envioExecutar() {
+  const texto = envioGetTexto();
+  if (!texto) { showToast('⚠ Configure o conteúdo primeiro!'); return; }
+  const clientes = envioGetDestinatarios();
+  if (!clientes.length) { showToast('⚠ Nenhum destinatário selecionado. Cadastre clientes primeiro!'); return; }
+  const canWpp = document.getElementById('envioCanWpp')?.checked;
+  const canTel = document.getElementById('envioCanTel')?.checked;
+  const canEmail = document.getElementById('envioCanEmail')?.checked;
+  if (!canWpp && !canTel && !canEmail) { showToast('⚠ Selecione pelo menos um canal!'); return; }
+  const container = document.getElementById('enviosLista');
+  const status = document.getElementById('envioStatus');
+  if (status) { status.textContent = `${clientes.length} envios preparados`; status.style.background = 'rgba(245,200,66,0.15)'; status.style.color = '#f5c842'; }
+  container.innerHTML = `<div style="margin-bottom:12px;padding:10px 14px;background:rgba(245,200,66,0.08);border:1px solid rgba(245,200,66,0.2);border-radius:8px;font-size:12px;color:#f5c842;">
+    ✅ ${clientes.length} envios preparados — clique em cada botão para enviar
+  </div>` +
+  clientes.map(c => {
+    const msg = texto.replace(/\{nome\}/g, c.nome.split(' ')[0]);
+    const wppLink = c.whatsapp && canWpp ? `<a href="https://wa.me/55${c.whatsapp.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}" target="_blank" style="padding:6px 10px;background:#25D366;color:#fff;border-radius:6px;text-decoration:none;font-size:11px;font-weight:600;">💬 WPP</a>` : '';
+    const telLink = c.telegram && canTel ? `<a href="https://t.me/${c.telegram.replace('@','')}" target="_blank" onclick="navigator.clipboard.writeText(${JSON.stringify(msg)})" style="padding:6px 10px;background:#0088cc;color:#fff;border-radius:6px;text-decoration:none;font-size:11px;font-weight:600;">✈️ TEL</a>` : '';
+    const emailLink = c.email && canEmail ? `<a href="mailto:${c.email}?subject=Sophos Inteligência Financeira&body=${encodeURIComponent(msg)}" style="padding:6px 10px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:6px;text-decoration:none;font-size:11px;">📧 EMAIL</a>` : '';
+    const temCanal = wppLink || telLink || emailLink;
+    return `<div style="background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:12px;font-weight:600;color:var(--text);">${escapeHtml(c.nome)}</div>
+        <div style="font-size:10px;color:var(--text3);">${escapeHtml(c.empresa||c.email||'')}</div>
+      </div>
+      <div style="display:flex;gap:6px;flex-shrink:0;">
+        ${temCanal ? wppLink + telLink + emailLink : '<span style="font-size:11px;color:#e74c3c;">Sem canal cadastrado</span>'}
+      </div>
+    </div>`;
+  }).join('');
+  showToast(`📤 ${clientes.length} envios preparados!`);
+}
+
+// =============================================
+// BANCO DE IMAGENS
+// =============================================
+let _imgFiltro = '';
+let _imgPendentes = [];
+let _imgPendenteIdx = 0;
+
+function imgInit() {
+  imgRenderizar();
+  imgStatsUpdate();
+}
+
+function imgCarregar() {
+  try { return JSON.parse(localStorage.getItem('fc_imagens') || '[]'); } catch(e) { return []; }
+}
+
+function imgSalvarDB(imgs) {
+  localStorage.setItem('fc_imagens', JSON.stringify(imgs));
+}
+
+function imgStatsUpdate() {
+  const imgs = imgCarregar();
+  const el = document.getElementById('imgStats');
+  if (!el) return;
+  const cats = {};
+  imgs.forEach(i => { cats[i.categoria] = (cats[i.categoria]||0)+1; });
+  el.innerHTML = `Total: <strong>${imgs.length}</strong><br>` +
+    Object.entries(cats).map(([c,n]) => `${c}: ${n}`).join('<br>');
+}
+
+function imgFiltrar(cat) {
+  _imgFiltro = cat;
+  document.querySelectorAll('.imgCatBtn, #imgCatTodos').forEach(b => {
+    b.style.background = 'var(--surface2)'; b.style.color = 'var(--text2)'; b.style.border = '1px solid var(--border2)';
+  });
+  const id = cat ? null : document.getElementById('imgCatTodos');
+  if (!cat && id) { id.style.background = 'var(--accent)'; id.style.color = '#000'; id.style.border = 'none'; }
+  imgRenderizar();
+}
+
+function imgBuscar() { imgRenderizar(); }
+
+function imgRenderizar() {
+  const busca = (document.getElementById('imgBusca')?.value || '').toLowerCase();
+  const ordem = document.getElementById('imgOrdem')?.value || 'recente';
+  let imgs = imgCarregar();
+  if (_imgFiltro) imgs = imgs.filter(i => i.categoria === _imgFiltro);
+  if (busca) imgs = imgs.filter(i => i.nome?.toLowerCase().includes(busca));
+  if (ordem === 'nome') imgs.sort((a,b) => a.nome.localeCompare(b.nome));
+  const grid = document.getElementById('imgGrid');
+  if (!grid) return;
+  if (!imgs.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text3);"><div style="font-size:40px;margin-bottom:12px;">🖼️</div><div style="font-size:13px;color:var(--text2);">Nenhuma imagem cadastrada</div><div style="font-size:11px;margin-top:6px;">Clique em "+ Adicionar Imagens" para começar</div></div>';
+    return;
+  }
+  grid.innerHTML = imgs.map(img => `
+    <div style="background:var(--surface2);border:1px solid var(--border2);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)'" onclick="imgAbrirModal('${img.id}')">
+      <div style="height:110px;background:var(--surface3);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <img src="${img.data}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+      </div>
+      <div style="padding:8px 10px;">
+        <div style="font-size:11px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(img.nome)}</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px;">${img.categoria}</div>
+      </div>
+      <div style="padding:0 8px 8px;display:flex;gap:4px;">
+        <button onclick="event.stopPropagation();imgCopiarLink('${img.id}')" style="flex:1;padding:4px;background:var(--surface3);border:none;border-radius:4px;color:var(--text3);cursor:pointer;font-size:10px;">📋</button>
+        <button onclick="event.stopPropagation();imgExcluir('${img.id}')" style="padding:4px 8px;background:rgba(231,76,60,0.1);border:1px solid rgba(231,76,60,0.2);border-radius:4px;color:#e74c3c;cursor:pointer;font-size:10px;">🗑</button>
+      </div>
+    </div>`).join('');
+}
+
+function imgUpload(input) {
+  const files = Array.from(input.files);
+  if (!files.length) return;
+  _imgPendentes = files;
+  _imgPendenteIdx = 0;
+  imgProximoPendente();
+}
+
+function imgProximoPendente() {
+  if (_imgPendenteIdx >= _imgPendentes.length) return;
+  const file = _imgPendentes[_imgPendenteIdx];
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    document.getElementById('imgPreviewModal').src = e.target.result;
+    document.getElementById('imgNomeModal').value = file.name.replace(/\.[^.]+$/, '');
+    document.getElementById('modalImgAdd').style.display = 'flex';
+    document.getElementById('modalImgAdd')._data = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function imgSalvar() {
+  const nome = document.getElementById('imgNomeModal')?.value.trim();
+  const cat = document.getElementById('imgCatModal')?.value || 'outros';
+  const data = document.getElementById('modalImgAdd')._data;
+  if (!nome || !data) { showToast('⚠ Preencha o nome da imagem'); return; }
+  const imgs = imgCarregar();
+  imgs.unshift({ id: 'img' + Date.now(), nome, categoria: cat, data, criadoEm: new Date().toISOString() });
+  imgSalvarDB(imgs);
+  document.getElementById('modalImgAdd').style.display = 'none';
+  _imgPendenteIdx++;
+  if (_imgPendenteIdx < _imgPendentes.length) {
+    setTimeout(imgProximoPendente, 300);
+  } else {
+    imgRenderizar();
+    imgStatsUpdate();
+    showToast(`✅ ${_imgPendenteIdx} imagem(ns) salva(s)!`);
+    document.getElementById('imgUploadInput').value = '';
+  }
+}
+
+function imgAbrirModal(id) {
+  const img = imgCarregar().find(i => i.id === id);
+  if (!img) return;
+  document.getElementById('imgPreviewModal').src = img.data;
+  document.getElementById('imgNomeModal').value = img.nome;
+  document.getElementById('imgCatModal').value = img.categoria;
+  document.getElementById('modalImgAdd').style.display = 'flex';
+  document.getElementById('modalImgAdd')._data = img.data;
+  document.getElementById('modalImgAdd')._editId = id;
+}
+
+function imgCopiarLink(id) {
+  const img = imgCarregar().find(i => i.id === id);
+  if (!img) return;
+  navigator.clipboard.writeText(img.data).then(() => showToast('✅ Imagem copiada! Cole onde precisar.'));
+}
+
+function imgExcluir(id) {
+  if (!confirm('Excluir esta imagem?')) return;
+  imgSalvarDB(imgCarregar().filter(i => i.id !== id));
+  imgRenderizar();
+  imgStatsUpdate();
+  showToast('🗑 Imagem removida.');
+}
+
 </script>
 
 <!-- ==================== MODAL COMPARTILHAR ==================== -->

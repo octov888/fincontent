@@ -1197,6 +1197,9 @@
     <div class="nav-item" id="nav-imagens" onclick="navIr('imagens')">
       <span class="icon">🖼️</span> Banco de Imagens
     </div>
+    <div class="nav-item" id="nav-categorias" onclick="navIr('categorias')">
+      <span class="icon">🏷️</span> Categorias
+    </div>
   </div>
 
   <div class="nav-section">
@@ -1918,7 +1921,7 @@
     </div>
   </div>
   <div style="flex:1;display:flex;overflow:hidden;">
-    <div style="width:320px;min-width:320px;border-right:1px solid var(--border);overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;">
+    <div style="width:280px;min-width:280px;border-right:1px solid var(--border);overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">
 
       <div class="section">
         <div class="section-title">📋 Conteúdo a Enviar</div>
@@ -2038,6 +2041,81 @@
   </div>
 </div>
 
+
+<!-- ==================== CATEGORIAS ==================== -->
+<div id="categoriasApp" style="display:none;flex:1;flex-direction:column;height:100vh;overflow:hidden;">
+  <div class="topbar">
+    <div class="page-title">🏷️ <span>Categorias</span></div>
+    <div class="topbar-right">
+      <button class="btn btn-primary" onclick="catAbrirModal()">+ Nova Categoria</button>
+    </div>
+  </div>
+  <div style="flex:1;overflow-y:auto;padding:24px;">
+    <div style="max-width:900px;margin:0 auto;">
+
+      <!-- Info -->
+      <div style="background:rgba(245,200,66,0.08);border:1px solid rgba(245,200,66,0.2);border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:12px;color:var(--text2);line-height:1.7;">
+        As categorias organizam os conteúdos do Repositório. Cada conteúdo pode ter uma ou mais categorias. As categorias pré-definidas não podem ser excluídas.
+      </div>
+
+      <!-- Grid de categorias -->
+      <div id="catGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;"></div>
+    </div>
+  </div>
+
+  <!-- Modal Nova/Editar Categoria -->
+  <div id="modalCategoria" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;align-items:center;justify-content:center;">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:420px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:20px;">
+        <div id="catModalTitulo" style="font-size:16px;font-weight:700;color:var(--text);">Nova Categoria</div>
+        <button onclick="document.getElementById('modalCategoria').style.display='none'" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+      </div>
+      <input type="hidden" id="catEditId">
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div>
+          <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:5px;">Nome *</label>
+          <input id="catNome" type="text" placeholder="Ex: Macroeconomia" class="tema-input" style="min-height:0;padding:9px 12px;">
+        </div>
+        <div>
+          <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:5px;">Ícone</label>
+          <input id="catIcone" type="text" placeholder="Ex: 📊" class="tema-input" style="min-height:0;padding:9px 12px;width:80px;">
+        </div>
+        <div>
+          <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:5px;">Cor</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;" id="catCores">
+            <button onclick="catSelecionarCor('#f5c842')" style="width:28px;height:28px;border-radius:50%;background:#f5c842;border:2px solid transparent;cursor:pointer;" title="Amarelo"></button>
+            <button onclick="catSelecionarCor('#e74c3c')" style="width:28px;height:28px;border-radius:50%;background:#e74c3c;border:2px solid transparent;cursor:pointer;" title="Vermelho"></button>
+            <button onclick="catSelecionarCor('#2ecc71')" style="width:28px;height:28px;border-radius:50%;background:#2ecc71;border:2px solid transparent;cursor:pointer;" title="Verde"></button>
+            <button onclick="catSelecionarCor('#3498db')" style="width:28px;height:28px;border-radius:50%;background:#3498db;border:2px solid transparent;cursor:pointer;" title="Azul"></button>
+            <button onclick="catSelecionarCor('#9b59b6')" style="width:28px;height:28px;border-radius:50%;background:#9b59b6;border:2px solid transparent;cursor:pointer;" title="Roxo"></button>
+            <button onclick="catSelecionarCor('#e67e22')" style="width:28px;height:28px;border-radius:50%;background:#e67e22;border:2px solid transparent;cursor:pointer;" title="Laranja"></button>
+            <button onclick="catSelecionarCor('#1abc9c')" style="width:28px;height:28px;border-radius:50%;background:#1abc9c;border:2px solid transparent;cursor:pointer;" title="Teal"></button>
+            <button onclick="catSelecionarCor('#95a5a6')" style="width:28px;height:28px;border-radius:50%;background:#95a5a6;border:2px solid transparent;cursor:pointer;" title="Cinza"></button>
+          </div>
+          <input type="hidden" id="catCor" value="#f5c842">
+        </div>
+        <div>
+          <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:5px;">Grupo / Área</label>
+          <select id="catGrupo" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-size:12px;outline:none;">
+            <option value="financas">💰 Finanças e Contabilidade</option>
+            <option value="conhecimento">📚 Conhecimento e Filosofia</option>
+            <option value="espiritualidade">🔮 Espiritualidade e Ordens</option>
+            <option value="saude">❤️ Saúde e Bem-Estar</option>
+            <option value="historia">🏛️ História e Civilização</option>
+            <option value="religiao">✝️ Religião e Fé</option>
+            <option value="viagens">✈️ Viagens e Cultura</option>
+            <option value="tecnologia">💻 Tecnologia</option>
+            <option value="outros">📦 Outros</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:20px;">
+        <button onclick="catSalvar()" style="flex:1;padding:11px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;">✓ Salvar</button>
+        <button onclick="document.getElementById('modalCategoria').style.display='none'" style="padding:11px 14px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:12px;">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- ==================== BANCO DE IMAGENS ==================== -->
 <div id="imagensApp" style="display:none;flex:1;flex-direction:column;height:100vh;overflow:hidden;">
   <div class="topbar">
@@ -2367,7 +2445,7 @@
   </div>
   <div style="flex:1;display:flex;overflow:hidden;">
     <!-- LEFT: Configurações -->
-    <div style="width:320px;min-width:320px;border-right:1px solid var(--border);overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;">
+    <div style="width:300px;min-width:300px;border-right:1px solid var(--border);overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">
       <div class="section">
         <div class="section-title">📚 Sobre o Livro</div>
         <label class="form-label">Título do Livro</label>
@@ -2425,7 +2503,7 @@
           <button onclick="livroSalvar()" class="btn btn-ghost" style="font-size:11px;">💾 .txt</button>
         </div>
       </div>
-      <div id="livroOutput" style="flex:1;overflow-y:auto;padding:24px;font-size:13px;line-height:1.9;color:var(--text);white-space:pre-wrap;font-family:'DM Sans',sans-serif;">
+      <div id="livroOutput" style="flex:1;overflow-y:auto;padding:32px 40px;font-size:14px;line-height:2.0;color:var(--text);white-space:pre-wrap;font-family:'DM Sans',sans-serif;max-width:900px;">
         <div style="text-align:center;padding:80px 20px;color:var(--text3);">
           <div style="font-size:40px;margin-bottom:16px;">📖</div>
           <div style="font-size:15px;font-weight:600;color:var(--text2);">Configure seu livro e clique em Gerar</div>
@@ -2446,7 +2524,7 @@
     </div>
   </div>
   <div style="flex:1;display:flex;overflow:hidden;">
-    <div style="width:320px;min-width:320px;border-right:1px solid var(--border);overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;">
+    <div style="width:280px;min-width:280px;border-right:1px solid var(--border);overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">
       <div class="section">
         <div class="section-title">🎯 Sobre a Apresentação</div>
         <label class="form-label">Título</label>
@@ -2487,7 +2565,7 @@
           <button onclick="apresSalvar()" class="btn btn-ghost" style="font-size:11px;">💾 .txt</button>
         </div>
       </div>
-      <div id="apresOutput" style="flex:1;overflow-y:auto;padding:24px;font-size:13px;line-height:1.9;color:var(--text);white-space:pre-wrap;font-family:'DM Sans',sans-serif;">
+      <div id="apresOutput" style="flex:1;overflow-y:auto;padding:32px 40px;font-size:14px;line-height:2.0;color:var(--text);white-space:pre-wrap;font-family:'DM Sans',sans-serif;max-width:900px;">
         <div style="text-align:center;padding:80px 20px;color:var(--text3);">
           <div style="font-size:40px;margin-bottom:16px;">🎯</div>
           <div style="font-size:15px;font-weight:600;color:var(--text2);">Configure e clique em Gerar</div>
@@ -2508,7 +2586,7 @@
     </div>
   </div>
   <div style="flex:1;display:flex;overflow:hidden;">
-    <div style="width:320px;min-width:320px;border-right:1px solid var(--border);overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;">
+    <div style="width:280px;min-width:280px;border-right:1px solid var(--border);overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">
       <div class="section">
         <div class="section-title">📄 Sobre o Documento</div>
         <label class="form-label">Título</label>
@@ -2558,7 +2636,7 @@
           <button onclick="docSalvar()" class="btn btn-ghost" style="font-size:11px;">💾 .txt</button>
         </div>
       </div>
-      <div id="docOutput" style="flex:1;overflow-y:auto;padding:24px;font-size:13px;line-height:1.9;color:var(--text);white-space:pre-wrap;font-family:'DM Sans',sans-serif;">
+      <div id="docOutput" style="flex:1;overflow-y:auto;padding:32px 40px;font-size:14px;line-height:2.0;color:var(--text);white-space:pre-wrap;font-family:'DM Sans',sans-serif;max-width:900px;">
         <div style="text-align:center;padding:80px 20px;color:var(--text3);">
           <div style="font-size:40px;margin-bottom:16px;">📄</div>
           <div style="font-size:15px;font-weight:600;color:var(--text2);">Configure e clique em Gerar</div>
@@ -3733,7 +3811,8 @@ function navIr(destino) {
      document.getElementById('telegramApp'),
      document.getElementById('enviosApp'),
      document.getElementById('repositorioApp'),
-     document.getElementById('imagensApp')]
+     document.getElementById('imagensApp'),
+     document.getElementById('categoriasApp')]
       .forEach(el => { if (el) el.style.display = 'none'; });
   }
 
@@ -3837,6 +3916,11 @@ function navIr(destino) {
     case 'imagens':
       show(document.getElementById('imagensApp'), 'column');
       setTimeout(() => imgInit(), 100);
+      break;
+
+    case 'categorias':
+      show(document.getElementById('categoriasApp'), 'column');
+      setTimeout(() => catInit(), 100);
       break;
 
     case 'whatsapp':
@@ -5219,7 +5303,7 @@ function exportarHTML() {
       <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Título / Nome do conteúdo</label>
       <input id="salvarRepoTitulo" type="text" placeholder="Ex: Newsletter Abril 2026 — Mercado Financeiro" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;" onkeydown="if(event.key==='Enter') confirmarSalvarRepo()">
     </div>
-    <div style="margin-bottom:16px;">
+    <div style="margin-bottom:12px;">
       <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Tipo</label>
       <select id="salvarRepoTipo" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;">
         <option value="newsletter">📰 Newsletter</option>
@@ -5229,6 +5313,11 @@ function exportarHTML() {
         <option value="documento">📑 Documento Word</option>
         <option value="gerador">✨ Gerador IA</option>
       </select>
+    </div>
+    <div style="margin-bottom:16px;">
+      <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Categorias</label>
+      <select id="salvarRepoCategorias" multiple style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:6px;color:var(--text);font-size:12px;outline:none;height:90px;" title="Segure Ctrl para selecionar múltiplas"></select>
+      <div style="font-size:10px;color:var(--text3);margin-top:3px;">Segure Ctrl para selecionar múltiplas categorias</div>
     </div>
     <div style="display:flex;gap:8px;">
       <button onclick="confirmarSalvarRepo()" style="flex:1;padding:12px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:14px;">💾 Salvar</button>
@@ -5365,7 +5454,7 @@ function imprimirNewsletter() {
       <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Título / Nome do conteúdo</label>
       <input id="salvarRepoTitulo" type="text" placeholder="Ex: Newsletter Abril 2026 — Mercado Financeiro" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;" onkeydown="if(event.key==='Enter') confirmarSalvarRepo()">
     </div>
-    <div style="margin-bottom:16px;">
+    <div style="margin-bottom:12px;">
       <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Tipo</label>
       <select id="salvarRepoTipo" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;">
         <option value="newsletter">📰 Newsletter</option>
@@ -5375,6 +5464,11 @@ function imprimirNewsletter() {
         <option value="documento">📑 Documento Word</option>
         <option value="gerador">✨ Gerador IA</option>
       </select>
+    </div>
+    <div style="margin-bottom:16px;">
+      <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Categorias</label>
+      <select id="salvarRepoCategorias" multiple style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:6px;color:var(--text);font-size:12px;outline:none;height:90px;" title="Segure Ctrl para selecionar múltiplas"></select>
+      <div style="font-size:10px;color:var(--text3);margin-top:3px;">Segure Ctrl para selecionar múltiplas categorias</div>
     </div>
     <div style="display:flex;gap:8px;">
       <button onclick="confirmarSalvarRepo()" style="flex:1;padding:12px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:14px;">💾 Salvar</button>
@@ -6807,9 +6901,13 @@ function salvarNoRepositorio(modulo) {
   document.getElementById('salvarRepoTitulo').placeholder = 'Ex: ' + (sugestao || modulo) + ' — ' + data;
   document.getElementById('salvarRepoTipo').value = tipos[modulo] || 'artigo';
   document.getElementById('salvarRepoPreview').textContent = texto.substring(0, 120) + '...';
-  document.getElementById('modalSalvarRepo').style.display = 'flex';
+  // Populate categories select
+  const catSel = document.getElementById('salvarRepoCategorias');
+  if (catSel && typeof catCarregar === 'function') {
+    catSel.innerHTML = catGetOptions([]);
+  }
 
-  // Focar no campo de título
+  document.getElementById('modalSalvarRepo').style.display = 'flex';
   setTimeout(() => document.getElementById('salvarRepoTitulo').focus(), 100);
 }
 
@@ -6846,7 +6944,10 @@ function confirmarSalvarRepo() {
     }
   }
 
-  const id = repoSalvar(tipo, titulo, _salvarRepoTexto, {modulo: _salvarRepoModulo}, htmlSalvo);
+  // Get selected categories
+  const catSel = document.getElementById('salvarRepoCategorias');
+  const categorias = catSel ? Array.from(catSel.selectedOptions).map(o => o.value) : [];
+  const id = repoSalvar(tipo, titulo, _salvarRepoTexto, {modulo: _salvarRepoModulo, categorias}, htmlSalvo);
   document.getElementById('modalSalvarRepo').style.display = 'none';
   showToast('✅ "' + titulo + '" salvo no Repositório!');
 }
@@ -6966,6 +7067,10 @@ function repoRenderizar() {
         <div style="font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(r.titulo)}</div>
         <div style="font-size:10px;color:var(--text3);margin-top:2px;">${r.tipo} · ${new Date(r.criadoEm).toLocaleDateString('pt-BR')} · ${(r.tamanho/1000).toFixed(1)}KB</div>
         <div style="font-size:11px;color:var(--text2);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml((r.conteudo||'').substring(0,80))}...</div>
+        ${r.extra?.categorias?.length ? `<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;">${(r.extra.categorias||[]).slice(0,3).map(cid => {
+          const cats = catCarregar(); const cat = cats.find(c=>c.id===cid);
+          return cat ? `<span style="font-size:9px;padding:1px 5px;border-radius:4px;background:${cat.cor}22;color:${cat.cor};border:1px solid ${cat.cor}44;">${cat.icone} ${cat.nome}</span>` : '';
+        }).join('')}</div>` : ''}
       </div>
       <button onclick="event.stopPropagation();repoExcluir('${r.id}')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;flex-shrink:0;padding:2px 6px;" title="Excluir">🗑</button>
     </div>`).join('');
@@ -7164,6 +7269,191 @@ function editarSalvar() {
   }
   document.getElementById('modalEditar').style.display = 'none';
 }
+
+// =============================================
+// SISTEMA DE CATEGORIAS
+// =============================================
+
+const CATEGORIAS_DEFAULT = [
+  // Finanças
+  { id: 'financas', nome: 'Finanças e Contabilidade', icone: '💰', cor: '#f5c842', grupo: 'financas', fixo: true },
+  { id: 'investimentos', nome: 'Investimentos', icone: '📈', cor: '#2ecc71', grupo: 'financas', fixo: true },
+  { id: 'tributario', nome: 'Tributário', icone: '📋', cor: '#e67e22', grupo: 'financas', fixo: true },
+  { id: 'gestao', nome: 'Gestão Empresarial', icone: '🏢', cor: '#3498db', grupo: 'financas', fixo: true },
+  { id: 'mercado', nome: 'Mercado de Capitais', icone: '🏦', cor: '#9b59b6', grupo: 'financas', fixo: true },
+  // Conhecimento
+  { id: 'filosofia', nome: 'Filosofia', icone: '🎭', cor: '#1abc9c', grupo: 'conhecimento', fixo: true },
+  { id: 'autodesenvolvimento', nome: 'Autodesenvolvimento', icone: '🌱', cor: '#27ae60', grupo: 'conhecimento', fixo: true },
+  { id: 'saude', nome: 'Saúde e Bem-Estar', icone: '❤️', cor: '#e74c3c', grupo: 'saude', fixo: true },
+  { id: 'historia', nome: 'História', icone: '🏛️', cor: '#795548', grupo: 'historia', fixo: true },
+  { id: 'viagens', nome: 'Viagens e Cultura', icone: '✈️', cor: '#00bcd4', grupo: 'viagens', fixo: true },
+  { id: 'tecnologia', nome: 'Tecnologia', icone: '💻', cor: '#607d8b', grupo: 'tecnologia', fixo: true },
+  // Religião
+  { id: 'catolicismo', nome: 'Catolicismo', icone: '✝️', cor: '#8e44ad', grupo: 'religiao', fixo: true },
+  { id: 'judaismo', nome: 'Judaísmo', icone: '✡️', cor: '#2980b9', grupo: 'religiao', fixo: true },
+  { id: 'islamismo', nome: 'Islamismo', icone: '☪️', cor: '#16a085', grupo: 'religiao', fixo: true },
+  // Ordens Iniciáticas
+  { id: 'maconaria', nome: 'Maçonaria', icone: '🔱', cor: '#c0392b', grupo: 'espiritualidade', fixo: true },
+  { id: 'rosacruz', nome: 'Rosacruz', icone: '🌹', cor: '#e91e63', grupo: 'espiritualidade', fixo: true },
+  { id: 'martinismo', nome: 'Martinismo', icone: '⭐', cor: '#673ab7', grupo: 'espiritualidade', fixo: true },
+  { id: 'sufismo', nome: 'Sufismo', icone: '🌙', cor: '#009688', grupo: 'espiritualidade', fixo: true },
+  { id: 'golden_dawn', nome: 'Golden Dawn', icone: '☀️', cor: '#ff9800', grupo: 'espiritualidade', fixo: true },
+  { id: 'oto', nome: 'O.T.O', icone: '🔯', cor: '#9c27b0', grupo: 'espiritualidade', fixo: true },
+  { id: 'pitagoricos', nome: 'Pitagóricos', icone: '📐', cor: '#3f51b5', grupo: 'espiritualidade', fixo: true },
+  { id: 'vedanta', nome: 'Vedanta', icone: '🕉️', cor: '#ff5722', grupo: 'espiritualidade', fixo: true },
+  { id: 'vajrayana', nome: 'Vajrayana', icone: '💎', cor: '#795548', grupo: 'espiritualidade', fixo: true },
+];
+
+const GRUPO_LABELS = {
+  financas: '💰 Finanças e Contabilidade',
+  conhecimento: '📚 Conhecimento e Filosofia',
+  espiritualidade: '🔮 Espiritualidade e Ordens',
+  saude: '❤️ Saúde e Bem-Estar',
+  historia: '🏛️ História e Civilização',
+  religiao: '✝️ Religião e Fé',
+  viagens: '✈️ Viagens e Cultura',
+  tecnologia: '💻 Tecnologia',
+  outros: '📦 Outros',
+};
+
+let _catCorSelecionada = '#f5c842';
+
+function catCarregar() {
+  try {
+    const salvas = JSON.parse(localStorage.getItem('fc_categorias') || '[]');
+    // Merge: defaults + user-created (não duplicar)
+    const ids = new Set(CATEGORIAS_DEFAULT.map(c => c.id));
+    const extras = salvas.filter(c => !ids.has(c.id));
+    return [...CATEGORIAS_DEFAULT, ...extras];
+  } catch(e) { return [...CATEGORIAS_DEFAULT]; }
+}
+
+function catSalvarDB(categorias) {
+  // Salvar apenas as não-fixas
+  const extras = categorias.filter(c => !c.fixo);
+  localStorage.setItem('fc_categorias', JSON.stringify(extras));
+}
+
+function catInit() {
+  catRenderizar();
+}
+
+function catRenderizar() {
+  const cats = catCarregar();
+  const grid = document.getElementById('catGrid');
+  if (!grid) return;
+
+  // Agrupar por grupo
+  const grupos = {};
+  cats.forEach(c => {
+    const g = c.grupo || 'outros';
+    if (!grupos[g]) grupos[g] = [];
+    grupos[g].push(c);
+  });
+
+  grid.innerHTML = Object.entries(grupos).map(([g, items]) => `
+    <div style="background:var(--surface2);border:1px solid var(--border2);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px;">
+      <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">${GRUPO_LABELS[g] || g}</div>
+      ${items.map(c => `
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--surface);border:1px solid ${c.cor}33;border-radius:8px;">
+          <div style="width:32px;height:32px;border-radius:8px;background:${c.cor}22;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">${c.icone||'📁'}</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:12px;font-weight:600;color:var(--text);">${escapeHtml(c.nome)}</div>
+            <div style="font-size:10px;margin-top:1px;"><span style="padding:1px 6px;border-radius:4px;background:${c.cor}22;color:${c.cor};">${c.fixo?'padrão':'personalizada'}</span></div>
+          </div>
+          <div style="display:flex;gap:4px;flex-shrink:0;">
+            <button onclick="catEditar('${c.id}')" style="width:26px;height:26px;border-radius:6px;background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.3);color:#4a9eff;cursor:pointer;font-size:12px;" title="Editar">✏️</button>
+            ${!c.fixo ? `<button onclick="catExcluir('${c.id}')" style="width:26px;height:26px;border-radius:6px;background:rgba(231,76,60,0.1);border:1px solid rgba(231,76,60,0.2);color:#e74c3c;cursor:pointer;font-size:12px;" title="Excluir">🗑</button>` : ''}
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+function catAbrirModal(id) {
+  document.getElementById('catEditId').value = id || '';
+  document.getElementById('catModalTitulo').textContent = id ? 'Editar Categoria' : 'Nova Categoria';
+  if (id) {
+    const c = catCarregar().find(x => x.id === id);
+    if (c) {
+      document.getElementById('catNome').value = c.nome;
+      document.getElementById('catIcone').value = c.icone || '';
+      document.getElementById('catGrupo').value = c.grupo || 'outros';
+      _catCorSelecionada = c.cor || '#f5c842';
+      document.getElementById('catCor').value = _catCorSelecionada;
+    }
+  } else {
+    document.getElementById('catNome').value = '';
+    document.getElementById('catIcone').value = '';
+    document.getElementById('catGrupo').value = 'outros';
+    _catCorSelecionada = '#f5c842';
+  }
+  document.getElementById('modalCategoria').style.display = 'flex';
+  setTimeout(() => document.getElementById('catNome').focus(), 100);
+}
+
+function catEditar(id) { catAbrirModal(id); }
+
+function catSelecionarCor(cor) {
+  _catCorSelecionada = cor;
+  document.getElementById('catCor').value = cor;
+  document.querySelectorAll('#catCores button').forEach(b => {
+    b.style.border = b.style.background === cor ? '2px solid white' : '2px solid transparent';
+  });
+}
+
+function catSalvar() {
+  const nome = document.getElementById('catNome')?.value.trim();
+  if (!nome) { showToast('⚠ O nome é obrigatório.'); return; }
+  const id = document.getElementById('catEditId')?.value;
+  const icone = document.getElementById('catIcone')?.value.trim() || '📁';
+  const cor = _catCorSelecionada || '#f5c842';
+  const grupo = document.getElementById('catGrupo')?.value || 'outros';
+
+  // Get extras (non-fixed)
+  const extras = JSON.parse(localStorage.getItem('fc_categorias') || '[]');
+
+  if (id) {
+    // Edit: check if it's a default one
+    const defIdx = CATEGORIAS_DEFAULT.findIndex(c => c.id === id);
+    if (defIdx >= 0) {
+      // Store override for default categories
+      const overrides = JSON.parse(localStorage.getItem('fc_cat_overrides') || '{}');
+      overrides[id] = { nome, icone, cor, grupo };
+      localStorage.setItem('fc_cat_overrides', JSON.stringify(overrides));
+    } else {
+      const extIdx = extras.findIndex(c => c.id === id);
+      if (extIdx >= 0) extras[extIdx] = { ...extras[extIdx], nome, icone, cor, grupo };
+      localStorage.setItem('fc_categorias', JSON.stringify(extras));
+    }
+    showToast('✅ Categoria atualizada!');
+  } else {
+    // New category
+    const newId = 'cat_' + Date.now();
+    extras.push({ id: newId, nome, icone, cor, grupo, fixo: false });
+    localStorage.setItem('fc_categorias', JSON.stringify(extras));
+    showToast('✅ Categoria criada!');
+  }
+
+  document.getElementById('modalCategoria').style.display = 'none';
+  catRenderizar();
+}
+
+function catExcluir(id) {
+  if (!confirm('Excluir esta categoria?')) return;
+  const extras = JSON.parse(localStorage.getItem('fc_categorias') || '[]').filter(c => c.id !== id);
+  localStorage.setItem('fc_categorias', JSON.stringify(extras));
+  catRenderizar();
+  showToast('🗑 Categoria removida.');
+}
+
+// Helper: get categories for selects
+function catGetOptions(selecionadas) {
+  const cats = catCarregar();
+  return cats.map(c =>
+    `<option value="${c.id}" ${selecionadas?.includes(c.id)?'selected':''}>${c.icone} ${c.nome}</option>`
+  ).join('');
+}
+
 </script>
 
 <!-- ==================== MODAL COMPARTILHAR ==================== -->
@@ -7252,7 +7542,7 @@ function editarSalvar() {
       <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Título / Nome do conteúdo</label>
       <input id="salvarRepoTitulo" type="text" placeholder="Ex: Newsletter Abril 2026 — Mercado Financeiro" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;" onkeydown="if(event.key==='Enter') confirmarSalvarRepo()">
     </div>
-    <div style="margin-bottom:16px;">
+    <div style="margin-bottom:12px;">
       <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Tipo</label>
       <select id="salvarRepoTipo" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;">
         <option value="newsletter">📰 Newsletter</option>
@@ -7262,6 +7552,11 @@ function editarSalvar() {
         <option value="documento">📑 Documento Word</option>
         <option value="gerador">✨ Gerador IA</option>
       </select>
+    </div>
+    <div style="margin-bottom:16px;">
+      <label style="font-size:11px;color:#888;text-transform:uppercase;display:block;margin-bottom:6px;">Categorias</label>
+      <select id="salvarRepoCategorias" multiple style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:6px;color:var(--text);font-size:12px;outline:none;height:90px;" title="Segure Ctrl para selecionar múltiplas"></select>
+      <div style="font-size:10px;color:var(--text3);margin-top:3px;">Segure Ctrl para selecionar múltiplas categorias</div>
     </div>
     <div style="display:flex;gap:8px;">
       <button onclick="confirmarSalvarRepo()" style="flex:1;padding:12px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:14px;">💾 Salvar</button>

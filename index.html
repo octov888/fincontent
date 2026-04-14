@@ -29,12 +29,7 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-body {
+  body {
     font-family: 'DM Sans', sans-serif;
     background: var(--bg);
     color: var(--text);
@@ -1139,7 +1134,6 @@ body {
 </head>
 <body>
 
-
 <!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="logo">
@@ -1230,15 +1224,12 @@ body {
       <span class="icon">🎯</span> Apresentação
     </div>
     <div class="nav-item" id="nav-documento" onclick="navIr('documento')">
-      <span class="icon">📝</span> Artigo
+      <span class="icon">📄</span> Documento Word
     </div>
   </div>
 
   <div class="nav-section">
     <div class="nav-label">Config</div>
-    <div class="nav-item" id="nav-iam" onclick="navIr('iam')">
-      <span class="icon">🔐</span> IAM · Identidade
-    </div>
     <div class="nav-item" id="nav-voz" onclick="navIr('voz')">
       <span class="icon">🎨</span> Voz da Marca
     </div>
@@ -1254,7 +1245,7 @@ body {
     <div class="plan-badge">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
         <div class="plan-name">Plano Pro Ativo</div>
-        <button onclick="iamAbrirMinhaSenha()" title="Alterar senha" style="background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);color:#4a9eff;border-radius:6px;padding:3px 8px;font-size:11px;cursor:pointer;margin-right:4px;">🔑</button><button onclick="fazerLogout()" title="Sair" style="background:rgba(231,76,60,0.15);border:1px solid rgba(231,76,60,0.3);color:#e74c3c;border-radius:6px;padding:2px 8px;font-size:10px;cursor:pointer;font-family:'DM Sans',sans-serif;">Sair</button>
+        <button onclick="fazerLogout()" title="Sair" style="background:rgba(231,76,60,0.15);border:1px solid rgba(231,76,60,0.3);color:#e74c3c;border-radius:6px;padding:2px 8px;font-size:10px;cursor:pointer;font-family:'DM Sans',sans-serif;">Sair</button>
       </div>
       <div class="plan-status"><span class="plan-dot"></span>Conectado · Meta API ✓</div>
       <div id="sidebarUsuario" style="font-size:10px;color:var(--text3);margin-top:4px;"></div>
@@ -2290,6 +2281,7 @@ body {
       <div>
         <label class="form-label">Telegram (@usuario)</label>
         <input id="cTelegram" type="text" placeholder="@usuario" class="tema-input" style="min-height:0;padding:8px 12px;">
+        </div>
       </div>
       <div>
         <label class="form-label">E-mail</label>
@@ -2472,7 +2464,7 @@ body {
             <div style="font-size:10px;color:var(--text3);margin-top:2px;">Netlify</div>
           </div>
           <div style="background:var(--surface);border-radius:8px;padding:12px;text-align:center;">
-            <div id="dominioStatusUrl" style="font-size:11px;font-weight:600;color:#f5c842;margin-top:4px;word-break:break-all;">cartainvest.com</div>
+            <div id="dominioStatusUrl" style="font-size:11px;font-weight:600;color:#f5c842;margin-top:4px;word-break:break-all;">fincontent.netlify.app</div>
             <div style="font-size:10px;color:var(--text3);margin-top:2px;">URL atual</div>
           </div>
           <div style="background:var(--surface);border-radius:8px;padding:12px;text-align:center;">
@@ -2520,7 +2512,7 @@ body {
               <div style="background:#0a0a0a;border-radius:6px;padding:8px 12px;margin-top:8px;font-family:monospace;font-size:11px;color:#2ecc71;">
                 Tipo: CNAME<br>
                 Nome: @ (ou subdomínio)<br>
-                Valor: <span id="dominioNetlifyTarget">cartainvest.com</span><br>
+                Valor: <span id="dominioNetlifyTarget">fincontent.netlify.app</span><br>
                 TTL: 3600
               </div>
             </div>
@@ -2806,8 +2798,6 @@ body {
           <option>Acadêmico</option>
           <option>Prático e direto</option>
         </select>
-        <label class="form-label" style="margin-top:10px;">Categoria</label>
-        <select id="livroCat" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;" onchange=""></select>
       </div>
       <div class="section">
         <div class="section-title">📖 Referências Bibliográficas</div>
@@ -2885,8 +2875,6 @@ body {
           <option value="pptx">Estrutura para PowerPoint</option>
           <option value="pdf">Estrutura para PDF</option>
         </select>
-        <label class="form-label" style="margin-top:10px;">Categoria</label>
-        <select id="apresCat" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;" onchange=""></select>
       </div>
       <div class="section">
         <div class="section-title">📚 Referências</div>
@@ -2917,10 +2905,10 @@ body {
   </div>
 </div>
 
-<!-- ==================== ARTIGO ==================== -->
+<!-- ==================== DOCUMENTO WORD ==================== -->
 <div id="documentoApp" style="display:none;flex:1;flex-direction:column;height:100vh;overflow:hidden;">
   <div class="topbar">
-    <div class="page-title">📝 <span>Artigo</span></div>
+    <div class="page-title">📄 Documento <span>Word</span></div>
     <div class="topbar-right">
       <button class="btn btn-ghost" onclick="docExportar()">📋 Exportar</button>
       <button class="btn btn-primary" onclick="docGerar()">✦ Gerar com IA</button>
@@ -2929,7 +2917,7 @@ body {
   <div style="flex:1;display:flex;overflow:hidden;">
     <div style="width:280px;min-width:280px;border-right:1px solid var(--border);overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">
       <div class="section">
-        <div class="section-title">📝 Sobre o Artigo</div>
+        <div class="section-title">📄 Sobre o Documento</div>
         <label class="form-label">Título</label>
         <input type="text" id="docTitulo" class="tema-input" placeholder="Ex: Relatório de Análise Financeira" style="min-height:0;padding:8px 12px;">
         <label class="form-label" style="margin-top:10px;">Tipo de documento</label>
@@ -2958,18 +2946,16 @@ body {
           <option>Executivo e conciso</option>
           <option>Educativo e claro</option>
         </select>
-        <label class="form-label" style="margin-top:10px;">Categoria</label>
-        <select id="docCat" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;" onchange=""></select>
       </div>
       <div class="section">
         <div class="section-title">📚 Referências</div>
         <div id="docRefsList" style="max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;"></div>
       </div>
-      <button class="gerar-btn" id="docGerarBtn" onclick="docGerar()">✦ Gerar Artigo com IA</button>
+      <button class="gerar-btn" id="docGerarBtn" onclick="docGerar()">✦ Gerar Documento com IA</button>
     </div>
     <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
       <div style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
-        <span style="font-size:12px;font-weight:600;color:var(--text2);">📝 Conteúdo do Artigo</span>
+        <span style="font-size:12px;font-weight:600;color:var(--text2);">📄 Conteúdo do Documento</span>
         <div style="display:flex;gap:6px;">
           <span id="docStatus" style="font-size:11px;padding:3px 8px;border-radius:8px;background:var(--surface3);color:var(--text3);">Aguardando</span>
           <button onclick="docCopiar()" class="btn btn-ghost" style="font-size:11px;">📋 Copiar</button>
@@ -2983,7 +2969,7 @@ body {
         <div style="text-align:center;padding:80px 20px;color:var(--text3);">
           <div style="font-size:40px;margin-bottom:16px;">📄</div>
           <div style="font-size:15px;font-weight:600;color:var(--text2);">Configure e clique em Gerar</div>
-          <div style="font-size:12px;margin-top:8px;">A IA criará o artigo completo com formatação profissional</div>
+          <div style="font-size:12px;margin-top:8px;">A IA criará o documento completo com formatação profissional</div>
         </div>
       </div>
     </div>
@@ -3233,11 +3219,10 @@ body {
         <span style="font-size:12px;color:var(--text2);">Lembrar de mim (sessão permanente)</span>
       </label>
 
-      <div style="background:rgba(245,200,66,0.08);border:1px solid rgba(245,200,66,0.2);border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:11px;text-align:center;line-height:1.8;">
-        <div style="color:#f5c842;font-weight:700;margin-bottom:4px;">🔑 Credenciais de acesso</div>
-        <div style="color:#a0a0c0;">E-mail: <strong style="color:#fff;user-select:all;">roger783954@gmail.com</strong></div>
-        <div style="color:#a0a0c0;">Senha: <strong style="color:#f5c842;user-select:all;">fincontent2026</strong></div>
-      </div>
+      <div style="background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.3);border-radius:8px;padding:12px;margin-bottom:14px;text-align:center;">
+          <div style="font-size:10px;color:#888;margin-bottom:4px;">SENHA DE ACESSO</div>
+          <div style="font-size:32px;font-weight:900;color:#f5c842;letter-spacing:10px;">1234</div>
+        </div>
       <button id="btnEntrar" onclick="fazerLogin()"
         style="width:100%;padding:13px;background:var(--accent);color:#000;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;border:none;border-radius:10px;cursor:pointer;">
         Entrar →
@@ -3250,7 +3235,7 @@ body {
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // =====================
 // VARIÁVEIS GLOBAIS — declaradas primeiro para evitar hoisting issues
 // =====================
@@ -3314,8 +3299,8 @@ function validarApiKeyInput() {}
 // =====================
 // USUÁRIOS CADASTRADOS — edite aqui para adicionar/remover
 const USUARIOS_SISTEMA = [
-  { email: 'roger783954@gmail.com', senha: 'fincontent2026', nome: 'Roger', perfil: 'admin' },
-  { email: 'admin@fincontent.com', senha: 'admin2026', nome: 'Administrador', perfil: 'admin' },
+  { email: 'roger783954@gmail.com', senha: '1234', nome: 'Roger', perfil: 'admin' },
+  { email: 'admin@fincontent.com', senha: '1234', nome: 'Admin', perfil: 'admin' },
 ];
 
 // =====================
@@ -3381,6 +3366,19 @@ function selecionarUsuario(email) {
 }
 
 function fazerLogin() {
+    // ── ACESSO DIRETO (senha: 1234) ──────────────────────
+    var _em = (document.getElementById('loginEmail').value||'').trim().toLowerCase();
+    var _pw = (document.getElementById('loginSenha').value||'').trim();
+    if ((_em==='roger783954@gmail.com'||_em==='admin@fincontent.com') && _pw==='1234') {
+      document.getElementById('loginScreen').style.display='none';
+      var _sb=document.getElementById('sidebarUsuario');
+      if(_sb) _sb.textContent='👤 '+(_em==='roger783954@gmail.com'?'Roger':'Admin');
+      localStorage.setItem('fc_auth_perm',JSON.stringify({email:_em,nome:_em==='roger783954@gmail.com'?'Roger':'Admin',ts:Date.now(),permanente:true}));
+      try{showToast('✅ Bem-vindo!');}catch(e){}
+      return;
+    }
+    // ─────────────────────────────────────────────────────
+
   try {
     const email = (document.getElementById('loginEmail').value || '').trim().toLowerCase();
     const senha = (document.getElementById('loginSenha').value || '').trim();
@@ -3420,35 +3418,10 @@ function fazerLogin() {
 
     document.getElementById('loginScreen').style.display = 'none';
     const sidebar = document.getElementById('sidebarUsuario');
-    if (sidebar) sidebar.innerHTML = '👤 ' + user.nome + '<br><span style="color:#f5c842;">' + (user.perfil||'admin').toUpperCase() + '</span>';
+    if (sidebar) sidebar.textContent = '👤 ' + user.nome + ' · ' + user.email;
     if (btn2) { btn2.textContent = 'Entrar →'; btn2.disabled = false; }
 
-    // Registrar sessão no IAM
-    try {
-      if (typeof IAM !== 'undefined') {
-        const iamUsers = IAM.getUsers();
-        let iamUser = iamUsers.find(u => u.email.toLowerCase() === user.email.toLowerCase());
-        if (!iamUser) {
-          // Criar no IAM se não existir
-          iamUser = {
-            id: 'usr_' + Date.now(), nome: user.nome, email: user.email,
-            senhaHash: '', perfil: user.perfil || 'admin', status: 'ativo',
-            createdAt: Date.now(), lastLogin: Date.now(), tentativas: 0, bloqueadoAte: null,
-            twoFA: { ativo: false, secret: null }, obs: 'Criado via login legado'
-          };
-          iamUsers.push(iamUser);
-          IAM.saveUsers(iamUsers);
-        }
-        iamUser.lastLogin = Date.now();
-        IAM.saveUsers(IAM.getUsers().map(u => u.id === iamUser.id ? iamUser : u));
-        IAM.createSession(iamUser);
-        IAM.audit('login', 'Login bem-sucedido: ' + user.nome, iamUser.id);
-      }
-    } catch(iamErr) { console.warn('IAM sync:', iamErr); }
-
     try { showToast('✅ Bem-vindo, ' + user.nome + '!'); } catch(e) {}
-    // Inicializar IAM em background
-    try { if (typeof iamBootstrap === 'function') iamBootstrap(); } catch(e) {}
 
   } catch(err) {
     console.error('Erro no login:', err);
@@ -3484,8 +3457,6 @@ function atualizarSidebarUsuario(auth) {
 
 function fazerLogout() {
   if (!confirm('Deseja sair do sistema?')) return;
-  // Registrar logout no IAM
-  try { if (typeof IAM !== 'undefined') IAM.logout(); } catch(e) {}
   localStorage.removeItem('fc_auth_perm');
   document.getElementById('loginEmail').value = '';
   document.getElementById('loginSenha').value = '';
@@ -4219,9 +4190,6 @@ let npArticles = {};
 // NAVEGAÇÃO CENTRAL
 // =====================
 function navIr(destino) {
-  if (['livro','apresentacao','documento'].includes(destino)) {
-    setTimeout(() => popularSelectsCategorias(), 80);
-  }
   // Marcar item ativo
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   const navEl = document.getElementById('nav-' + destino);
@@ -4246,8 +4214,7 @@ function navIr(destino) {
      document.getElementById('imagensApp'),
      document.getElementById('categoriasApp'),
      document.getElementById('dominioApp'),
-     document.getElementById('resultadosApp'),
-     document.getElementById('iamApp')]
+     document.getElementById('resultadosApp')]
       .forEach(el => { if (el) el.style.display = 'none'; });
   }
 
@@ -4355,7 +4322,7 @@ function navIr(destino) {
 
     case 'categorias':
       show(document.getElementById('categoriasApp'), 'column');
-      setTimeout(() => { catInit(); popularSelectsCategorias(); }, 150);
+      setTimeout(() => catInit(), 100);
       break;
 
     case 'whatsapp':
@@ -4416,11 +4383,6 @@ function navIr(destino) {
 
     default:
       show(mainApp, 'column');
-    case 'iam':
-      show(document.getElementById('iamApp'), 'column');
-      setTimeout(() => iamInit(), 100);
-      break;
-
   }
 }
 
@@ -5877,931 +5839,6 @@ function imprimirNewsletter() {
   win.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><style>@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&display=swap');*{margin:0;padding:0;box-sizing:border-box;}body{background:#e8e4dc;padding:20px;font-family:Georgia,serif;}.newsletter{background:#fff;max-width:800px;margin:0 auto;}.np-masthead{padding:16px 24px 12px;text-align:center;}.np-title{font-size:48px;font-weight:900;color:#fff;line-height:1;}.np-tagline{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-top:4px;}.np-top-bar{display:flex;justify-content:space-between;font-size:10px;margin-bottom:8px;font-family:Arial;border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:6px;color:rgba(255,255,255,0.6);}.np-edition-bar{color:#fff;font-size:10px;font-family:Arial;padding:4px 24px;display:flex;justify-content:space-between;}.np-body{padding:16px 20px;}.np-headline-section{border-bottom:2px solid #1a1a1a;padding-bottom:16px;margin-bottom:16px;}.np-headline-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;font-family:Arial;font-weight:700;margin-bottom:4px;}.np-headline{font-size:26px;font-weight:900;line-height:1.15;margin-bottom:8px;border-bottom:1px solid #ccc;padding-bottom:8px;}.np-lead{font-size:13px;font-style:italic;color:#333;margin-bottom:10px;line-height:1.5;border-left:3px solid;padding-left:10px;}.np-article-text{font-size:12px;line-height:1.75;color:#222;column-count:2;column-gap:20px;column-rule:1px solid #ddd;text-align:justify;}.np-quote{background:#f5f5f0;border-left:4px solid;padding:10px 14px;margin:10px 0;font-size:13px;font-style:italic;line-height:1.5;break-inside:avoid;}.np-columns{display:grid;grid-template-columns:1fr 1fr;gap:16px;border-top:2px solid #1a1a1a;padding-top:14px;margin-bottom:14px;}.np-column{border-right:1px solid #ccc;padding-right:14px;}.np-column:last-child{border-right:none;padding-right:0;}.np-col-headline{font-size:14px;font-weight:900;line-height:1.2;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid #1a1a1a;}.np-col-text{font-size:11px;line-height:1.65;text-align:justify;color:#333;}.np-footer-article{border-top:2px solid #1a1a1a;padding-top:12px;}.np-footer-columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}.np-footer-col{font-size:11px;line-height:1.6;color:#333;border-right:1px solid #ddd;padding-right:12px;text-align:justify;}.np-footer-col:last-child{border-right:none;}.np-section-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;font-family:Arial;font-weight:700;margin-bottom:4px;}.np-paper-footer{color:#aaa;padding:8px 24px;font-size:9px;font-family:Arial;display:flex;justify-content:space-between;}@media print{body{padding:0;background:#fff;}}</style></head><body>${content}</body></html>`);
   win.document.close();
 }
-// ============================================================
-// IAM — Identity and Access Management
-// ============================================================
-const IAM = (() => {
-  const KEY_USERS    = 'fc_iam_users';
-  const KEY_SESSION  = 'fc_iam_session';
-  const KEY_AUDIT    = 'fc_iam_audit';
-  const KEY_POLITICA = 'fc_iam_politica';
-  let _pendingUserId = null; // for 2FA login flow
-
-  // ── Políticas default ─────────────────────────────────────
-  const POLITICA_DEFAULT = {
-    minCarac: true, maiuscula: true, numero: true, especial: true,
-    sessionTimeout: 8, maxTentativas: 5, durBloqueio: 30
-  };
-
-  function getPolitica() {
-    try { return { ...POLITICA_DEFAULT, ...JSON.parse(localStorage.getItem(KEY_POLITICA) || '{}') }; }
-    catch { return { ...POLITICA_DEFAULT }; }
-  }
-  function salvarPolitica(p) { localStorage.setItem(KEY_POLITICA, JSON.stringify(p)); }
-
-  // ── Hash de senha (SHA-256 via SubtleCrypto) ──────────────
-  async function hashSenha(senha) {
-    const enc = new TextEncoder();
-    const buf = await crypto.subtle.digest('SHA-256', enc.encode(senha + 'fc_salt_2026'));
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-  }
-
-  // ── TOTP (2FA) ────────────────────────────────────────────
-  function gerarSecret2FA() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
-    let s = '';
-    for (let i = 0; i < 16; i++) s += chars[Math.floor(Math.random() * chars.length)];
-    return s;
-  }
-
-  function base32decode(s) {
-    const map = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
-    let bits = '', bytes = [];
-    for (const c of s.toUpperCase().replace(/=+$/, '')) {
-      const v = map.indexOf(c);
-      if (v < 0) continue;
-      bits += v.toString(2).padStart(5, '0');
-    }
-    for (let i = 0; i + 8 <= bits.length; i += 8) bytes.push(parseInt(bits.slice(i, i + 8), 2));
-    return new Uint8Array(bytes);
-  }
-
-  async function totpCode(secret, time) {
-    const t = Math.floor((time || Date.now() / 1000) / 30);
-    const msg = new DataView(new ArrayBuffer(8));
-    msg.setUint32(4, t, false);
-    const key = await crypto.subtle.importKey('raw', base32decode(secret), { name: 'HMAC', hash: 'SHA-1' }, false, ['sign']);
-    const sig = new Uint8Array(await crypto.subtle.sign('HMAC', key, msg.buffer));
-    const offset = sig[19] & 0xf;
-    const code = ((sig[offset] & 0x7f) << 24 | sig[offset+1] << 16 | sig[offset+2] << 8 | sig[offset+3]) % 1000000;
-    return String(code).padStart(6, '0');
-  }
-
-  async function verifyTOTP(secret, token) {
-    const now = Date.now() / 1000;
-    for (const delta of [0, -1, 1]) {
-      if (await totpCode(secret, now + delta * 30) === token) return true;
-    }
-    return false;
-  }
-
-  function otpAuthURL(secret, email) {
-    return `otpauth://totp/FinContent%20AI:${encodeURIComponent(email)}?secret=${secret}&issuer=FinContent%20AI`;
-  }
-
-  // ── Usuários ──────────────────────────────────────────────
-  function getUsers() {
-    try { return JSON.parse(localStorage.getItem(KEY_USERS) || '[]'); }
-    catch { return []; }
-  }
-  function saveUsers(users) { localStorage.setItem(KEY_USERS, JSON.stringify(users)); }
-
-  async function ensureAdmin() {
-    let users = getUsers();
-
-    // Admin principal: Roger
-    if (!users.find(u => u.email === 'roger783954@gmail.com')) {
-      const h = await hashSenha('Roger@2026!');
-      const roger = {
-        id: 'usr_roger', nome: 'Roger', email: 'roger783954@gmail.com',
-        senhaHash: h, perfil: 'admin', status: 'ativo',
-        createdAt: Date.now(), lastLogin: null, tentativas: 0, bloqueadoAte: null,
-        twoFA: { ativo: false, secret: null }, obs: 'Administrador principal'
-      };
-      users = getUsers();
-      users.unshift(roger);
-      saveUsers(users);
-    }
-
-    // Resetar bloqueios expirados
-    users = getUsers();
-    let changed = false;
-    users.forEach(u => {
-      if (u.bloqueadoAte && Date.now() > u.bloqueadoAte) {
-        u.bloqueadoAte = null; u.tentativas = 0; changed = true;
-      }
-    });
-    if (changed) saveUsers(users);
-
-    // Admin fallback genérico
-    users = getUsers();
-    if (!users.find(u => u.email === 'admin@fincontent.com')) {
-      const h2 = await hashSenha('Admin@2026!');
-      const admin = {
-        id: 'usr_admin', nome: 'Administrador', email: 'admin@fincontent.com',
-        senhaHash: h2, perfil: 'admin', status: 'ativo',
-        createdAt: Date.now(), lastLogin: null, tentativas: 0, bloqueadoAte: null,
-        twoFA: { ativo: false, secret: null }, obs: 'Conta admin de suporte'
-      };
-      users.push(admin);
-      saveUsers(users);
-    }
-  }
-
-  // ── Sessão ────────────────────────────────────────────────
-  function getSession() {
-    try { return JSON.parse(localStorage.getItem(KEY_SESSION) || 'null'); }
-    catch { return null; }
-  }
-  function saveSession(s) {
-    if (s) localStorage.setItem(KEY_SESSION, JSON.stringify(s));
-    else localStorage.removeItem(KEY_SESSION);
-  }
-
-  function isSessionValid() {
-    const s = getSession();
-    if (!s) return false;
-    if (Date.now() > s.expiresAt) { saveSession(null); return false; }
-    return true;
-  }
-
-  function getCurrentUser() {
-    const s = getSession();
-    if (!s) return null;
-    return getUsers().find(u => u.id === s.userId) || null;
-  }
-
-  function createSession(user) {
-    const pol = getPolitica();
-    const token = Array.from(crypto.getRandomValues(new Uint8Array(24))).map(b => b.toString(16).padStart(2,'0')).join('');
-    const session = {
-      token, userId: user.id, userName: user.nome, userEmail: user.email, userPerfil: user.perfil,
-      createdAt: Date.now(), expiresAt: Date.now() + pol.sessionTimeout * 3600000,
-      userAgent: navigator.userAgent.substring(0, 80)
-    };
-    saveSession(session);
-
-    // Salvar em lista de sessões ativas
-    let sessoes = [];
-    try { sessoes = JSON.parse(localStorage.getItem('fc_iam_sessoes') || '[]'); } catch {}
-    sessoes.unshift({ ...session });
-    sessoes = sessoes.slice(0, 50);
-    localStorage.setItem('fc_iam_sessoes', JSON.stringify(sessoes));
-    return session;
-  }
-
-  // ── Auditoria ─────────────────────────────────────────────
-  function audit(acao, detalhes, userId) {
-    const s = getSession();
-    const uid = userId || (s ? s.userId : 'anon');
-    let log = [];
-    try { log = JSON.parse(localStorage.getItem(KEY_AUDIT) || '[]'); } catch {}
-    log.unshift({ id: Date.now(), acao, detalhes, userId: uid, timestamp: Date.now() });
-    log = log.slice(0, 500);
-    localStorage.setItem(KEY_AUDIT, JSON.stringify(log));
-  }
-
-  function getAuditLog() {
-    try { return JSON.parse(localStorage.getItem(KEY_AUDIT) || '[]'); } catch { return []; }
-  }
-
-  // ── Validação de senha ────────────────────────────────────
-  function validarSenha(senha) {
-    const pol = getPolitica();
-    const erros = [];
-    if (pol.minCarac && senha.length < 8) erros.push('Mínimo 8 caracteres');
-    if (pol.maiuscula && !/[A-Z]/.test(senha)) erros.push('Letra maiúscula');
-    if (pol.numero && !/[0-9]/.test(senha)) erros.push('Número');
-    if (pol.especial && !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(senha)) erros.push('Caractere especial');
-    return erros;
-  }
-
-  function forcaSenha(senha) {
-    let score = 0;
-    if (senha.length >= 8) score++;
-    if (senha.length >= 12) score++;
-    if (/[A-Z]/.test(senha)) score++;
-    if (/[0-9]/.test(senha)) score++;
-    if (/[^A-Za-z0-9]/.test(senha)) score++;
-    const labels = ['', 'Muito fraca', 'Fraca', 'Média', 'Forte', 'Muito forte'];
-    const colors = ['', '#e74c3c', '#e67e22', '#f5c842', '#2ecc71', '#1abc9c'];
-    return { score, label: labels[score] || '', color: colors[score] || '#e74c3c', pct: (score / 5) * 100 };
-  }
-
-  // ── Login ─────────────────────────────────────────────────
-  async function login(email, senha) {
-    const users = getUsers();
-    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-
-    if (!user) {
-      audit('login_falhou', `E-mail não encontrado: ${email}`, 'anon');
-      return { ok: false, msg: 'E-mail ou senha incorretos.' };
-    }
-
-    // Verificar bloqueio
-    if (user.bloqueadoAte && Date.now() < user.bloqueadoAte) {
-      const min = Math.ceil((user.bloqueadoAte - Date.now()) / 60000);
-      return { ok: false, msg: `Conta bloqueada. Tente em ${min} minutos.` };
-    }
-
-    if (user.status !== 'ativo') return { ok: false, msg: 'Conta inativa. Contate o administrador.' };
-
-    const hash = await hashSenha(senha);
-    if (hash !== user.senhaHash) {
-      const pol = getPolitica();
-      user.tentativas = (user.tentativas || 0) + 1;
-      if (user.tentativas >= pol.maxTentativas) {
-        user.bloqueadoAte = Date.now() + pol.durBloqueio * 60000;
-        audit('bloqueado', `${user.nome} bloqueado após ${user.tentativas} tentativas`, user.id);
-      }
-      const idx = users.findIndex(u => u.id === user.id);
-      users[idx] = user;
-      saveUsers(users);
-      audit('login_falhou', `Senha incorreta para: ${email}`, user.id);
-      const rem = pol.maxTentativas - user.tentativas;
-      return { ok: false, msg: rem > 0 ? `Senha incorreta. ${rem} tentativa(s) restante(s).` : 'Conta bloqueada.' };
-    }
-
-    // Reset tentativas
-    user.tentativas = 0;
-    user.bloqueadoAte = null;
-    const idx = users.findIndex(u => u.id === user.id);
-    users[idx] = user;
-    saveUsers(users);
-
-    // 2FA check
-    if (user.twoFA && user.twoFA.ativo) {
-      _pendingUserId = user.id;
-      return { ok: false, need2FA: true };
-    }
-
-    // Criar sessão
-    user.lastLogin = Date.now();
-    users[idx] = user;
-    saveUsers(users);
-    createSession(user);
-    audit('login', `Login bem-sucedido: ${user.nome}`, user.id);
-    return { ok: true, user };
-  }
-
-  async function verify2FA(token) {
-    if (!_pendingUserId) return { ok: false, msg: 'Sessão expirada. Tente novamente.' };
-    const users = getUsers();
-    const user = users.find(u => u.id === _pendingUserId);
-    if (!user || !user.twoFA.secret) return { ok: false, msg: 'Erro 2FA.' };
-
-    const valid = await verifyTOTP(user.twoFA.secret, token);
-    if (!valid) { audit('2fa', `Código 2FA inválido para: ${user.email}`, user.id); return { ok: false, msg: 'Código inválido.' }; }
-
-    user.lastLogin = Date.now();
-    const idx = users.findIndex(u => u.id === _pendingUserId);
-    users[idx] = user;
-    saveUsers(users);
-    _pendingUserId = null;
-    createSession(user);
-    audit('login', `Login 2FA bem-sucedido: ${user.nome}`, user.id);
-    return { ok: true, user };
-  }
-
-  function logout() {
-    const s = getSession();
-    if (s) audit('logout', `Logout: ${s.userName}`, s.userId);
-    saveSession(null);
-  }
-
-  // ── Gestão de usuários ────────────────────────────────────
-  async function criarUsuario(data) {
-    const erros = validarSenha(data.senha);
-    if (erros.length) return { ok: false, msg: 'Senha fraca: ' + erros.join(', ') };
-    const users = getUsers();
-    if (users.find(u => u.email.toLowerCase() === data.email.toLowerCase()))
-      return { ok: false, msg: 'E-mail já cadastrado.' };
-    const hash = await hashSenha(data.senha);
-    const user = {
-      id: 'usr_' + Date.now(), nome: data.nome, email: data.email,
-      senhaHash: hash, perfil: data.perfil || 'usuario', status: data.status || 'ativo',
-      createdAt: Date.now(), lastLogin: null, tentativas: 0, bloqueadoAte: null,
-      twoFA: { ativo: false, secret: null }, obs: data.obs || ''
-    };
-    users.push(user);
-    saveUsers(users);
-    audit('usuario_criado', `Usuário criado: ${user.nome} (${user.email}) — perfil: ${user.perfil}`);
-    return { ok: true, user };
-  }
-
-  async function atualizarUsuario(id, data) {
-    const users = getUsers();
-    const idx = users.findIndex(u => u.id === id);
-    if (idx < 0) return { ok: false, msg: 'Usuário não encontrado.' };
-    const u = users[idx];
-    u.nome = data.nome || u.nome;
-    u.perfil = data.perfil || u.perfil;
-    u.status = data.status || u.status;
-    u.obs = data.obs !== undefined ? data.obs : u.obs;
-    if (data.senha) {
-      const erros = validarSenha(data.senha);
-      if (erros.length) return { ok: false, msg: 'Senha fraca: ' + erros.join(', ') };
-      u.senhaHash = await hashSenha(data.senha);
-      audit('senha_alterada', `Senha alterada para: ${u.nome}`, id);
-    }
-    users[idx] = u;
-    saveUsers(users);
-    return { ok: true, user: u };
-  }
-
-  function desbloquearUsuario(id) {
-    const users = getUsers();
-    const idx = users.findIndex(u => u.id === id);
-    if (idx < 0) return;
-    users[idx].tentativas = 0;
-    users[idx].bloqueadoAte = null;
-    saveUsers(users);
-    audit('desbloqueado', `Usuário desbloqueado: ${users[idx].nome}`, id);
-  }
-
-  async function alterarMinhaSenha(senhaAtual, novaSenha) {
-    const s = getSession();
-    if (!s) return { ok: false, msg: 'Sem sessão ativa.' };
-    const users = getUsers();
-    const idx = users.findIndex(u => u.id === s.userId);
-    if (idx < 0) return { ok: false, msg: 'Usuário não encontrado.' };
-    const hashAtual = await hashSenha(senhaAtual);
-    if (hashAtual !== users[idx].senhaHash) return { ok: false, msg: 'Senha atual incorreta.' };
-    const erros = validarSenha(novaSenha);
-    if (erros.length) return { ok: false, msg: 'Senha fraca: ' + erros.join(', ') };
-    users[idx].senhaHash = await hashSenha(novaSenha);
-    saveUsers(users);
-    audit('senha_alterada', `Própria senha alterada: ${users[idx].nome}`);
-    return { ok: true };
-  }
-
-  // ── Permissões ────────────────────────────────────────────
-  const PERMISSOES = {
-    admin:   ['*'],
-    gestor:  ['gerador','newsletter','fontes','biblioteca','calendario','posts','instagram','facebook','resultados','desempenho','insights','livro','apresentacao','documento','clientes','whatsapp','telegram','envios','repositorio','imagens','categorias','voz'],
-    usuario: ['gerador','newsletter','fontes','biblioteca','livro','apresentacao','documento','repositorio','imagens']
-  };
-
-  function temPermissao(modulo) {
-    const u = getCurrentUser();
-    if (!u) return false;
-    const perms = PERMISSOES[u.perfil] || [];
-    return perms.includes('*') || perms.includes(modulo);
-  }
-
-  // ── Recuperação de senha ──────────────────────────────────
-  function gerarRecuperacao(email) {
-    const users = getUsers();
-    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-    if (!user) return null;
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
-    const expires = Date.now() + 15 * 60000; // 15 min
-    localStorage.setItem('fc_iam_rec', JSON.stringify({ userId: user.id, code, expires }));
-    audit('recuperacao_senha', `Código gerado para: ${email}`, user.id);
-    return code;
-  }
-
-  // ── Setup 2FA ─────────────────────────────────────────────
-  function setup2FA(userId) {
-    const users = getUsers();
-    const user = users.find(u => u.id === userId);
-    if (!user) return null;
-    const secret = gerarSecret2FA();
-    return { secret, otpauth: otpAuthURL(secret, user.email) };
-  }
-
-  async function ativar2FA(userId, token, secret) {
-    const ok = await verifyTOTP(secret, token);
-    if (!ok) return { ok: false, msg: 'Código inválido.' };
-    const users = getUsers();
-    const idx = users.findIndex(u => u.id === userId);
-    if (idx < 0) return { ok: false, msg: 'Usuário não encontrado.' };
-    users[idx].twoFA = { ativo: true, secret };
-    saveUsers(users);
-    audit('2fa', `2FA ativado para: ${users[idx].nome}`, userId);
-    return { ok: true };
-  }
-
-  function desativar2FA(userId) {
-    const users = getUsers();
-    const idx = users.findIndex(u => u.id === userId);
-    if (idx < 0) return;
-    users[idx].twoFA = { ativo: false, secret: null };
-    saveUsers(users);
-    audit('2fa', `2FA desativado para: ${users[idx].nome}`, userId);
-  }
-
-  // ── Exportações públicas ──────────────────────────────────
-  return {
-    init: ensureAdmin, // async login, logout, verify2FA,
-    isSessionValid, getCurrentUser, getSession, createSession,
-    getUsers, saveUsers, criarUsuario, atualizarUsuario, desbloquearUsuario,
-    alterarMinhaSenha, getPolitica, salvarPolitica, validarSenha, forcaSenha,
-    audit, getAuditLog, temPermissao,
-    setup2FA, ativar2FA, desativar2FA, gerarRecuperacao,
-    totpCode, gerarSecret2FA
-  };
-})();
-
-// ── UI do IAM ────────────────────────────────────────────────
-let _iam2faSetupData = null;
-
-async function iamBootstrap() {
-  await IAM.init();
-  try {
-    if (typeof USUARIOS_SISTEMA !== 'undefined') {
-      USUARIOS_SISTEMA.forEach(u => {
-        const users = IAM.getUsers();
-        if (!users.find(x => x.email.toLowerCase() === u.email.toLowerCase())) {
-          users.push({
-            id: 'usr_' + u.email.split('@')[0], nome: u.nome, email: u.email,
-            senhaHash: '', perfil: u.perfil || 'admin', status: 'ativo',
-            createdAt: Date.now(), lastLogin: null, tentativas: 0, bloqueadoAte: null,
-            twoFA: { ativo: false, secret: null }, obs: 'Usuário legado'
-          });
-          IAM.saveUsers(users);
-        }
-      });
-    }
-  } catch(e) {}
-}
-
-function iamAplicarPermissoes() {
-  const user = IAM.getCurrentUser();
-  if (!user) return;
-  // Hide nav items user doesn't have access to
-  const navMap = {
-    'nav-config': 'config', 'nav-dominio': 'dominio',
-    'nav-clientes': 'clientes', 'nav-whatsapp': 'whatsapp',
-    'nav-telegram': 'telegram', 'nav-envios': 'envios',
-    'nav-iam': 'iam'
-  };
-  Object.entries(navMap).forEach(([navId, modulo]) => {
-    const el = document.getElementById(navId);
-    if (el) el.style.display = IAM.temPermissao(modulo) ? '' : 'none';
-  });
-}
-
-function iamAtualizarSidebarUser() {
-  const user = IAM.getCurrentUser();
-  if (!user) return;
-  const el = document.getElementById('sidebarUsuario');
-  if (el) el.innerHTML = `👤 ${user.nome}<br><span style="color:#f5c842;">${user.perfil.toUpperCase()}</span>`;
-}
-
-// Login UI
-function iamDoLogin() {
-  const email = document.getElementById('iamEmail').value.trim();
-  const senha = document.getElementById('iamSenha').value;
-  const btn = document.getElementById('iamBtnLogin');
-  if (!email || !senha) { iamLoginMsg('Preencha e-mail e senha.', 'warn'); return; }
-  btn.textContent = 'Entrando...'; btn.disabled = true;
-  IAM.login(email, senha).then(r => {
-    btn.textContent = 'Entrar'; btn.disabled = false;
-    if (r.ok) {
-      iamFinalizarLogin();
-    } else if (r.need2FA) {
-      document.getElementById('iamStep1').style.display = 'none';
-      document.getElementById('iamStep2').style.display = 'block';
-      setTimeout(() => document.getElementById('iam2fa0')?.focus(), 100);
-    } else {
-      iamLoginMsg(r.msg, 'error');
-    }
-  });
-}
-
-function iamFinalizarLogin() {
-  document.getElementById('iamLoginScreen').style.display = 'none';
-  document.getElementById('appContent').style.display = 'flex';
-  document.querySelector('.sidebar')?.style.removeProperty('display');
-  iamAplicarPermissoes();
-  iamAtualizarSidebarUser();
-  // Esconder dica de credenciais após primeiro login
-  const cred = document.getElementById('iamCredPadrao');
-  if (cred) cred.style.display = 'none';
-  showToast('✅ Bem-vindo, ' + IAM.getCurrentUser()?.nome + '!');
-}
-
-function iamLoginMsg(msg, tipo) {
-  const el = document.getElementById('iamLoginMsg');
-  el.style.display = 'block';
-  el.textContent = msg;
-  el.style.background = tipo === 'error' ? 'rgba(231,76,60,0.15)' : 'rgba(245,200,66,0.1)';
-  el.style.border = tipo === 'error' ? '1px solid rgba(231,76,60,0.3)' : '1px solid rgba(245,200,66,0.2)';
-  el.style.color = tipo === 'error' ? '#e74c3c' : '#f5c842';
-}
-
-function iamShowRecuperar() {
-  document.getElementById('iamStep1').style.display = 'none';
-  document.getElementById('iamStep3').style.display = 'block';
-}
-
-function iamShowLogin() {
-  document.getElementById('iamStep3').style.display = 'none';
-  document.getElementById('iamStep2').style.display = 'none';
-  document.getElementById('iamStep1').style.display = 'block';
-  document.getElementById('iamLoginMsg').style.display = 'none';
-}
-
-function iamStep2Cancel() {
-  document.getElementById('iamStep2').style.display = 'none';
-  document.getElementById('iamStep1').style.display = 'block';
-  [0,1,2,3,4,5].forEach(i => { const el = document.getElementById('iam2fa'+i); if(el) el.value=''; });
-}
-
-function iam2faNext(el, nextIdx) {
-  if (el.value && nextIdx !== null) document.getElementById('iam2fa'+nextIdx)?.focus();
-  if (nextIdx === null) iamVerify2FA();
-}
-
-function iam2faDel(e, el, prevIdx) {
-  if (e.key === 'Backspace' && !el.value && prevIdx !== null) document.getElementById('iam2fa'+prevIdx)?.focus();
-}
-
-function iamVerify2FA() {
-  const code = [0,1,2,3,4,5].map(i => document.getElementById('iam2fa'+i)?.value || '').join('');
-  if (code.length < 6) return;
-  IAM.verify2FA(code).then(r => {
-    if (r.ok) iamFinalizarLogin();
-    else { iamLoginMsg(r.msg, 'error'); [0,1,2,3,4,5].forEach(i => { const el = document.getElementById('iam2fa'+i); if(el) el.value=''; }); document.getElementById('iam2fa0')?.focus(); }
-  });
-}
-
-function iamEnviarRecuperar() {
-  const email = document.getElementById('iamRecEmail').value.trim();
-  if (!email) return;
-  const code = IAM.gerarRecuperacao(email);
-  if (code) {
-    iamLoginMsg(`Código gerado: ${code}\n(Em produção seria enviado por e-mail. Guarde por 15 minutos.)`, 'warn');
-  } else {
-    iamLoginMsg('E-mail não encontrado.', 'error');
-  }
-}
-
-function iamToggleSenha(inputId, btn) {
-  const el = document.getElementById(inputId);
-  if (!el) return;
-  el.type = el.type === 'password' ? 'text' : 'password';
-  btn.textContent = el.type === 'password' ? '👁' : '🙈';
-}
-
-// Logout
-function fazerLogout() {
-  if (!confirm('Deseja encerrar sua sessão?')) return;
-  IAM.logout();
-  location.reload();
-}
-
-function iamEncerrarSessao() { fazerLogout(); }
-
-// IAM Panel
-function iamInit() {
-  iamRenderUsuarios();
-  iamRenderSessaoInfo();
-  iamCarregarPoliticas();
-  iamAtualizarBadgeSessao();
-}
-
-function iamAtualizarBadgeSessao() {
-  const s = IAM.getSession();
-  const badgeNome = document.getElementById('iamSessaoBadgeNome');
-  if (badgeNome && s) badgeNome.textContent = s.userName + ' · ' + (s.userPerfil || '').toUpperCase();
-}
-
-function iamTab(tab) {
-  const tabs = ['usuarios','sessoes','auditoria','politicas'];
-  tabs.forEach(t => {
-    const painel = document.getElementById('iamPainel'+t.charAt(0).toUpperCase()+t.slice(1));
-    if (painel) painel.style.display = t === tab ? 'flex' : 'none';
-    const btn = document.getElementById('iamTab'+t.charAt(0).toUpperCase()+t.slice(1));
-    if (btn) {
-      btn.style.borderBottom = t === tab ? '2px solid #f5c842' : '2px solid transparent';
-      btn.style.color = t === tab ? '#f5c842' : 'var(--text2)';
-    }
-  });
-  if (tab === 'sessoes') iamRenderSessoes();
-  if (tab === 'auditoria') iamRenderAuditoria();
-  if (tab === 'politicas') iamCarregarPoliticas();
-  if (tab === 'usuarios') iamRenderUsuarios();
-}
-
-function iamRenderUsuarios() {
-  const users = IAM.getUsers();
-  const busca = (document.getElementById('iamBusca')?.value || '').toLowerCase();
-  const filtroPerfil = document.getElementById('iamFiltroPerfil')?.value || '';
-  const filtroStatus = document.getElementById('iamFiltroStatus')?.value || '';
-  
-  let lista = users.filter(u => {
-    const matchB = !busca || u.nome.toLowerCase().includes(busca) || u.email.toLowerCase().includes(busca);
-    const matchP = !filtroPerfil || u.perfil === filtroPerfil;
-    const matchS = !filtroStatus || iamUserStatus(u) === filtroStatus;
-    return matchB && matchP && matchS;
-  });
-
-  // Stats
-  document.getElementById('iamStatTotal').textContent = users.length;
-  document.getElementById('iamStatAtivos').textContent = users.filter(u => u.status === 'ativo' && !(u.bloqueadoAte && Date.now() < u.bloqueadoAte)).length;
-  document.getElementById('iamStatAdmins').textContent = users.filter(u => u.perfil === 'admin').length;
-  document.getElementById('iamStatBloqueados').textContent = users.filter(u => u.bloqueadoAte && Date.now() < u.bloqueadoAte).length;
-
-  const perfilColors = { admin: '#9b59b6', gestor: '#3498db', usuario: '#2ecc71' };
-  const statusColors = { ativo: '#2ecc71', inativo: '#95a5a6', bloqueado: '#e74c3c' };
-  
-  const cur = IAM.getSession();
-  // Atualizar contador na tab
-  const cntEl = document.getElementById('iamTabUsuariosCnt');
-  if (cntEl) cntEl.textContent = users.length;
-
-  const html = lista.length === 0 ? '<div style="text-align:center;padding:60px 20px;color:var(--text3);"><div style="font-size:36px;margin-bottom:12px;">👥</div><div style="font-size:14px;font-weight:600;color:var(--text2);">Nenhum usuário encontrado</div><div style="font-size:12px;margin-top:6px;">Clique em + Novo Usuário para começar</div></div>' :
-    lista.map(u => {
-      const st = iamUserStatus(u);
-      const isCur = cur && cur.userId === u.id;
-      const lastLogin = u.lastLogin ? new Date(u.lastLogin).toLocaleString('pt-BR') : 'Nunca';
-      return `<div style="background:var(--surface2);border:1px solid ${isCur ? 'rgba(245,200,66,0.3)' : 'var(--border)'};border-radius:10px;padding:14px;display:flex;align-items:center;gap:12px;">
-        <div style="width:42px;height:42px;border-radius:50%;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">${u.nome.charAt(0).toUpperCase()}</div>
-        <div style="flex:1;min-width:0;">
-          <div style="font-size:13px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px;">
-            ${u.nome} ${isCur ? '<span style="font-size:9px;background:rgba(245,200,66,0.2);color:#f5c842;padding:1px 5px;border-radius:4px;">VOCÊ</span>' : ''}
-            ${u.twoFA?.ativo ? '<span style="font-size:9px;background:rgba(46,204,113,0.2);color:#2ecc71;padding:1px 5px;border-radius:4px;">2FA</span>' : ''}
-          </div>
-          <div style="font-size:11px;color:var(--text3);margin-top:1px;">${u.email}</div>
-          <div style="font-size:10px;color:var(--text3);margin-top:2px;">Último login: ${lastLogin}</div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">
-          <span style="font-size:10px;padding:2px 7px;border-radius:10px;background:${perfilColors[u.perfil]}22;color:${perfilColors[u.perfil]};font-weight:700;">${u.perfil.toUpperCase()}</span>
-          <span style="font-size:10px;padding:2px 7px;border-radius:10px;background:${statusColors[st]}22;color:${statusColors[st]};">${st}</span>
-          <div style="display:flex;gap:4px;margin-top:4px;">
-            <button onclick="iamEditarUsuario('${u.id}')" style="padding:3px 7px;background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);border-radius:5px;color:#4a9eff;font-size:10px;cursor:pointer;">✏ Editar</button>
-            ${st === 'bloqueado' ? `<button onclick="iamDesbloquear('${u.id}')" style="padding:3px 7px;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.2);border-radius:5px;color:#2ecc71;font-size:10px;cursor:pointer;">🔓</button>` : ''}
-            ${!u.twoFA?.ativo ? `<button onclick="iamSetup2FA('${u.id}')" style="padding:3px 7px;background:rgba(155,89,182,0.1);border:1px solid rgba(155,89,182,0.2);border-radius:5px;color:#9b59b6;font-size:10px;cursor:pointer;">2FA</button>` : `<button onclick="iamDesativar2FA('${u.id}')" style="padding:3px 7px;background:rgba(231,76,60,0.1);border:1px solid rgba(231,76,60,0.2);border-radius:5px;color:#e74c3c;font-size:10px;cursor:pointer;">−2FA</button>`}
-          </div>
-        </div>
-      </div>`;
-    }).join('');
-  
-  document.getElementById('iamListaUsuarios').innerHTML = html;
-}
-
-function iamUserStatus(u) {
-  if (u.bloqueadoAte && Date.now() < u.bloqueadoAte) return 'bloqueado';
-  return u.status;
-}
-
-function iamRenderSessoes() {
-  let sessoes = [];
-  try { sessoes = JSON.parse(localStorage.getItem('fc_iam_sessoes') || '[]'); } catch {}
-  const cur = IAM.getSession();
-  const html = sessoes.length === 0 ? '<div style="text-align:center;padding:40px;color:var(--text3);">Sem sessões registradas</div>' :
-    sessoes.map(s => {
-      const isCur = cur && cur.token === s.token;
-      const expired = Date.now() > s.expiresAt;
-      const exp = new Date(s.expiresAt).toLocaleString('pt-BR');
-      const cri = new Date(s.createdAt).toLocaleString('pt-BR');
-      return `<div style="background:var(--surface2);border:1px solid ${isCur ? 'rgba(245,200,66,0.3)' : 'var(--border)'};border-radius:8px;padding:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
-        <div>
-          <div style="font-size:12px;font-weight:600;color:var(--text);">${s.userName || 'Usuário'} ${isCur ? '<span style="font-size:9px;background:rgba(245,200,66,0.2);color:#f5c842;padding:1px 5px;border-radius:4px;">ATIVA</span>' : ''}</div>
-          <div style="font-size:10px;color:var(--text3);">Iniciada: ${cri} · Expira: ${exp}</div>
-          <div style="font-size:10px;color:var(--text3);margin-top:2px;">${s.userAgent?.substring(0,60) || ''}...</div>
-        </div>
-        <span style="font-size:10px;padding:2px 7px;border-radius:8px;background:${expired?'rgba(231,76,60,0.15)':'rgba(46,204,113,0.15)'};color:${expired?'#e74c3c':'#2ecc71'};">${expired?'Expirada':'Ativa'}</span>
-      </div>`;
-    }).join('');
-  document.getElementById('iamListaSessoes').innerHTML = html;
-}
-
-function iamEncerrarTodasSessoes() {
-  if (!confirm('Encerrar todas as sessões (incluindo a sua)?')) return;
-  localStorage.removeItem('fc_iam_sessoes');
-  IAM.logout();
-  location.reload();
-}
-
-function iamRenderAuditoria() {
-  const log = IAM.getAuditLog();
-  const filtro = document.getElementById('iamAudFiltro')?.value || '';
-  const lista = filtro ? log.filter(l => l.acao === filtro) : log;
-  const acaoCores = {
-    login: '#2ecc71', logout: '#95a5a6', login_falhou: '#e74c3c',
-    bloqueado: '#c0392b', senha_alterada: '#f5c842', usuario_criado: '#3498db',
-    '2fa': '#9b59b6', recuperacao_senha: '#e67e22', desbloqueado: '#1abc9c'
-  };
-  const html = lista.length === 0 ? '<div style="text-align:center;padding:40px;color:var(--text3);">Sem registros de auditoria</div>' :
-    lista.map(l => {
-      const cor = acaoCores[l.acao] || '#606080';
-      const dt = new Date(l.timestamp).toLocaleString('pt-BR');
-      return `<div style="background:var(--surface2);border-left:3px solid ${cor};border-radius:0 6px 6px 0;padding:8px 12px;display:flex;align-items:center;gap:10px;">
-        <div style="flex:1;">
-          <span style="font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;background:${cor}22;color:${cor};">${l.acao}</span>
-          <span style="font-size:11px;color:var(--text2);margin-left:8px;">${l.detalhes}</span>
-        </div>
-        <span style="font-size:10px;color:var(--text3);white-space:nowrap;">${dt}</span>
-      </div>`;
-    }).join('');
-  document.getElementById('iamListaAuditoria').innerHTML = html;
-}
-
-function iamLimparAuditoria() {
-  if (!confirm('Limpar todo o log de auditoria?')) return;
-  localStorage.removeItem('fc_iam_audit');
-  iamRenderAuditoria();
-  showToast('Log limpo.');
-}
-
-function iamRenderSessaoInfo() {
-  const s = IAM.getSession();
-  const el = document.getElementById('iamSessaoInfo');
-  if (!el || !s) return;
-  const exp = new Date(s.expiresAt).toLocaleTimeString('pt-BR');
-  const inicio = new Date(s.createdAt).toLocaleTimeString('pt-BR');
-  const perfil = s.userPerfil || 'usuario';
-  const perfilCores = { admin: '#9b59b6', gestor: '#3498db', usuario: '#2ecc71' };
-  const cor = perfilCores[perfil] || '#2ecc71';
-  el.innerHTML = `
-    <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
-      <span style="font-size:14px;">👤</span>
-      <span style="font-weight:600;color:var(--text);">${s.userName}</span>
-    </div>
-    <div style="font-size:10px;margin-bottom:2px;">
-      <span style="background:${cor}22;color:${cor};padding:1px 6px;border-radius:4px;font-weight:700;">${perfil.toUpperCase()}</span>
-    </div>
-    <div style="font-size:10px;color:var(--text3);margin-top:4px;">📧 ${s.userEmail || ''}</div>
-    <div style="font-size:10px;color:var(--text3);">🕐 Início: ${inicio}</div>
-    <div style="font-size:10px;color:var(--text3);">⏱ Expira: ${exp}</div>
-  `;
-}
-
-function iamCarregarPoliticas() {
-  const p = IAM.getPolitica();
-  const set = (id, val) => { const el = document.getElementById(id); if (el) { if(el.type==='checkbox') el.checked=val; else el.value=val; } };
-  set('polMinCarac', p.minCarac); set('polMaiuscula', p.maiuscula);
-  set('polNumero', p.numero); set('polEspecial', p.especial);
-  set('polSessionTimeout', p.sessionTimeout);
-  set('polMaxTentativas', p.maxTentativas); set('polDurBloquio', p.durBloqueio);
-}
-
-function iamSalvarPoliticas() {
-  const get = id => { const el = document.getElementById(id); return el ? (el.type==='checkbox' ? el.checked : Number(el.value)) : null; };
-  IAM.salvarPolitica({
-    minCarac: get('polMinCarac'), maiuscula: get('polMaiuscula'),
-    numero: get('polNumero'), especial: get('polEspecial'),
-    sessionTimeout: get('polSessionTimeout') || 8,
-    maxTentativas: get('polMaxTentativas') || 5,
-    durBloqueio: get('polDurBloquio') || 30
-  });
-  showToast('✅ Políticas salvas!');
-}
-
-// Modal usuário
-function iamAbrirNovoUsuario() {
-  document.getElementById('iamModalTitulo').textContent = 'Novo Usuário';
-  document.getElementById('iamEditId').value = '';
-  document.getElementById('iamNome').value = '';
-  document.getElementById('iamEmailNovo').value = '';
-  document.getElementById('iamEmailNovo').disabled = false;
-  document.getElementById('iamPerfil').value = 'usuario';
-  document.getElementById('iamStatusNovo').value = 'ativo';
-  document.getElementById('iamSenhaNova').value = '';
-  document.getElementById('iamObs').value = '';
-  document.getElementById('iamSenhaArea').style.display = 'block';
-  document.getElementById('iamEditSenhaToggle').style.display = 'none';
-  document.getElementById('iamSenhaForca').textContent = '';
-  document.getElementById('iamSenhaBar').style.width = '0';
-  document.getElementById('iamModalUsuario').style.display = 'flex';
-}
-
-function iamEditarUsuario(id) {
-  const u = IAM.getUsers().find(x => x.id === id);
-  if (!u) return;
-  document.getElementById('iamModalTitulo').textContent = 'Editar Usuário';
-  document.getElementById('iamEditId').value = id;
-  document.getElementById('iamNome').value = u.nome;
-  document.getElementById('iamEmailNovo').value = u.email;
-  document.getElementById('iamEmailNovo').disabled = true;
-  document.getElementById('iamPerfil').value = u.perfil;
-  document.getElementById('iamStatusNovo').value = u.status;
-  document.getElementById('iamObs').value = u.obs || '';
-  document.getElementById('iamSenhaArea').style.display = 'none';
-  document.getElementById('iamEditSenhaToggle').style.display = 'block';
-  document.getElementById('iamAlterarSenha').checked = false;
-  document.getElementById('iamSenhaNova').value = '';
-  document.getElementById('iamModalUsuario').style.display = 'flex';
-}
-
-function iamFecharModal() { document.getElementById('iamModalUsuario').style.display = 'none'; }
-
-function iamSalvarUsuario() {
-  const id = document.getElementById('iamEditId').value;
-  const nome = document.getElementById('iamNome').value.trim();
-  const email = document.getElementById('iamEmailNovo').value.trim();
-  const perfil = document.getElementById('iamPerfil').value;
-  const status = document.getElementById('iamStatusNovo').value;
-  const senha = document.getElementById('iamSenhaNova').value;
-  const obs = document.getElementById('iamObs').value;
-
-  if (!nome || (!id && !email)) { showToast('⚠ Preencha nome e e-mail.'); return; }
-
-  const alterarSenha = document.getElementById('iamAlterarSenha')?.checked;
-
-  if (id) {
-    const data = { nome, perfil, status, obs };
-    if (alterarSenha && senha) data.senha = senha;
-    IAM.atualizarUsuario(id, data).then(r => {
-      if (r.ok) { iamFecharModal(); iamRenderUsuarios(); showToast('✅ Usuário atualizado!'); }
-      else showToast('⚠ ' + r.msg);
-    });
-  } else {
-    if (!senha) { showToast('⚠ Informe uma senha.'); return; }
-    IAM.criarUsuario({ nome, email, senha, perfil, status, obs }).then(r => {
-      if (r.ok) { iamFecharModal(); iamRenderUsuarios(); showToast('✅ Usuário criado!'); }
-      else showToast('⚠ ' + r.msg);
-    });
-  }
-}
-
-function iamChecarSenha() {
-  const senha = document.getElementById('iamSenhaNova')?.value || '';
-  const f = IAM.forcaSenha(senha);
-  const el = document.getElementById('iamSenhaForca');
-  const bar = document.getElementById('iamSenhaBar');
-  if (el) { el.textContent = senha ? f.label : ''; el.style.color = f.color; }
-  if (bar) { bar.style.width = f.pct + '%'; bar.style.background = f.color; }
-}
-
-function iamChecarSenhaAlt() {
-  const senha = document.getElementById('iamSenhaNovaAlt')?.value || '';
-  const f = IAM.forcaSenha(senha);
-  const el = document.getElementById('iamSenhaForcaAlt');
-  if (el) { el.textContent = senha ? f.label : ''; el.style.color = f.color; }
-}
-
-function iamDesbloquear(id) {
-  IAM.desbloquearUsuario(id);
-  iamRenderUsuarios();
-  showToast('✅ Usuário desbloqueado!');
-}
-
-// 2FA
-function iamSetup2FA(userId) {
-  const data = IAM.setup2FA(userId);
-  if (!data) return;
-  _iam2faSetupData = { userId, secret: data.secret };
-  document.getElementById('iam2faSecret').textContent = data.secret;
-  // QR code via QR API
-  const qr = document.getElementById('iam2faQR');
-  qr.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(data.otpauth)}" style="border-radius:8px;width:160px;height:160px;" alt="QR Code 2FA">`;
-  document.getElementById('iam2faConfirm').value = '';
-  document.getElementById('iam2faModal').style.display = 'flex';
-}
-
-function iamConfirmar2FA() {
-  if (!_iam2faSetupData) return;
-  const token = document.getElementById('iam2faConfirm').value.trim();
-  IAM.ativar2FA(_iam2faSetupData.userId, token, _iam2faSetupData.secret).then(r => {
-    if (r.ok) {
-      document.getElementById('iam2faModal').style.display = 'none';
-      _iam2faSetupData = null;
-      iamRenderUsuarios();
-      showToast('✅ 2FA ativado com sucesso!');
-    } else {
-      showToast('⚠ ' + r.msg);
-    }
-  });
-}
-
-function iamDesativar2FA(userId) {
-  if (!confirm('Desativar 2FA deste usuário?')) return;
-  IAM.desativar2FA(userId);
-  iamRenderUsuarios();
-  showToast('2FA desativado.');
-}
-
-// Alterar minha senha
-function iamAbrirMinhaSenha() {
-  document.getElementById('iamSenhaAtual').value = '';
-  document.getElementById('iamSenhaNovaAlt').value = '';
-  document.getElementById('iamSenhaConfAlt').value = '';
-  document.getElementById('iamSenhaForcaAlt').textContent = '';
-  document.getElementById('iamModalMinhaSenha').style.display = 'flex';
-}
-
-function iamAlterarMinhaSenha() {
-  const atual = document.getElementById('iamSenhaAtual').value;
-  const nova = document.getElementById('iamSenhaNovaAlt').value;
-  const conf = document.getElementById('iamSenhaConfAlt').value;
-  if (nova !== conf) { showToast('⚠ As senhas não coincidem.'); return; }
-  IAM.alterarMinhaSenha(atual, nova).then(r => {
-    if (r.ok) {
-      document.getElementById('iamModalMinhaSenha').style.display = 'none';
-      showToast('✅ Senha alterada com sucesso!');
-    } else {
-      showToast('⚠ ' + r.msg);
-    }
-  });
-}
-
-// Exportar auditoria
-function iamExportarAuditoria() {
-  const log = IAM.getAuditLog();
-  const csv = 'Timestamp,Ação,Usuário,Detalhes\n' + log.map(l =>
-    `"${new Date(l.timestamp).toLocaleString('pt-BR')}","${l.acao}","${l.userId}","${l.detalhes.replace(/"/g,'""')}"`
-  ).join('\n');
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = Object.assign(document.createElement('a'), { href: url, download: 'auditoria_iam.csv' });
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
 </script>
 
 <!-- ==================== MODAL COMPARTILHAR ==================== -->
@@ -6976,6 +6013,10 @@ function iamExportarAuditoria() {
     </div>
   </div>
 </div>
+  win.document.close();
+  setTimeout(() => win.print(), 800);
+  closeModal('modalExportar');
+}
 
 <script>
 function abrirPreviewJanela() {
@@ -7475,8 +6516,6 @@ async function livroGerar() {
   if (!apiKey || apiKey.length < 20) { showToast('⚠ Configure sua API Key nas Configurações!'); return; }
 
   const titulo = document.getElementById('livroTitulo')?.value.trim() || '';
-  const catEl = document.getElementById('livroCat');
-  const catNome = catEl?.selectedOptions[0]?.text || '';
   const tema = document.getElementById('livroTema')?.value.trim() || '';
   const publico = document.getElementById('livroPublico')?.value.trim() || 'leitores em geral';
   const capitulos = document.getElementById('livroCapitulos')?.value || '8';
@@ -7499,8 +6538,7 @@ async function livroGerar() {
   if (output) output.innerHTML = '<div style="text-align:center;padding:60px;"><div class="loading-dots" style="justify-content:center;"><span></span><span></span><span></span></div><div style="margin-top:12px;color:var(--text3);font-size:13px;">A IA está escrevendo seu livro...</div></div>';
 
   const prompts = {
-    estrutura: `Crie a estrutura completa de um livro com as seguintes especificações:\n- Título: "${titulo || tema}"\n- Tema: ${tema}
-Categoria: ${catNome || "Finanças e Contabilidade"}\n- Público-alvo: ${publico}\n- Número de capítulos: ${capitulos}\n- Tom: ${tom}\n\nInclua: prefácio, índice detalhado com descrição de cada capítulo, introdução e conclusão.${refs ? `\n\nReferências bibliográficas para embasar: ${refs}` : ''}`,
+    estrutura: `Crie a estrutura completa de um livro com as seguintes especificações:\n- Título: "${titulo || tema}"\n- Tema: ${tema}\n- Público-alvo: ${publico}\n- Número de capítulos: ${capitulos}\n- Tom: ${tom}\n\nInclua: prefácio, índice detalhado com descrição de cada capítulo, introdução e conclusão.${refs ? `\n\nReferências bibliográficas para embasar: ${refs}` : ''}`,
     capitulo: `Escreva o capítulo ${capNum} de um livro sobre "${titulo || tema}" com as seguintes especificações:\n- Tema central: ${tema}\n- Público: ${publico}\n- Tom: ${tom}\n- Tamanho: mínimo 1500 palavras\n\nO capítulo deve ter: título, introdução, 3-4 seções com subtítulos, exemplos práticos e conclusão.${refs ? `\n\nBaseie-se nestas referências: ${refs}` : ''}`,
     introducao: `Escreva a introdução e o prefácio de um livro com as seguintes especificações:\n- Título: "${titulo || tema}"\n- Tema: ${tema}\n- Público: ${publico}\n- Tom: ${tom}\n\nInclua: prefácio (contexto do autor), introdução (apresentação do livro, objetivos, estrutura).${refs ? `\n\nReferências: ${refs}` : ''}`,
     completo: `Escreva um livro completo e condensado sobre:\n- Título: "${titulo || tema}"\n- Tema: ${tema}\n- Público: ${publico}\n- ${capitulos} capítulos\n- Tom: ${tom}\n\nFormato: índice, prefácio, todos os capítulos (condensados mas completos), conclusão e referências.${refs ? `\n\nBaseie-se em: ${refs}` : ''}`
@@ -7562,8 +6600,6 @@ async function apresGerar() {
   if (!apiKey || apiKey.length < 20) { showToast('⚠ Configure sua API Key!'); return; }
 
   const titulo = document.getElementById('apresTitulo')?.value.trim() || '';
-  const catEl = document.getElementById('apresCat');
-  const catNome = catEl?.selectedOptions[0]?.text || '';
   const tema = document.getElementById('apresTema')?.value.trim() || '';
   const publico = document.getElementById('apresPublico')?.value.trim() || 'executivos';
   const slides = document.getElementById('apresSlides')?.value || '12';
@@ -7642,8 +6678,6 @@ async function docGerar() {
   if (!apiKey || apiKey.length < 20) { showToast('⚠ Configure sua API Key!'); return; }
 
   const titulo = document.getElementById('docTitulo')?.value.trim() || '';
-  const catEl = document.getElementById('docCat');
-  const catNome = catEl?.selectedOptions[0]?.text || '';
   const tipo = document.getElementById('docTipo')?.value || 'relatorio';
   const tema = document.getElementById('docTema')?.value.trim() || '';
   const tamanho = document.getElementById('docTamanho')?.value || 'medio';
@@ -7680,7 +6714,7 @@ async function docGerar() {
     if (output) output.innerHTML = `<div style="color:#e74c3c;padding:20px;">❌ ${escapeHtml(err.message)}</div>`;
     if (status) { status.textContent = '✗ Erro'; status.style.color = '#e74c3c'; }
   }
-  btn.disabled = false; btn.innerHTML = '✦ Gerar Artigo com IA';
+  btn.disabled = false; btn.innerHTML = '✦ Gerar Documento com IA';
 }
 
 function docCopiar() {
@@ -7743,9 +6777,9 @@ function chamarAPIComXHR(apiKey, prompt, maxTokens) {
 // =====================
 function baixarScripts() {
   const scripts = {
-    'ORGANIZAR-FINCONTENT.bat': `@echo off\nchcp 65001 >nul\nsetlocal enabledelayedexpansion\ntitle FinContent AI\n\n:MENU\ncls\necho.\necho  ================================================\necho   FinContent AI - Atualizador Local\necho  ================================================\necho.\n\nset PASTA=%USERPROFILE%\\FinContent AI\nset APP=%PASTA%\\FinContent AI.html\nset DOWNLOADS=%USERPROFILE%\\Downloads\n\nset VER=Nao instalado\nif exist "%APP%" (\n    powershell -NoProfile -Command "$t=(Get-Content '%APP%' -Raw -Encoding UTF8);if($t -match 'v[\\d]+\\.[\\d]+\\.[\\d]+ . \\w+ [\\d]{4}'){Write-Host $matches[0]}" > "%TEMP%\\fver.txt" 2>nul\n    set /p VER=<"%TEMP%\\fver.txt"\n    if "!VER!"=="" set VER=Instalado\n)\n\nset NOVO=\nset NOVO_NOME=\nfor /f "delims=" %%F in ('dir "%DOWNLOADS%\\index*.html" /b /o:-d 2^>nul') do (\n    if not defined NOVO ( set NOVO=%DOWNLOADS%\\%%F & set NOVO_NOME=%%F )\n)\n\necho  Versao instalada : !VER!\nif defined NOVO_NOME (echo  Arquivo nos Downloads: !NOVO_NOME!) else (echo  Nenhum arquivo novo nos Downloads)\necho.\necho  [1] Atualizar app local\necho  [2] Abrir FinContent AI\necho  [3] Abrir pasta Downloads\necho  [4] Abrir pasta FinContent AI\necho  [5] Abrir site online\necho  [6] Sair\necho.\nset /p OP=  Opcao: \n\nif "!OP!"=="1" goto ATUALIZAR\nif "!OP!"=="2" goto ABRIR\nif "!OP!"=="3" explorer "%DOWNLOADS%" & goto MENU\nif "!OP!"=="4" explorer "%PASTA%" & goto MENU\nif "!OP!"=="5" start https://cartainvest.com & goto MENU\nif "!OP!"=="6" exit\ngoto MENU\n\n:ATUALIZAR\nset ARQ=\nfor /f "delims=" %%F in ('dir "%DOWNLOADS%\\index*.html" /b /o:-d 2^>nul') do (\n    if not defined ARQ set ARQ=%DOWNLOADS%\\%%F\n)\nif not defined ARQ (echo ERRO: Nenhum index.html nos Downloads. Baixe primeiro. & pause & goto MENU)\nif not exist "%PASTA%" mkdir "%PASTA%"\ncopy /Y "!ARQ!" "%APP%" >nul\nif exist "%APP%" (\n    powershell -NoProfile -Command "$t=(Get-Content '%APP%' -Raw -Encoding UTF8);if($t -match 'v[\\d]+\\.[\\d]+\\.[\\d]+ . \\w+ [\\d]{4}'){Write-Host $matches[0]}" > "%TEMP%\\fver.txt" 2>nul\n    set /p NV=<"%TEMP%\\fver.txt"\n    echo Instalado: !NV!\n    set /p AB=  Abrir agora? (s/n^): \n    if /i "!AB!"=="s" start "" "%APP%"\n) else (echo ERRO ao atualizar.)\npause & goto MENU\n\n:ABRIR\nif exist "%APP%" (start "" "%APP%") else (echo App nao instalado. Use opcao 1. & pause)\ngoto MENU`,
+    'ORGANIZAR-FINCONTENT.bat': `@echo off\nchcp 65001 >nul\nsetlocal enabledelayedexpansion\ntitle FinContent AI\n\n:MENU\ncls\necho.\necho  ================================================\necho   FinContent AI - Atualizador Local\necho  ================================================\necho.\n\nset PASTA=%USERPROFILE%\\FinContent AI\nset APP=%PASTA%\\FinContent AI.html\nset DOWNLOADS=%USERPROFILE%\\Downloads\n\nset VER=Nao instalado\nif exist "%APP%" (\n    powershell -NoProfile -Command "$t=(Get-Content '%APP%' -Raw -Encoding UTF8);if($t -match 'v[\\d]+\\.[\\d]+\\.[\\d]+ . \\w+ [\\d]{4}'){Write-Host $matches[0]}" > "%TEMP%\\fver.txt" 2>nul\n    set /p VER=<"%TEMP%\\fver.txt"\n    if "!VER!"=="" set VER=Instalado\n)\n\nset NOVO=\nset NOVO_NOME=\nfor /f "delims=" %%F in ('dir "%DOWNLOADS%\\index*.html" /b /o:-d 2^>nul') do (\n    if not defined NOVO ( set NOVO=%DOWNLOADS%\\%%F & set NOVO_NOME=%%F )\n)\n\necho  Versao instalada : !VER!\nif defined NOVO_NOME (echo  Arquivo nos Downloads: !NOVO_NOME!) else (echo  Nenhum arquivo novo nos Downloads)\necho.\necho  [1] Atualizar app local\necho  [2] Abrir FinContent AI\necho  [3] Abrir pasta Downloads\necho  [4] Abrir pasta FinContent AI\necho  [5] Abrir site online\necho  [6] Sair\necho.\nset /p OP=  Opcao: \n\nif "!OP!"=="1" goto ATUALIZAR\nif "!OP!"=="2" goto ABRIR\nif "!OP!"=="3" explorer "%DOWNLOADS%" & goto MENU\nif "!OP!"=="4" explorer "%PASTA%" & goto MENU\nif "!OP!"=="5" start https://fincontent.netlify.app & goto MENU\nif "!OP!"=="6" exit\ngoto MENU\n\n:ATUALIZAR\nset ARQ=\nfor /f "delims=" %%F in ('dir "%DOWNLOADS%\\index*.html" /b /o:-d 2^>nul') do (\n    if not defined ARQ set ARQ=%DOWNLOADS%\\%%F\n)\nif not defined ARQ (echo ERRO: Nenhum index.html nos Downloads. Baixe primeiro. & pause & goto MENU)\nif not exist "%PASTA%" mkdir "%PASTA%"\ncopy /Y "!ARQ!" "%APP%" >nul\nif exist "%APP%" (\n    powershell -NoProfile -Command "$t=(Get-Content '%APP%' -Raw -Encoding UTF8);if($t -match 'v[\\d]+\\.[\\d]+\\.[\\d]+ . \\w+ [\\d]{4}'){Write-Host $matches[0]}" > "%TEMP%\\fver.txt" 2>nul\n    set /p NV=<"%TEMP%\\fver.txt"\n    echo Instalado: !NV!\n    set /p AB=  Abrir agora? (s/n^): \n    if /i "!AB!"=="s" start "" "%APP%"\n) else (echo ERRO ao atualizar.)\npause & goto MENU\n\n:ABRIR\nif exist "%APP%" (start "" "%APP%") else (echo App nao instalado. Use opcao 1. & pause)\ngoto MENU`,
 
-    'PUBLICAR-ONLINE.bat': `@echo off\nchcp 65001 >nul\nsetlocal enabledelayedexpansion\ntitle FinContent AI - Publicar Online\ncolor 0B\ncls\necho FinContent AI - Publicar no Site Online\necho.\nset PASTA=%USERPROFILE%\\FinContent AI\nset APP=%PASTA%\\FinContent AI.html\nset CONFIG=%PASTA%\\token.txt\nset PY=%TEMP%\\fc_pub.py\nif not exist "%APP%" (echo ERRO: App nao encontrado. Use ORGANIZAR primeiro. & pause & exit)\npython --version >nul 2>&1\nif !errorlevel! neq 0 (echo ERRO: Python nao instalado. Acesse python.org/downloads & pause & exit)\nset TOKEN=\nif exist "%CONFIG%" (set /p TOKEN=<"%CONFIG%" & for /f "tokens=* delims= " %%A in ("!TOKEN!") do set TOKEN=%%A)\nif "!TOKEN!"=="" (\n    echo Token GitHub nao configurado.\n    echo.\n    echo 1. Abra no Chrome: https://github.com/settings/tokens/new?scopes=repo\n    echo 2. Note: fincontent-pub\n    echo 3. Expiration: No expiration\n    echo 4. Clique Generate token\n    echo 5. Copie o token (ghp_...)\n    echo.\n    set /p TOKEN=Cole o token aqui: \n    for /f "tokens=* delims= " %%A in ("!TOKEN!") do set TOKEN=%%A\n    if "!TOKEN!"=="" (echo Token vazio. & pause & exit)\n    echo !TOKEN!>"%CONFIG%"\n    echo Token salvo para proximas vezes!\n    echo.\n)\necho Token: !TOKEN:~0,12!...\necho Enviando para GitHub...\necho ─────────────────────────────\n(\necho import base64,json,urllib.request,urllib.error\necho TOKEN=open(r'%CONFIG%','r',encoding='utf-8'^).read(^).strip(^)\necho APP=r'%APP%'\necho URL='https://api.github.com/repos/octov888/fincontent/contents/index.html'\necho H={'Authorization':'token '+TOKEN,'Accept':'application/vnd.github.v3+json'}\necho content=open(APP,'rb'^).read(^)\necho b64=base64.b64encode(content^).decode(^)\necho print(f'Tamanho: {len(content^)//1024} KB'^)\necho sha=None\necho try:\necho  req=urllib.request.Request(URL,headers=H^)\necho  with urllib.request.urlopen(req,timeout=15^) as rr: sha=json.loads(rr.read(^)^).get('sha'^)\n  echo  print('SHA ok'^)\necho except Exception as e: print(f'Aviso: {e}'^)\necho body={'message':'Atualizacao FinContent AI','content':b64}\necho if sha: body['sha']=sha\necho req2=urllib.request.Request(URL,data=json.dumps(body^).encode(^),method='PUT',headers={**H,'Content-Type':'application/json'}^)\necho try:\necho  with urllib.request.urlopen(req2,timeout=60^) as rr:\necho   json.loads(rr.read(^)^)\necho   print('SUCESSO'^)\necho except urllib.error.HTTPError as e:\necho  msg=e.read(^).decode(^)\necho  if e.code==401: print('TOKEN_INVALIDO'^)\necho  elif e.code==422: print('ARQUIVO_IDENTICO'^)\necho  else: print(f'ERRO {e.code}: {msg[:200]}'^)\necho except Exception as e: print(f'ERRO: {e}'^)\n) > "%PY%"\npython "%PY%" 2>&1\nset RES=\nfor /f "delims=" %%L in ('python "%PY%" 2^>^&1') do set RES=%%L\necho ─────────────────────────────\nif "!RES!"=="SUCESSO" (\n    echo SUCESSO! Site atualizado!\n    echo Aguarde 30s e acesse: https://cartainvest.com\n    set /p AB=Abrir site? (s/n^): \n    if /i "!AB!"=="s" start https://cartainvest.com\n) else if "!RES!"=="TOKEN_INVALIDO" (\n    echo Token invalido! Deletando...\n    del "%CONFIG%" >nul 2>&1\n    echo Execute novamente para inserir novo token.\n) else if "!RES!"=="ARQUIVO_IDENTICO" (\n    echo Arquivo ja esta atualizado no GitHub.\n) else (echo Erro - verifique conexao com internet.)\necho.\npause`
+    'PUBLICAR-ONLINE.bat': `@echo off\nchcp 65001 >nul\nsetlocal enabledelayedexpansion\ntitle FinContent AI - Publicar Online\ncolor 0B\ncls\necho FinContent AI - Publicar no Site Online\necho.\nset PASTA=%USERPROFILE%\\FinContent AI\nset APP=%PASTA%\\FinContent AI.html\nset CONFIG=%PASTA%\\token.txt\nset PY=%TEMP%\\fc_pub.py\nif not exist "%APP%" (echo ERRO: App nao encontrado. Use ORGANIZAR primeiro. & pause & exit)\npython --version >nul 2>&1\nif !errorlevel! neq 0 (echo ERRO: Python nao instalado. Acesse python.org/downloads & pause & exit)\nset TOKEN=\nif exist "%CONFIG%" (set /p TOKEN=<"%CONFIG%" & for /f "tokens=* delims= " %%A in ("!TOKEN!") do set TOKEN=%%A)\nif "!TOKEN!"=="" (\n    echo Token GitHub nao configurado.\n    echo.\n    echo 1. Abra no Chrome: https://github.com/settings/tokens/new?scopes=repo\n    echo 2. Note: fincontent-pub\n    echo 3. Expiration: No expiration\n    echo 4. Clique Generate token\n    echo 5. Copie o token (ghp_...)\n    echo.\n    set /p TOKEN=Cole o token aqui: \n    for /f "tokens=* delims= " %%A in ("!TOKEN!") do set TOKEN=%%A\n    if "!TOKEN!"=="" (echo Token vazio. & pause & exit)\n    echo !TOKEN!>"%CONFIG%"\n    echo Token salvo para proximas vezes!\n    echo.\n)\necho Token: !TOKEN:~0,12!...\necho Enviando para GitHub...\necho ─────────────────────────────\n(\necho import base64,json,urllib.request,urllib.error\necho TOKEN=open(r'%CONFIG%','r',encoding='utf-8'^).read(^).strip(^)\necho APP=r'%APP%'\necho URL='https://api.github.com/repos/octov888/fincontent/contents/index.html'\necho H={'Authorization':'token '+TOKEN,'Accept':'application/vnd.github.v3+json'}\necho content=open(APP,'rb'^).read(^)\necho b64=base64.b64encode(content^).decode(^)\necho print(f'Tamanho: {len(content^)//1024} KB'^)\necho sha=None\necho try:\necho  req=urllib.request.Request(URL,headers=H^)\necho  with urllib.request.urlopen(req,timeout=15^) as rr: sha=json.loads(rr.read(^)^).get('sha'^)\n  echo  print('SHA ok'^)\necho except Exception as e: print(f'Aviso: {e}'^)\necho body={'message':'Atualizacao FinContent AI','content':b64}\necho if sha: body['sha']=sha\necho req2=urllib.request.Request(URL,data=json.dumps(body^).encode(^),method='PUT',headers={**H,'Content-Type':'application/json'}^)\necho try:\necho  with urllib.request.urlopen(req2,timeout=60^) as rr:\necho   json.loads(rr.read(^)^)\necho   print('SUCESSO'^)\necho except urllib.error.HTTPError as e:\necho  msg=e.read(^).decode(^)\necho  if e.code==401: print('TOKEN_INVALIDO'^)\necho  elif e.code==422: print('ARQUIVO_IDENTICO'^)\necho  else: print(f'ERRO {e.code}: {msg[:200]}'^)\necho except Exception as e: print(f'ERRO: {e}'^)\n) > "%PY%"\npython "%PY%" 2>&1\nset RES=\nfor /f "delims=" %%L in ('python "%PY%" 2^>^&1') do set RES=%%L\necho ─────────────────────────────\nif "!RES!"=="SUCESSO" (\n    echo SUCESSO! Site atualizado!\n    echo Aguarde 30s e acesse: https://fincontent.netlify.app\n    set /p AB=Abrir site? (s/n^): \n    if /i "!AB!"=="s" start https://fincontent.netlify.app\n) else if "!RES!"=="TOKEN_INVALIDO" (\n    echo Token invalido! Deletando...\n    del "%CONFIG%" >nul 2>&1\n    echo Execute novamente para inserir novo token.\n) else if "!RES!"=="ARQUIVO_IDENTICO" (\n    echo Arquivo ja esta atualizado no GitHub.\n) else (echo Erro - verifique conexao com internet.)\necho.\npause`
   };
 
   let count = 0;
@@ -7981,8 +7015,8 @@ function wppGetDestinatarios() {
 function wppMudarTipo() {
   const tipo = document.getElementById('wppTipo')?.value;
   const msgs = {
-    newsletter: 'Olá {nome}! 👋\n\nA newsletter desta semana está incrível!\n\nAcesse: https://cartainvest.com\n\nAté a próxima! 🚀',
-    artigo: 'Oi {nome}! 📊\n\nPreparei um artigo exclusivo que pode te interessar.\n\nLeia aqui: https://cartainvest.com\n\nQualquer dúvida, estou à disposição!',
+    newsletter: 'Olá {nome}! 👋\n\nA newsletter desta semana está incrível!\n\nAcesse: https://fincontent.netlify.app\n\nAté a próxima! 🚀',
+    artigo: 'Oi {nome}! 📊\n\nPreparei um artigo exclusivo que pode te interessar.\n\nLeia aqui: https://fincontent.netlify.app\n\nQualquer dúvida, estou à disposição!',
     livre: '',
     ia: 'Gerando mensagem personalizada com IA...'
   };
@@ -8086,7 +7120,7 @@ function telGerarLinks() {
     clientes.map(c => {
       const usuario = c.telegram.replace('@', '');
       const link = `https://t.me/${usuario}`;
-      const linkMsg = `https://t.me/share/url?url=${encodeURIComponent('https://cartainvest.com')}&text=${encodeURIComponent(mensagem)}`;
+      const linkMsg = `https://t.me/share/url?url=${encodeURIComponent('https://fincontent.netlify.app')}&text=${encodeURIComponent(mensagem)}`;
       return `<div style="background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
         <div style="flex:1;min-width:0;">
           <div style="font-size:12px;font-weight:600;color:var(--text);">${escapeHtml(c.nome)}</div>
@@ -8127,7 +7161,7 @@ function compartilharConteudo(modulo) {
         if (arts.art1.lead) txt += `_${arts.art1.lead}_\n\n`;
         if (arts.art1.col1) txt += arts.art1.col1.substring(0, 600) + '...\n\n';
         if (arts.art2?.manchete) txt += `📌 *${arts.art2.manchete}*\n${(arts.art2.col1||'').substring(0,200)}...\n\n`;
-        txt += `👉 Acesse a newsletter completa: https://cartainvest.com`;
+        txt += `👉 Acesse a newsletter completa: https://fincontent.netlify.app`;
         return txt;
       }
       const out = document.getElementById('npOutput');
@@ -8826,21 +7860,6 @@ function catSalvarDB(categorias) {
   localStorage.setItem('fc_categorias', JSON.stringify(extras));
 }
 
-// Popula selects de categoria em todos os módulos
-function popularSelectsCategorias() {
-  const cats = catCarregar();
-  const selectIds = ['livroCat', 'apresCat', 'docCat'];
-  const defaultOpt = '<option value="">Selecione uma categoria...</option>';
-  selectIds.forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const val = el.value;
-    el.innerHTML = defaultOpt + cats.map(c =>
-      `<option value="${c.id}" ${c.id === val ? 'selected' : ''}>${c.icone} ${c.nome}</option>`
-    ).join('');
-  });
-}
-
 function catInit() {
   catRenderizar();
 }
@@ -8980,7 +7999,7 @@ function dominioInit() {
   if (url) {
     document.getElementById('dominioStatusCustom').textContent = 'https://' + url;
     document.getElementById('dominioStatusCustom').style.color = '#2ecc71';
-    document.getElementById('dominioNetlifyTarget') && (document.getElementById('dominioNetlifyTarget').textContent = 'cartainvest.com');
+    document.getElementById('dominioNetlifyTarget') && (document.getElementById('dominioNetlifyTarget').textContent = 'fincontent.netlify.app');
   }
 }
 
@@ -9781,286 +8800,5 @@ function fontesArquivarConsulta(titulo) {
     </div>
   </div>
 </div>
-
-<!-- ==================== IAM PANEL ==================== -->
-<div id="iamApp" style="display:none;flex:1;flex-direction:column;height:100vh;overflow:hidden;">
-  <div class="topbar">
-    <div class="page-title">🔐 IAM — <span>Identidade & Acesso</span></div>
-    <div class="topbar-right">
-      <div id="iamSessaoBadge" style="font-size:11px;padding:4px 10px;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.2);border-radius:8px;color:#2ecc71;display:flex;align-items:center;gap:5px;">
-        <span style="width:6px;height:6px;background:#2ecc71;border-radius:50%;display:inline-block;"></span>
-        <span id="iamSessaoBadgeNome">Carregando...</span>
-      </div>
-      <button class="btn btn-ghost" onclick="iamExportarAuditoria()">📥 Auditoria CSV</button>
-      <button class="btn btn-primary" onclick="iamAbrirNovoUsuario()">+ Novo Usuário</button>
-    </div>
-  </div>
-  <div style="flex:1;display:flex;overflow:hidden;">
-    
-    <!-- LEFT: stats + filtros -->
-    <div style="width:240px;min-width:240px;border-right:1px solid var(--border);overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        <div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;">
-          <div id="iamStatTotal" style="font-size:20px;font-weight:800;color:#f5c842;">0</div>
-          <div style="font-size:10px;color:var(--text3);">Usuários</div>
-        </div>
-        <div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;">
-          <div id="iamStatAtivos" style="font-size:20px;font-weight:800;color:#2ecc71;">0</div>
-          <div style="font-size:10px;color:var(--text3);">Ativos</div>
-        </div>
-        <div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;">
-          <div id="iamStatAdmins" style="font-size:20px;font-weight:800;color:#9b59b6;">0</div>
-          <div style="font-size:10px;color:var(--text3);">Admins</div>
-        </div>
-        <div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;">
-          <div id="iamStatBloqueados" style="font-size:20px;font-weight:800;color:#e74c3c;">0</div>
-          <div style="font-size:10px;color:var(--text3);">Bloqueados</div>
-        </div>
-      </div>
-      
-      <input id="iamBusca" type="text" placeholder="🔍 Buscar usuário..." oninput="iamRenderUsuarios()"
-        style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 10px;color:var(--text);font-size:12px;box-sizing:border-box;">
-      
-      <select id="iamFiltroPerfil" onchange="iamRenderUsuarios()"
-        style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 10px;color:var(--text);font-size:12px;">
-        <option value="">Todos os perfis</option>
-        <option value="admin">Admin</option>
-        <option value="gestor">Gestor</option>
-        <option value="usuario">Usuário</option>
-      </select>
-      
-      <select id="iamFiltroStatus" onchange="iamRenderUsuarios()"
-        style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 10px;color:var(--text);font-size:12px;">
-        <option value="">Todos os status</option>
-        <option value="ativo">Ativo</option>
-        <option value="inativo">Inativo</option>
-        <option value="bloqueado">Bloqueado</option>
-      </select>
-      
-      <!-- Sessão atual -->
-      <div style="background:rgba(46,204,113,0.06);border:1px solid rgba(46,204,113,0.2);border-radius:8px;padding:12px;margin-top:4px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
-          <span style="width:7px;height:7px;background:#2ecc71;border-radius:50%;display:inline-block;animation:pulse 2s infinite;"></span>
-          <span style="font-size:10px;font-weight:700;color:#2ecc71;text-transform:uppercase;letter-spacing:0.5px;">Sessão Ativa</span>
-        </div>
-        <div id="iamSessaoInfo" style="font-size:11px;color:var(--text2);line-height:1.8;"></div>
-        <div style="display:flex;gap:6px;margin-top:10px;">
-          <button onclick="iamAbrirMinhaSenha()" style="flex:1;padding:6px;background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);border-radius:6px;color:#4a9eff;font-size:10px;cursor:pointer;">🔑 Senha</button>
-          <button onclick="iamEncerrarSessao()" style="flex:1;padding:6px;background:rgba(231,76,60,0.1);border:1px solid rgba(231,76,60,0.3);border-radius:6px;color:#e74c3c;font-size:10px;cursor:pointer;">🚪 Sair</button>
-        </div>
-      </div>
-    </div>
-    
-    <!-- TABS: Usuários | Sessões | Auditoria | Políticas -->
-    <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
-      <div style="display:flex;border-bottom:1px solid var(--border);padding:0 16px;flex-shrink:0;background:var(--surface);">
-        <button onclick="iamTab('usuarios')" id="iamTabUsuarios"
-          style="background:none;border:none;border-bottom:2px solid #f5c842;color:#f5c842;font-size:12px;padding:12px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;display:flex;align-items:center;gap:5px;">
-          👥 Usuários <span id="iamTabUsuariosCnt" style="background:rgba(245,200,66,0.15);border-radius:10px;padding:1px 6px;font-size:10px;">0</span>
-        </button>
-        <button onclick="iamTab('sessoes')" id="iamTabSessoes"
-          style="background:none;border:none;border-bottom:2px solid transparent;color:var(--text2);font-size:12px;padding:12px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;">
-          🕐 Sessões
-        </button>
-        <button onclick="iamTab('auditoria')" id="iamTabAuditoria"
-          style="background:none;border:none;border-bottom:2px solid transparent;color:var(--text2);font-size:12px;padding:12px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;">
-          📋 Auditoria
-        </button>
-        <button onclick="iamTab('politicas')" id="iamTabPoliticas"
-          style="background:none;border:none;border-bottom:2px solid transparent;color:var(--text2);font-size:12px;padding:12px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;">
-          🛡 Políticas
-        </button>
-      </div>
-      
-      <!-- USUÁRIOS -->
-      <div id="iamPainelUsuarios" style="flex:1;overflow-y:auto;padding:16px;">
-        <div id="iamListaUsuarios" style="display:flex;flex-direction:column;gap:8px;"></div>
-      </div>
-      
-      <!-- SESSÕES -->
-      <div id="iamPainelSessoes" style="display:none;flex:1;overflow-y:auto;padding:16px;">
-        <div style="display:flex;justify-content:flex-end;margin-bottom:12px;">
-          <button onclick="iamEncerrarTodasSessoes()" style="padding:7px 14px;background:rgba(231,76,60,0.15);border:1px solid rgba(231,76,60,0.3);border-radius:8px;color:#e74c3c;font-size:12px;cursor:pointer;">🗑 Encerrar Todas</button>
-        </div>
-        <div id="iamListaSessoes" style="display:flex;flex-direction:column;gap:8px;"></div>
-      </div>
-      
-      <!-- AUDITORIA -->
-      <div id="iamPainelAuditoria" style="display:none;flex:1;overflow-y:auto;padding:16px;">
-        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
-          <select id="iamAudFiltro" onchange="iamRenderAuditoria()" style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:7px 10px;color:var(--text);font-size:12px;">
-            <option value="">Todas as ações</option>
-            <option value="login">Login</option>
-            <option value="logout">Logout</option>
-            <option value="login_falhou">Falha Login</option>
-            <option value="bloqueado">Bloqueado</option>
-            <option value="senha_alterada">Senha Alterada</option>
-            <option value="usuario_criado">Usuário Criado</option>
-            <option value="2fa">2FA</option>
-          </select>
-          <button onclick="iamLimparAuditoria()" style="padding:7px 12px;background:rgba(231,76,60,0.1);border:1px solid rgba(231,76,60,0.2);border-radius:8px;color:#e74c3c;font-size:12px;cursor:pointer;">🗑 Limpar Log</button>
-        </div>
-        <div id="iamListaAuditoria" style="display:flex;flex-direction:column;gap:4px;"></div>
-      </div>
-      
-      <!-- POLÍTICAS -->
-      <div id="iamPainelPoliticas" style="display:none;flex:1;overflow-y:auto;padding:16px;max-width:600px;">
-        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:16px;">🛡 Política de Senhas e Segurança</div>
-        <div style="display:flex;flex-direction:column;gap:12px;">
-          <div style="background:var(--surface2);border-radius:10px;padding:16px;">
-            <div style="font-size:11px;font-weight:700;color:#f5c842;text-transform:uppercase;margin-bottom:12px;">Requisitos de Senha</div>
-            <label style="display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text2);cursor:pointer;margin-bottom:8px;">
-              <input type="checkbox" id="polMinCarac" checked onchange="iamSalvarPoliticas()"> Mínimo 8 caracteres
-            </label>
-            <label style="display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text2);cursor:pointer;margin-bottom:8px;">
-              <input type="checkbox" id="polMaiuscula" checked onchange="iamSalvarPoliticas()"> Letra maiúscula obrigatória
-            </label>
-            <label style="display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text2);cursor:pointer;margin-bottom:8px;">
-              <input type="checkbox" id="polNumero" checked onchange="iamSalvarPoliticas()"> Número obrigatório
-            </label>
-            <label style="display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text2);cursor:pointer;">
-              <input type="checkbox" id="polEspecial" checked onchange="iamSalvarPoliticas()"> Caractere especial (!@#$...)
-            </label>
-          </div>
-          <div style="background:var(--surface2);border-radius:10px;padding:16px;">
-            <div style="font-size:11px;font-weight:700;color:#f5c842;text-transform:uppercase;margin-bottom:12px;">Controle de Sessão</div>
-            <label style="font-size:11px;color:#888;display:block;margin-bottom:4px;">Timeout de sessão (horas)</label>
-            <input type="number" id="polSessionTimeout" value="8" min="1" max="72" onchange="iamSalvarPoliticas()"
-              style="width:80px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;padding:6px 8px;color:var(--text);font-size:13px;">
-          </div>
-          <div style="background:var(--surface2);border-radius:10px;padding:16px;">
-            <div style="font-size:11px;font-weight:700;color:#f5c842;text-transform:uppercase;margin-bottom:12px;">Bloqueio por Tentativas</div>
-            <label style="font-size:11px;color:#888;display:block;margin-bottom:4px;">Bloquear após N tentativas erradas</label>
-            <input type="number" id="polMaxTentativas" value="5" min="3" max="10" onchange="iamSalvarPoliticas()"
-              style="width:80px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;padding:6px 8px;color:var(--text);font-size:13px;">
-            <label style="font-size:11px;color:#888;display:block;margin-bottom:4px;margin-top:10px;">Duração do bloqueio (minutos)</label>
-            <input type="number" id="polDurBloquio" value="30" min="5" max="1440" onchange="iamSalvarPoliticas()"
-              style="width:80px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;padding:6px 8px;color:var(--text);font-size:13px;">
-          </div>
-          <div style="background:var(--surface2);border-radius:10px;padding:16px;">
-            <div style="font-size:11px;font-weight:700;color:#f5c842;text-transform:uppercase;margin-bottom:12px;">Papéis e Permissões</div>
-            <table style="width:100%;font-size:11px;color:var(--text2);border-collapse:collapse;">
-              <tr style="color:#888;border-bottom:1px solid var(--border);">
-                <th style="text-align:left;padding:6px 4px;">Módulo</th>
-                <th style="text-align:center;padding:6px 4px;">Admin</th>
-                <th style="text-align:center;padding:6px 4px;">Gestor</th>
-                <th style="text-align:center;padding:6px 4px;">Usuário</th>
-              </tr>
-              <tr style="border-bottom:1px solid var(--border);"><td style="padding:5px 4px;">Gerador IA</td><td style="text-align:center;color:#2ecc71;">✓</td><td style="text-align:center;color:#2ecc71;">✓</td><td style="text-align:center;color:#2ecc71;">✓</td></tr>
-              <tr style="border-bottom:1px solid var(--border);"><td style="padding:5px 4px;">CRM Clientes</td><td style="text-align:center;color:#2ecc71;">✓</td><td style="text-align:center;color:#2ecc71;">✓</td><td style="text-align:center;color:#e74c3c;">✗</td></tr>
-              <tr style="border-bottom:1px solid var(--border);"><td style="padding:5px 4px;">WhatsApp/Telegram</td><td style="text-align:center;color:#2ecc71;">✓</td><td style="text-align:center;color:#2ecc71;">✓</td><td style="text-align:center;color:#e74c3c;">✗</td></tr>
-              <tr style="border-bottom:1px solid var(--border);"><td style="padding:5px 4px;">Configurações</td><td style="text-align:center;color:#2ecc71;">✓</td><td style="text-align:center;color:#e74c3c;">✗</td><td style="text-align:center;color:#e74c3c;">✗</td></tr>
-              <tr><td style="padding:5px 4px;">IAM</td><td style="text-align:center;color:#2ecc71;">✓</td><td style="text-align:center;color:#e74c3c;">✗</td><td style="text-align:center;color:#e74c3c;">✗</td></tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL NOVO/EDITAR USUÁRIO IAM -->
-<div id="iamModalUsuario" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:3000;align-items:center;justify-content:center;">
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-      <div id="iamModalTitulo" style="font-size:16px;font-weight:700;color:var(--text);">Novo Usuário</div>
-      <button onclick="iamFecharModal()" style="background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;">✕</button>
-    </div>
-    <input type="hidden" id="iamEditId">
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <div>
-        <label class="form-label">Nome completo *</label>
-        <input id="iamNome" type="text" placeholder="Ex: João Silva" class="tema-input" style="min-height:0;padding:8px 12px;">
-      </div>
-      <div>
-        <label class="form-label">E-mail *</label>
-        <input id="iamEmailNovo" type="email" placeholder="email@empresa.com" class="tema-input" style="min-height:0;padding:8px 12px;">
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-        <div>
-          <label class="form-label">Perfil *</label>
-          <select id="iamPerfil" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;">
-            <option value="usuario">Usuário</option>
-            <option value="gestor">Gestor</option>
-            <option value="admin">Admin</option>
-          </select>
-        </div>
-        <div>
-          <label class="form-label">Status</label>
-          <select id="iamStatusNovo" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;">
-            <option value="ativo">Ativo</option>
-            <option value="inativo">Inativo</option>
-          </select>
-        </div>
-      </div>
-      <div id="iamSenhaArea">
-        <label class="form-label">Senha *</label>
-        <div style="position:relative;">
-          <input id="iamSenhaNova" type="password" placeholder="Mín 8 chars, maiúscula, número, especial" class="tema-input" style="min-height:0;padding:8px 36px 8px 12px;" oninput="iamChecarSenha()">
-          <button onclick="iamToggleSenha('iamSenhaNova',this)" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#606080;cursor:pointer;font-size:13px;">👁</button>
-        </div>
-        <div id="iamSenhaForca" style="margin-top:6px;font-size:11px;"></div>
-        <div style="margin-top:8px;height:4px;border-radius:2px;background:var(--surface3);overflow:hidden;">
-          <div id="iamSenhaBar" style="height:100%;width:0%;background:#e74c3c;transition:all 0.3s;border-radius:2px;"></div>
-        </div>
-      </div>
-      <div id="iamEditSenhaToggle" style="display:none;">
-        <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);cursor:pointer;">
-          <input type="checkbox" id="iamAlterarSenha" onchange="document.getElementById('iamSenhaArea').style.display=this.checked?'block':'none'">
-          Alterar senha
-        </label>
-      </div>
-      <div>
-        <label class="form-label">Observações</label>
-        <textarea id="iamObs" placeholder="Notas sobre o usuário..." style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;resize:vertical;min-height:60px;box-sizing:border-box;"></textarea>
-      </div>
-    </div>
-    <div style="display:flex;gap:8px;margin-top:20px;">
-      <button onclick="iamSalvarUsuario()" style="flex:1;padding:11px;background:#f5c842;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;">Salvar</button>
-      <button onclick="iamFecharModal()" style="padding:11px 14px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;font-size:13px;">Cancelar</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL 2FA SETUP -->
-<div id="iam2faModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:4000;align-items:center;justify-content:center;">
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:380px;text-align:center;">
-    <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px;">🔑 Configurar 2FA</div>
-    <div style="font-size:12px;color:var(--text2);margin-bottom:16px;">Escaneie o QR Code no Google Authenticator ou Authy</div>
-    <div id="iam2faQR" style="display:flex;justify-content:center;margin-bottom:12px;"></div>
-    <div id="iam2faSecret" style="font-family:monospace;font-size:12px;color:#f5c842;background:var(--surface2);border-radius:6px;padding:8px;margin-bottom:16px;word-break:break-all;"></div>
-    <div style="font-size:11px;color:#888;margin-bottom:12px;">Digite o código do app para confirmar:</div>
-    <input id="iam2faConfirm" type="text" placeholder="000000" maxlength="6" inputmode="numeric"
-      style="width:120px;text-align:center;font-size:20px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px;color:#f5c842;">
-    <div style="display:flex;gap:8px;margin-top:16px;">
-      <button onclick="iamConfirmar2FA()" style="flex:1;padding:10px;background:#f5c842;color:#000;border:none;border-radius:8px;font-weight:700;cursor:pointer;">Ativar 2FA</button>
-      <button onclick="document.getElementById('iam2faModal').style.display='none'" style="padding:10px 14px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;">Cancelar</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL ALTERAR MINHA SENHA -->
-<div id="iamModalMinhaSenha" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:3000;align-items:center;justify-content:center;">
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:400px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-      <div style="font-size:16px;font-weight:700;color:var(--text);">🔑 Alterar Minha Senha</div>
-      <button onclick="document.getElementById('iamModalMinhaSenha').style.display='none'" style="background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;">✕</button>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <div>
-        <label class="form-label">Senha atual</label>
-        <input id="iamSenhaAtual" type="password" class="tema-input" style="min-height:0;padding:8px 12px;">
-      </div>
-      <div>
-        <label class="form-label">Nova senha</label>
-        <input id="iamSenhaNovaAlt" type="password" class="tema-input" style="min-height:0;padding:8px 12px;" oninput="iamChecarSenhaAlt()">
-        <div id="iamSenhaForcaAlt" style="margin-top:4px;font-size:11px;"></div>
-      </div>
-      <div>
-        <label class="form-label">Confirmar nova senha</label>
-        <input id="iamSenhaConfAlt" type="password" class="tema-input" style="min-height:0;padding:8px 12px;">
-      </div>
-    </div>
-    <div style="display:flex;gap:8px;margin-top:20px;">
-      <button onclick="iamAlterarMinhaSenha()" style="flex:1;padding:11px;background:#f5c842;color:#000;border:none;border-radius:8px;font-weight:700;cursor:pointer;">Alterar Senha</button>
-      <button onclick="document.getElementById('iamModalMin
+</body>
+</html>

@@ -1226,8 +1226,18 @@ body {
       </div>
 
     </div>
+    <!-- Credenciais padrão -->
+    <div id="iamCredPadrao" style="background:rgba(245,200,66,0.07);border:1px solid rgba(245,200,66,0.15);border-radius:8px;padding:12px 14px;margin-top:12px;font-size:11px;color:#a0a0c0;text-align:center;line-height:1.9;">
+      <div style="color:#f5c842;font-weight:700;margin-bottom:6px;">🔑 Credenciais de Acesso</div>
+      <div style="background:rgba(0,0,0,0.2);border-radius:6px;padding:8px;margin-bottom:6px;">
+        <div style="color:#888;font-size:10px;margin-bottom:2px;">Admin Principal</div>
+        <code style="color:#f5c842;user-select:all;">roger783954@gmail.com</code><br>
+        Senha: <code style="color:#f5c842;user-select:all;">Roger@2026!</code>
+      </div>
+      <div style="font-size:10px;color:#606080;margin-top:4px;">⚠ Altere a senha após o primeiro acesso</div>
+    </div>
     <!-- Rodapé -->
-    <div style="text-align:center;margin-top:16px;font-size:10px;color:#3a3a55;">FinContent AI · v2.2.0 · Sessão criptografada</div>
+    <div style="text-align:center;margin-top:10px;font-size:10px;color:#3a3a55;">FinContent AI · v2.3.0 · Sessão criptografada</div>
   </div>
 </div>
 
@@ -6019,18 +6029,44 @@ const IAM = (() => {
   function saveUsers(users) { localStorage.setItem(KEY_USERS, JSON.stringify(users)); }
 
   async function ensureAdmin() {
-    const users = getUsers();
-    if (!users.find(u => u.perfil === 'admin')) {
-      const h = await hashSenha('Admin@123!');
-      const admin = {
-        id: 'usr_admin', nome: 'Administrador', email: 'admin@fincontent.com',
+    let users = getUsers();
+
+    // Admin principal: Roger
+    if (!users.find(u => u.email === 'roger783954@gmail.com')) {
+      const h = await hashSenha('Roger@2026!');
+      const roger = {
+        id: 'usr_roger', nome: 'Roger', email: 'roger783954@gmail.com',
         senhaHash: h, perfil: 'admin', status: 'ativo',
         createdAt: Date.now(), lastLogin: null, tentativas: 0, bloqueadoAte: null,
-        twoFA: { ativo: false, secret: null }, obs: 'Usuário administrador padrão'
+        twoFA: { ativo: false, secret: null }, obs: 'Administrador principal'
       };
-      const u = getUsers();
-      u.push(admin);
-      saveUsers(u);
+      users = getUsers();
+      users.unshift(roger);
+      saveUsers(users);
+    }
+
+    // Resetar bloqueios expirados
+    users = getUsers();
+    let changed = false;
+    users.forEach(u => {
+      if (u.bloqueadoAte && Date.now() > u.bloqueadoAte) {
+        u.bloqueadoAte = null; u.tentativas = 0; changed = true;
+      }
+    });
+    if (changed) saveUsers(users);
+
+    // Admin fallback genérico
+    users = getUsers();
+    if (!users.find(u => u.email === 'admin@fincontent.com')) {
+      const h2 = await hashSenha('Admin@2026!');
+      const admin = {
+        id: 'usr_admin', nome: 'Administrador', email: 'admin@fincontent.com',
+        senhaHash: h2, perfil: 'admin', status: 'ativo',
+        createdAt: Date.now(), lastLogin: null, tentativas: 0, bloqueadoAte: null,
+        twoFA: { ativo: false, secret: null }, obs: 'Conta admin de suporte'
+      };
+      users.push(admin);
+      saveUsers(users);
     }
   }
 
@@ -6340,11 +6376,13 @@ async function iamBootstrap() {
     document.querySelector('.sidebar')?.style.setProperty('display', 'none');
     // Mostrar dica de credenciais padrão
   const users = IAM.getUsers();
-  const hasDefaultAdmin = users.find(u => u.id === 'usr_admin' && u.email === 'admin@fincontent.com');
+  const hasDefaultAdmin = users.find(u => u.email === 'roger783954@gmail.com' || u.id === 'usr_admin');
   const credEl = document.getElementById('iamCredPadrao');
   if (credEl) credEl.style.display = hasDefaultAdmin ? '' : 'none';
-  // Focus email input
-  setTimeout(() => document.getElementById('iamEmail')?.focus(), 100);
+  // Pré-preencher email
+  const emailEl = document.getElementById('iamEmail');
+  if (emailEl && !emailEl.value) emailEl.value = 'roger783954@gmail.com';
+  setTimeout(() => document.getElementById('iamSenha')?.focus(), 100);
   } else {
     iamAplicarPermissoes();
     iamAtualizarSidebarUser();

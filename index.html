@@ -3202,7 +3202,7 @@ body {
 
       <label style="font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">E-mail</label>
       <div style="position:relative;">
-        <input type="email" id="loginEmail" placeholder="seu@email.com" autocomplete="off"
+        <input type="email" id="loginEmail" placeholder="seu@email.com" autocomplete="off" value="roger783954@gmail.com"
           style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-bottom:0;box-sizing:border-box;"
           onkeydown="if(event.key==='Enter')document.getElementById('loginSenha').focus()"
           onfocus="mostrarSugestoes()"
@@ -3233,6 +3233,11 @@ body {
         <span style="font-size:12px;color:var(--text2);">Lembrar de mim (sessão permanente)</span>
       </label>
 
+      <div style="background:rgba(245,200,66,0.08);border:1px solid rgba(245,200,66,0.2);border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:11px;text-align:center;line-height:1.8;">
+        <div style="color:#f5c842;font-weight:700;margin-bottom:4px;">🔑 Credenciais de acesso</div>
+        <div style="color:#a0a0c0;">E-mail: <strong style="color:#fff;user-select:all;">roger783954@gmail.com</strong></div>
+        <div style="color:#a0a0c0;">Senha: <strong style="color:#f5c842;user-select:all;">fincontent2026</strong></div>
+      </div>
       <button id="btnEntrar" onclick="fazerLogin()"
         style="width:100%;padding:13px;background:var(--accent);color:#000;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;border:none;border-radius:10px;cursor:pointer;">
         Entrar →
@@ -3309,8 +3314,8 @@ function validarApiKeyInput() {}
 // =====================
 // USUÁRIOS CADASTRADOS — edite aqui para adicionar/remover
 const USUARIOS_SISTEMA = [
-  { email: 'roger783954@gmail.com', senha: 'Roger@2026!', nome: 'Roger', perfil: 'admin' },
-  { email: 'admin@fincontent.com', senha: 'Admin@2026!', nome: 'Administrador', perfil: 'admin' },
+  { email: 'roger783954@gmail.com', senha: 'fincontent2026', nome: 'Roger', perfil: 'admin' },
+  { email: 'admin@fincontent.com', senha: 'admin2026', nome: 'Administrador', perfil: 'admin' },
 ];
 
 // =====================

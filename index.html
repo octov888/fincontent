@@ -1139,108 +1139,6 @@ body {
 </head>
 <body>
 
-<!-- ==================== IAM LOGIN SCREEN ==================== -->
-<div id="iamLoginScreen" style="display:none;position:fixed;inset:0;background:#0a0a0f;z-index:9999;align-items:center;justify-content:center;flex-direction:column;">
-  <div style="width:100%;max-width:400px;padding:20px;">
-    <!-- Logo -->
-    <div style="text-align:center;margin-bottom:32px;">
-      <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#f5c842;">FinContent <span style="color:#fff;">AI</span></div>
-      <div style="font-size:11px;color:#606080;margin-top:4px;text-transform:uppercase;letter-spacing:1px;">Conteúdo Financeiro Automatizado</div>
-    </div>
-    <!-- Card -->
-    <div style="background:#12121a;border:1px solid #2a2a40;border-radius:16px;padding:28px;">
-      <div id="iamLoginMsg" style="display:none;padding:10px 14px;border-radius:8px;font-size:12px;margin-bottom:16px;"></div>
-      
-      <!-- Step 1: Email + Senha -->
-      <div id="iamStep1">
-        <div style="font-size:16px;font-weight:700;color:#f0f0f8;margin-bottom:20px;">🔐 Entrar na plataforma</div>
-        <div style="margin-bottom:14px;">
-          <label style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">E-mail</label>
-          <input id="iamEmail" type="email" placeholder="seu@email.com" autocomplete="email"
-            style="width:100%;background:#1a1a26;border:1px solid #2a2a40;border-radius:8px;padding:10px 12px;color:#f0f0f8;font-size:13px;font-family:'DM Sans',sans-serif;box-sizing:border-box;"
-            onkeydown="if(event.key==='Enter')document.getElementById('iamSenha').focus()">
-        </div>
-        <div style="margin-bottom:20px;">
-          <label style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">Senha</label>
-          <div style="position:relative;">
-            <input id="iamSenha" type="password" placeholder="••••••••" autocomplete="current-password"
-              style="width:100%;background:#1a1a26;border:1px solid #2a2a40;border-radius:8px;padding:10px 36px 10px 12px;color:#f0f0f8;font-size:13px;font-family:'DM Sans',sans-serif;box-sizing:border-box;"
-              onkeydown="if(event.key==='Enter')iamDoLogin()">
-            <button onclick="iamToggleSenha('iamSenha',this)" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#606080;cursor:pointer;font-size:14px;">👁</button>
-          </div>
-          <div style="text-align:right;margin-top:6px;">
-            <a onclick="iamShowRecuperar()" style="font-size:11px;color:#4a9eff;cursor:pointer;text-decoration:none;">Esqueci minha senha</a>
-          </div>
-        </div>
-        <button onclick="iamDoLogin()" id="iamBtnLogin"
-          style="width:100%;padding:12px;background:#f5c842;color:#000;border:none;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;">
-          Entrar
-        </button>
-      </div>
-
-      <!-- Step 2: 2FA -->
-      <div id="iamStep2" style="display:none;">
-        <div style="font-size:16px;font-weight:700;color:#f0f0f8;margin-bottom:8px;">🔑 Duplo Fator (2FA)</div>
-        <div style="font-size:12px;color:#a0a0c0;margin-bottom:20px;">Digite o código de 6 dígitos do seu autenticador.</div>
-        <div style="display:flex;gap:8px;justify-content:center;margin-bottom:20px;">
-          <input id="iam2fa0" type="text" maxlength="1" inputmode="numeric"
-            style="width:44px;height:52px;text-align:center;font-size:22px;font-weight:700;background:#1a1a26;border:1px solid #2a2a40;border-radius:8px;color:#f5c842;font-family:'DM Sans',sans-serif;"
-            oninput="iam2faNext(this,1)" onkeydown="iam2faDel(event,this,null)">
-          <input id="iam2fa1" type="text" maxlength="1" inputmode="numeric"
-            style="width:44px;height:52px;text-align:center;font-size:22px;font-weight:700;background:#1a1a26;border:1px solid #2a2a40;border-radius:8px;color:#f5c842;font-family:'DM Sans',sans-serif;"
-            oninput="iam2faNext(this,2)" onkeydown="iam2faDel(event,this,0)">
-          <input id="iam2fa2" type="text" maxlength="1" inputmode="numeric"
-            style="width:44px;height:52px;text-align:center;font-size:22px;font-weight:700;background:#1a1a26;border:1px solid #2a2a40;border-radius:8px;color:#f5c842;font-family:'DM Sans',sans-serif;"
-            oninput="iam2faNext(this,3)" onkeydown="iam2faDel(event,this,1)">
-          <input id="iam2fa3" type="text" maxlength="1" inputmode="numeric"
-            style="width:44px;height:52px;text-align:center;font-size:22px;font-weight:700;background:#1a1a26;border:1px solid #2a2a40;border-radius:8px;color:#f5c842;font-family:'DM Sans',sans-serif;"
-            oninput="iam2faNext(this,4)" onkeydown="iam2faDel(event,this,2)">
-          <input id="iam2fa4" type="text" maxlength="1" inputmode="numeric"
-            style="width:44px;height:52px;text-align:center;font-size:22px;font-weight:700;background:#1a1a26;border:1px solid #2a2a40;border-radius:8px;color:#f5c842;font-family:'DM Sans',sans-serif;"
-            oninput="iam2faNext(this,5)" onkeydown="iam2faDel(event,this,3)">
-          <input id="iam2fa5" type="text" maxlength="1" inputmode="numeric"
-            style="width:44px;height:52px;text-align:center;font-size:22px;font-weight:700;background:#1a1a26;border:1px solid #2a2a40;border-radius:8px;color:#f5c842;font-family:'DM Sans',sans-serif;"
-            oninput="iam2faNext(this,null)" onkeydown="iam2faDel(event,this,4)">
-        </div>
-        <button onclick="iamVerify2FA()"
-          style="width:100%;padding:12px;background:#f5c842;color:#000;border:none;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;">
-          Verificar
-        </button>
-        <button onclick="iamStep2Cancel()" style="width:100%;padding:8px;background:none;border:none;color:#a0a0c0;font-size:12px;cursor:pointer;margin-top:8px;">← Voltar</button>
-      </div>
-
-      <!-- Step 3: Recuperar senha -->
-      <div id="iamStep3" style="display:none;">
-        <div style="font-size:16px;font-weight:700;color:#f0f0f8;margin-bottom:8px;">🔓 Recuperar Senha</div>
-        <div style="font-size:12px;color:#a0a0c0;margin-bottom:20px;">Um código será gerado para redefinir sua senha.</div>
-        <div style="margin-bottom:14px;">
-          <label style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">E-mail cadastrado</label>
-          <input id="iamRecEmail" type="email" placeholder="seu@email.com"
-            style="width:100%;background:#1a1a26;border:1px solid #2a2a40;border-radius:8px;padding:10px 12px;color:#f0f0f8;font-size:13px;font-family:'DM Sans',sans-serif;box-sizing:border-box;">
-        </div>
-        <button onclick="iamEnviarRecuperar()"
-          style="width:100%;padding:12px;background:#f5c842;color:#000;border:none;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;">
-          Gerar código de recuperação
-        </button>
-        <button onclick="iamShowLogin()" style="width:100%;padding:8px;background:none;border:none;color:#a0a0c0;font-size:12px;cursor:pointer;margin-top:8px;">← Voltar ao login</button>
-      </div>
-
-    </div>
-    <!-- Credenciais padrão -->
-    <div id="iamCredPadrao" style="background:rgba(245,200,66,0.07);border:1px solid rgba(245,200,66,0.15);border-radius:8px;padding:12px 14px;margin-top:12px;font-size:11px;color:#a0a0c0;text-align:center;line-height:1.9;">
-      <div style="color:#f5c842;font-weight:700;margin-bottom:6px;">🔑 Credenciais de Acesso</div>
-      <div style="background:rgba(0,0,0,0.2);border-radius:6px;padding:8px;margin-bottom:6px;">
-        <div style="color:#888;font-size:10px;margin-bottom:2px;">Admin Principal</div>
-        <code style="color:#f5c842;user-select:all;">roger783954@gmail.com</code><br>
-        Senha: <code style="color:#f5c842;user-select:all;">Roger@2026!</code>
-      </div>
-      <div style="font-size:10px;color:#606080;margin-top:4px;">⚠ Altere a senha após o primeiro acesso</div>
-    </div>
-    <!-- Rodapé -->
-    <div style="text-align:center;margin-top:10px;font-size:10px;color:#3a3a55;">FinContent AI · v2.3.0 · Sessão criptografada</div>
-  </div>
-</div>
-
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
@@ -3347,7 +3245,7 @@ body {
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // =====================
 // VARIÁVEIS GLOBAIS — declaradas primeiro para evitar hoisting issues
 // =====================
@@ -3411,8 +3309,8 @@ function validarApiKeyInput() {}
 // =====================
 // USUÁRIOS CADASTRADOS — edite aqui para adicionar/remover
 const USUARIOS_SISTEMA = [
-  { email: 'roger783954@gmail.com', senha: '12345', nome: 'Roger' },
-  // { email: 'outro@email.com', senha: 'outrasenha', nome: 'Outro Usuário' },
+  { email: 'roger783954@gmail.com', senha: 'Roger@2026!', nome: 'Roger', perfil: 'admin' },
+  { email: 'admin@fincontent.com', senha: 'Admin@2026!', nome: 'Administrador', perfil: 'admin' },
 ];
 
 // =====================
@@ -3517,10 +3415,35 @@ function fazerLogin() {
 
     document.getElementById('loginScreen').style.display = 'none';
     const sidebar = document.getElementById('sidebarUsuario');
-    if (sidebar) sidebar.textContent = '👤 ' + user.nome + ' · ' + user.email;
+    if (sidebar) sidebar.innerHTML = '👤 ' + user.nome + '<br><span style="color:#f5c842;">' + (user.perfil||'admin').toUpperCase() + '</span>';
     if (btn2) { btn2.textContent = 'Entrar →'; btn2.disabled = false; }
 
+    // Registrar sessão no IAM
+    try {
+      if (typeof IAM !== 'undefined') {
+        const iamUsers = IAM.getUsers();
+        let iamUser = iamUsers.find(u => u.email.toLowerCase() === user.email.toLowerCase());
+        if (!iamUser) {
+          // Criar no IAM se não existir
+          iamUser = {
+            id: 'usr_' + Date.now(), nome: user.nome, email: user.email,
+            senhaHash: '', perfil: user.perfil || 'admin', status: 'ativo',
+            createdAt: Date.now(), lastLogin: Date.now(), tentativas: 0, bloqueadoAte: null,
+            twoFA: { ativo: false, secret: null }, obs: 'Criado via login legado'
+          };
+          iamUsers.push(iamUser);
+          IAM.saveUsers(iamUsers);
+        }
+        iamUser.lastLogin = Date.now();
+        IAM.saveUsers(IAM.getUsers().map(u => u.id === iamUser.id ? iamUser : u));
+        IAM.createSession(iamUser);
+        IAM.audit('login', 'Login bem-sucedido: ' + user.nome, iamUser.id);
+      }
+    } catch(iamErr) { console.warn('IAM sync:', iamErr); }
+
     try { showToast('✅ Bem-vindo, ' + user.nome + '!'); } catch(e) {}
+    // Inicializar IAM em background
+    try { if (typeof iamBootstrap === 'function') iamBootstrap(); } catch(e) {}
 
   } catch(err) {
     console.error('Erro no login:', err);
@@ -3556,6 +3479,8 @@ function atualizarSidebarUsuario(auth) {
 
 function fazerLogout() {
   if (!confirm('Deseja sair do sistema?')) return;
+  // Registrar logout no IAM
+  try { if (typeof IAM !== 'undefined') IAM.logout(); } catch(e) {}
   localStorage.removeItem('fc_auth_perm');
   document.getElementById('loginEmail').value = '';
   document.getElementById('loginSenha').value = '';
@@ -4266,8 +4191,6 @@ setTimeout(initBibliotecaEditorial, 200);
 
   // Observar os painéis após DOM carregar
   window.addEventListener('load', function() {
-  // IAM Bootstrap — verificar autenticação
-  iamBootstrap();
     const fontes = document.getElementById('fontesApp');
     const bib = document.getElementById('bibliotecaEditorialApp');
     if (fontes) observer.observe(fontes, { attributes: true });
@@ -6370,23 +6293,22 @@ let _iam2faSetupData = null;
 
 async function iamBootstrap() {
   await IAM.init();
-  if (!IAM.isSessionValid()) {
-    document.getElementById('iamLoginScreen').style.display = 'flex';
-    document.getElementById('appContent').style.display = 'none';
-    document.querySelector('.sidebar')?.style.setProperty('display', 'none');
-    // Mostrar dica de credenciais padrão
-  const users = IAM.getUsers();
-  const hasDefaultAdmin = users.find(u => u.email === 'roger783954@gmail.com' || u.id === 'usr_admin');
-  const credEl = document.getElementById('iamCredPadrao');
-  if (credEl) credEl.style.display = hasDefaultAdmin ? '' : 'none';
-  // Pré-preencher email
-  const emailEl = document.getElementById('iamEmail');
-  if (emailEl && !emailEl.value) emailEl.value = 'roger783954@gmail.com';
-  setTimeout(() => document.getElementById('iamSenha')?.focus(), 100);
-  } else {
-    iamAplicarPermissoes();
-    iamAtualizarSidebarUser();
-  }
+  try {
+    if (typeof USUARIOS_SISTEMA !== 'undefined') {
+      USUARIOS_SISTEMA.forEach(u => {
+        const users = IAM.getUsers();
+        if (!users.find(x => x.email.toLowerCase() === u.email.toLowerCase())) {
+          users.push({
+            id: 'usr_' + u.email.split('@')[0], nome: u.nome, email: u.email,
+            senhaHash: '', perfil: u.perfil || 'admin', status: 'ativo',
+            createdAt: Date.now(), lastLogin: null, tentativas: 0, bloqueadoAte: null,
+            twoFA: { ativo: false, secret: null }, obs: 'Usuário legado'
+          });
+          IAM.saveUsers(users);
+        }
+      });
+    }
+  } catch(e) {}
 }
 
 function iamAplicarPermissoes() {
@@ -10136,10 +10058,4 @@ function fontesArquivarConsulta(titulo) {
     </div>
     <div style="display:flex;gap:8px;margin-top:20px;">
       <button onclick="iamAlterarMinhaSenha()" style="flex:1;padding:11px;background:#f5c842;color:#000;border:none;border-radius:8px;font-weight:700;cursor:pointer;">Alterar Senha</button>
-      <button onclick="document.getElementById('iamModalMinhaSenha').style.display='none'" style="padding:11px 14px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;">Cancelar</button>
-    </div>
-  </div>
-</div>
-
-</body>
-</html>
+      <button onclick="document.getElementById('iamModalMin

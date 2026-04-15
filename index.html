@@ -1224,12 +1224,15 @@
       <span class="icon">🎯</span> Apresentação
     </div>
     <div class="nav-item" id="nav-documento" onclick="navIr('documento')">
-      <span class="icon">📄</span> Documento Word
+      <span class="icon">📝</span> Artigo
     </div>
   </div>
 
   <div class="nav-section">
     <div class="nav-label">Config</div>
+    <div class="nav-item" id="nav-iam" onclick="navIr('iam')">
+      <span class="icon">🔐</span> IAM · Identidade
+    </div>
     <div class="nav-item" id="nav-voz" onclick="navIr('voz')">
       <span class="icon">🎨</span> Voz da Marca
     </div>
@@ -1245,13 +1248,13 @@
     <div class="plan-badge">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
         <div class="plan-name">Plano Pro Ativo</div>
-        <button onclick="fazerLogout()" title="Sair" style="background:rgba(231,76,60,0.15);border:1px solid rgba(231,76,60,0.3);color:#e74c3c;border-radius:6px;padding:2px 8px;font-size:10px;cursor:pointer;font-family:'DM Sans',sans-serif;">Sair</button>
+        <button onclick="iamAbrirMinhaSenha()" title="Alterar senha" style="background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);color:#4a9eff;border-radius:6px;padding:3px 8px;font-size:11px;cursor:pointer;margin-right:4px;">🔑</button><button onclick="fazerLogout()" title="Sair" style="background:rgba(231,76,60,0.15);border:1px solid rgba(231,76,60,0.3);color:#e74c3c;border-radius:6px;padding:2px 8px;font-size:10px;cursor:pointer;font-family:'DM Sans',sans-serif;">Sair</button>
       </div>
       <div class="plan-status"><span class="plan-dot"></span>Conectado · Meta API ✓</div>
       <div id="sidebarUsuario" style="font-size:10px;color:var(--text3);margin-top:4px;"></div>
     </div>
     <div style="text-align:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">
-      <span style="font-size:9px;color:var(--text3);letter-spacing:0.5px;">v2.3.0 · Abril 2026</span>
+      <span style="font-size:9px;color:var(--text3);letter-spacing:0.5px;">v2.3.1 · Abril 2026</span>
       <div style="margin-top:6px;">
         <button onclick="baixarScripts()" style="width:100%;padding:5px 8px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.3);border-radius:6px;color:#f5c842;font-size:10px;cursor:pointer;font-family:'DM Sans',sans-serif;">
           ⬇ Baixar Scripts de Atualização
@@ -2281,7 +2284,6 @@
       <div>
         <label class="form-label">Telegram (@usuario)</label>
         <input id="cTelegram" type="text" placeholder="@usuario" class="tema-input" style="min-height:0;padding:8px 12px;">
-        </div>
       </div>
       <div>
         <label class="form-label">E-mail</label>
@@ -2798,6 +2800,8 @@
           <option>Acadêmico</option>
           <option>Prático e direto</option>
         </select>
+        <label class="form-label" style="margin-top:10px;">Categoria</label>
+        <select id="livroCat" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;"></select>
       </div>
       <div class="section">
         <div class="section-title">📖 Referências Bibliográficas</div>
@@ -2875,6 +2879,8 @@
           <option value="pptx">Estrutura para PowerPoint</option>
           <option value="pdf">Estrutura para PDF</option>
         </select>
+        <label class="form-label" style="margin-top:10px;">Categoria</label>
+        <select id="apresCat" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;"></select>
       </div>
       <div class="section">
         <div class="section-title">📚 Referências</div>
@@ -2908,7 +2914,7 @@
 <!-- ==================== DOCUMENTO WORD ==================== -->
 <div id="documentoApp" style="display:none;flex:1;flex-direction:column;height:100vh;overflow:hidden;">
   <div class="topbar">
-    <div class="page-title">📄 Documento <span>Word</span></div>
+    <div class="page-title">📝 <span>Artigo</span></div>
     <div class="topbar-right">
       <button class="btn btn-ghost" onclick="docExportar()">📋 Exportar</button>
       <button class="btn btn-primary" onclick="docGerar()">✦ Gerar com IA</button>
@@ -2917,7 +2923,7 @@
   <div style="flex:1;display:flex;overflow:hidden;">
     <div style="width:280px;min-width:280px;border-right:1px solid var(--border);overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">
       <div class="section">
-        <div class="section-title">📄 Sobre o Documento</div>
+        <div class="section-title">📝 Sobre o Artigo</div>
         <label class="form-label">Título</label>
         <input type="text" id="docTitulo" class="tema-input" placeholder="Ex: Relatório de Análise Financeira" style="min-height:0;padding:8px 12px;">
         <label class="form-label" style="margin-top:10px;">Tipo de documento</label>
@@ -2946,12 +2952,14 @@
           <option>Executivo e conciso</option>
           <option>Educativo e claro</option>
         </select>
+        <label class="form-label" style="margin-top:10px;">Categoria</label>
+        <select id="docCat" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;"></select>
       </div>
       <div class="section">
         <div class="section-title">📚 Referências</div>
         <div id="docRefsList" style="max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;"></div>
       </div>
-      <button class="gerar-btn" id="docGerarBtn" onclick="docGerar()">✦ Gerar Documento com IA</button>
+      <button class="gerar-btn" id="docGerarBtn" onclick="docGerar()">✦ Gerar Artigo com IA</button>
     </div>
     <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
       <div style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
@@ -3188,12 +3196,12 @@
 
       <label style="font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px;">E-mail</label>
       <div style="position:relative;">
-        <input type="email" id="loginEmail" placeholder="seu@email.com" autocomplete="off" value="roger783954@gmail.com"
+        <input type="email" id="loginEmail" placeholder="seu@email.com" autocomplete="off"
           style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-bottom:0;box-sizing:border-box;"
           onkeydown="if(event.key==='Enter')document.getElementById('loginSenha').focus()"
           onfocus="mostrarSugestoes()"
           oninput="filtrarSugestoes(this.value)"
-          onblur="setTimeout(()=>ocultarSugestoes(),200)">
+          onblur="setTimeout(()=>ocultarSugestoes(),200)" value="roger783954@gmail.com">
 
         <!-- Dropdown de sugestões -->
         <div id="loginSugestoes" style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:#1e1e2e;border:1px solid var(--border2);border-radius:10px;overflow:hidden;z-index:99999;box-shadow:0 8px 24px rgba(0,0,0,0.4);">
@@ -3219,11 +3227,7 @@
         <span style="font-size:12px;color:var(--text2);">Lembrar de mim (sessão permanente)</span>
       </label>
 
-      <div style="background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.3);border-radius:8px;padding:12px;margin-bottom:14px;text-align:center;">
-          <div style="font-size:10px;color:#888;margin-bottom:4px;">SENHA DE ACESSO</div>
-          <div style="font-size:32px;font-weight:900;color:#f5c842;letter-spacing:10px;">1234</div>
-        </div>
-      <button id="btnEntrar" onclick="fazerLogin()"
+            <button id="btnEntrar" onclick="fazerLogin()"
         style="width:100%;padding:13px;background:var(--accent);color:#000;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;border:none;border-radius:10px;cursor:pointer;">
         Entrar →
       </button>
@@ -3366,18 +3370,17 @@ function selecionarUsuario(email) {
 }
 
 function fazerLogin() {
-    // ── ACESSO DIRETO (senha: 1234) ──────────────────────
-    var _em = (document.getElementById('loginEmail').value||'').trim().toLowerCase();
-    var _pw = (document.getElementById('loginSenha').value||'').trim();
-    if ((_em==='roger783954@gmail.com'||_em==='admin@fincontent.com') && _pw==='1234') {
+    // ACESSO DIRETO
+    var _e=(document.getElementById('loginEmail').value||'').trim().toLowerCase();
+    var _p=(document.getElementById('loginSenha').value||'').trim();
+    if((_e==='roger783954@gmail.com'||_e==='admin@fincontent.com')&&_p==='1234'){
       document.getElementById('loginScreen').style.display='none';
-      var _sb=document.getElementById('sidebarUsuario');
-      if(_sb) _sb.textContent='👤 '+(_em==='roger783954@gmail.com'?'Roger':'Admin');
-      localStorage.setItem('fc_auth_perm',JSON.stringify({email:_em,nome:_em==='roger783954@gmail.com'?'Roger':'Admin',ts:Date.now(),permanente:true}));
+      var _s=document.getElementById('sidebarUsuario');
+      if(_s)_s.textContent='👤 '+(_e.includes('roger')?'Roger':'Admin');
+      localStorage.setItem('fc_auth_perm',JSON.stringify({email:_e,nome:_e.includes('roger')?'Roger':'Admin',ts:Date.now(),permanente:true}));
       try{showToast('✅ Bem-vindo!');}catch(e){}
       return;
     }
-    // ─────────────────────────────────────────────────────
 
   try {
     const email = (document.getElementById('loginEmail').value || '').trim().toLowerCase();
@@ -3422,6 +3425,12 @@ function fazerLogin() {
     if (btn2) { btn2.textContent = 'Entrar →'; btn2.disabled = false; }
 
     try { showToast('✅ Bem-vindo, ' + user.nome + '!'); } catch(e) {}
+    try {
+      iamEnsureAdmin();
+      var _iu=iamGetUsers().find(function(u){return u.email===user.email;});
+      if(_iu){_iu.lastLogin=Date.now();var _all=iamGetUsers();_all[_all.findIndex(function(u){return u.id===_iu.id;})]=_iu;iamSaveUsers(_all);}
+      iamAudit('login','Login: '+user.nome,user.email);
+    } catch(e) {}
 
   } catch(err) {
     console.error('Erro no login:', err);
@@ -4190,6 +4199,8 @@ let npArticles = {};
 // NAVEGAÇÃO CENTRAL
 // =====================
 function navIr(destino) {
+  if(['livro','apresentacao','documento'].includes(destino)) setTimeout(popularSelectsCategorias,80);
+  if(destino==='iam') setTimeout(iamInit,100);
   // Marcar item ativo
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   const navEl = document.getElementById('nav-' + destino);
@@ -4214,7 +4225,7 @@ function navIr(destino) {
      document.getElementById('imagensApp'),
      document.getElementById('categoriasApp'),
      document.getElementById('dominioApp'),
-     document.getElementById('resultadosApp')]
+     document.getElementById('resultadosApp'),document.getElementById('iamApp')]
       .forEach(el => { if (el) el.style.display = 'none'; });
   }
 
@@ -4333,6 +4344,10 @@ function navIr(destino) {
     case 'telegram':
       show(document.getElementById('telegramApp'), 'column');
       setTimeout(() => initTelegramApp(), 100);
+      break;
+
+    case 'iam':
+      show(document.getElementById('iamApp'),'column');
       break;
 
     case 'dominio':
@@ -6710,7 +6725,7 @@ async function docGerar() {
     if (output) output.innerHTML = `<div style="color:#e74c3c;padding:20px;">❌ ${escapeHtml(err.message)}</div>`;
     if (status) { status.textContent = '✗ Erro'; status.style.color = '#e74c3c'; }
   }
-  btn.disabled = false; btn.innerHTML = '✦ Gerar Documento com IA';
+  btn.disabled = false; btn.innerHTML = '✦ Gerar Artigo com IA';
 }
 
 function docCopiar() {
@@ -8603,6 +8618,306 @@ function fontesArquivarConsulta(titulo) {
 }
 
 
+
+// ============================================================
+// IAM — Identity and Access Management
+// ============================================================
+const IAM_USERS_KEY = 'fc_iam_users';
+const IAM_AUDIT_KEY = 'fc_iam_audit';
+const IAM_POL_KEY   = 'fc_iam_politica';
+
+function iamGetUsers(){ try{return JSON.parse(localStorage.getItem(IAM_USERS_KEY)||'[]');}catch{return[];} }
+function iamSaveUsers(u){ localStorage.setItem(IAM_USERS_KEY,JSON.stringify(u)); }
+function iamGetAudit(){ try{return JSON.parse(localStorage.getItem(IAM_AUDIT_KEY)||'[]');}catch{return[];} }
+function iamGetPol(){ try{return{sessionTimeout:8,maxTentativas:5,durBloqueio:30,...JSON.parse(localStorage.getItem(IAM_POL_KEY)||'{}')};}catch{return{sessionTimeout:8,maxTentativas:5,durBloqueio:30};} }
+
+function iamAudit(acao,det,uid){
+  var log=iamGetAudit();
+  log.unshift({id:Date.now(),acao,detalhes:det,userId:uid||'sys',timestamp:Date.now()});
+  localStorage.setItem(IAM_AUDIT_KEY,JSON.stringify(log.slice(0,500)));
+}
+
+function iamEnsureAdmin(){
+  var users=iamGetUsers();
+  if(!users.find(function(u){return u.email==='roger783954@gmail.com';})){
+    users.unshift({id:'usr_roger',nome:'Roger',email:'roger783954@gmail.com',senha:'1234',perfil:'admin',status:'ativo',createdAt:Date.now(),lastLogin:null,tentativas:0,bloqueadoAte:null,twoFA:false,obs:'Admin principal'});
+    iamSaveUsers(users);
+  }
+  if(!users.find(function(u){return u.email==='admin@fincontent.com';})){
+    users=iamGetUsers();
+    users.push({id:'usr_admin',nome:'Admin',email:'admin@fincontent.com',senha:'1234',perfil:'admin',status:'ativo',createdAt:Date.now(),lastLogin:null,tentativas:0,bloqueadoAte:null,twoFA:false,obs:'Admin suporte'});
+    iamSaveUsers(users);
+  }
+}
+
+function iamInit(){
+  iamEnsureAdmin();
+  iamRenderUsuarios();
+  iamRenderSessaoInfo();
+  iamCarregarPoliticas();
+  var s=iamGetSessaoAtual();
+  var nb=document.getElementById('iamSessaoBadgeNome');
+  if(nb&&s) nb.textContent=s.nome+' · '+(s.perfil||'ADMIN').toUpperCase();
+}
+
+function iamGetSessaoAtual(){
+  try{var a=JSON.parse(localStorage.getItem('fc_auth_perm')||'null');return a;}catch{return null;}
+}
+
+function iamRenderSessaoInfo(){
+  var s=iamGetSessaoAtual();
+  var el=document.getElementById('iamSessaoInfo');
+  if(!el||!s) return;
+  el.innerHTML='<b>'+s.nome+'</b><br><span style="color:#f5c842;font-size:10px;">'+(s.perfil||'ADMIN').toUpperCase()+'</span><br><span style="font-size:10px;color:var(--text3);">'+s.email+'</span>';
+}
+
+function iamTab(tab){
+  var tabs=['usuarios','sessoes','auditoria','politicas'];
+  tabs.forEach(function(t){
+    var p=document.getElementById('iamPainel'+t.charAt(0).toUpperCase()+t.slice(1));
+    if(p) p.style.display=t===tab?'flex':'none';
+    var b=document.getElementById('iamTab'+t.charAt(0).toUpperCase()+t.slice(1));
+    if(b){b.style.borderBottom=t===tab?'2px solid #f5c842':'2px solid transparent';b.style.color=t===tab?'#f5c842':'var(--text2)';}
+  });
+  if(tab==='auditoria') iamRenderAuditoria();
+  if(tab==='politicas') iamCarregarPoliticas();
+  if(tab==='sessoes') iamRenderSessoes();
+  if(tab==='usuarios') iamRenderUsuarios();
+}
+
+function iamRenderUsuarios(){
+  var users=iamGetUsers();
+  var busca=(document.getElementById('iamBusca')||{}).value||'';
+  busca=busca.toLowerCase();
+  var fp=(document.getElementById('iamFiltroPerfil')||{}).value||'';
+  var lista=users.filter(function(u){
+    return(!busca||u.nome.toLowerCase().includes(busca)||u.email.toLowerCase().includes(busca))&&(!fp||u.perfil===fp);
+  });
+  var cnt=document.getElementById('iamTabUsuariosCnt');
+  if(cnt) cnt.textContent=users.length;
+  var st=document.getElementById('iamStatTotal'); if(st) st.textContent=users.length;
+  var sa=document.getElementById('iamStatAtivos'); if(sa) sa.textContent=users.filter(function(u){return u.status==='ativo';}).length;
+  var sad=document.getElementById('iamStatAdmins'); if(sad) sad.textContent=users.filter(function(u){return u.perfil==='admin';}).length;
+  var sb=document.getElementById('iamStatBloqueados'); if(sb) sb.textContent=users.filter(function(u){return u.bloqueadoAte&&Date.now()<u.bloqueadoAte;}).length;
+  var pc={'admin':'#9b59b6','gestor':'#3498db','usuario':'#2ecc71'};
+  var sc={'ativo':'#2ecc71','inativo':'#95a5a6','bloqueado':'#e74c3c'};
+  var sess=iamGetSessaoAtual();
+  var html=lista.length===0?'<div style="text-align:center;padding:60px;color:var(--text3);"><div style="font-size:36px;margin-bottom:12px;">👥</div><div>Nenhum usuário</div></div>':
+    lista.map(function(u){
+      var st2=u.bloqueadoAte&&Date.now()<u.bloqueadoAte?'bloqueado':u.status;
+      var isCur=sess&&sess.email===u.email;
+      var ll=u.lastLogin?new Date(u.lastLogin).toLocaleString('pt-BR'):'Nunca';
+      return '<div style="background:var(--surface2);border:1px solid '+(isCur?'rgba(245,200,66,0.3)':'var(--border)')+';border-radius:10px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:8px;">'+
+        '<div style="width:40px;height:40px;border-radius:50%;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">'+u.nome.charAt(0).toUpperCase()+'</div>'+
+        '<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:var(--text);">'+u.nome+(isCur?' <span style="font-size:9px;background:rgba(245,200,66,0.2);color:#f5c842;padding:1px 5px;border-radius:4px;">VOCÊ</span>':'')+'</div>'+
+        '<div style="font-size:11px;color:var(--text3);">'+u.email+'</div>'+
+        '<div style="font-size:10px;color:var(--text3);">Último login: '+ll+'</div></div>'+
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;">'+
+        '<span style="font-size:10px;padding:2px 7px;border-radius:10px;background:'+(pc[u.perfil]||'#888')+'22;color:'+(pc[u.perfil]||'#888')+';font-weight:700;">'+u.perfil.toUpperCase()+'</span>'+
+        '<span style="font-size:10px;padding:2px 7px;border-radius:10px;background:'+(sc[st2]||'#888')+'22;color:'+(sc[st2]||'#888')+';">'+st2+'</span>'+
+        '<div style="display:flex;gap:4px;margin-top:4px;">'+
+        '<button onclick="iamEditarUsuario(''+u.id+'')" style="padding:3px 7px;background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);border-radius:5px;color:#4a9eff;font-size:10px;cursor:pointer;">✏ Editar</button>'+
+        (st2==='bloqueado'?'<button onclick="iamDesbloquear(''+u.id+'')" style="padding:3px 7px;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.2);border-radius:5px;color:#2ecc71;font-size:10px;cursor:pointer;">🔓</button>':'')+
+        '</div></div></div>';
+    }).join('');
+  var el=document.getElementById('iamListaUsuarios');
+  if(el) el.innerHTML=html;
+}
+
+function iamRenderSessoes(){
+  var sess=iamGetSessaoAtual();
+  var el=document.getElementById('iamListaSessoes');
+  if(!el) return;
+  if(!sess){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--text3);">Sem sessão ativa</div>';return;}
+  el.innerHTML='<div style="background:var(--surface2);border:1px solid rgba(245,200,66,0.3);border-radius:8px;padding:14px;">'+
+    '<div style="font-size:13px;font-weight:700;color:var(--text);">'+sess.nome+' <span style="font-size:9px;background:rgba(245,200,66,0.2);color:#f5c842;padding:1px 5px;border-radius:4px;">ATIVA</span></div>'+
+    '<div style="font-size:11px;color:var(--text3);margin-top:4px;">'+sess.email+'</div>'+
+    '<div style="font-size:10px;color:var(--text3);margin-top:2px;">Início: '+new Date(sess.ts).toLocaleString('pt-BR')+'</div>'+
+    '</div>';
+}
+
+function iamRenderAuditoria(){
+  var log=iamGetAudit();
+  var filtro=(document.getElementById('iamAudFiltro')||{}).value||'';
+  var lista=filtro?log.filter(function(l){return l.acao===filtro;}):log;
+  var cores={login:'#2ecc71',logout:'#95a5a6',login_falhou:'#e74c3c',bloqueado:'#c0392b',senha_alterada:'#f5c842',usuario_criado:'#3498db'};
+  var html=lista.length===0?'<div style="text-align:center;padding:40px;color:var(--text3);">Sem registros</div>':
+    lista.map(function(l){
+      var c=cores[l.acao]||'#606080';
+      return '<div style="background:var(--surface2);border-left:3px solid '+c+';border-radius:0 6px 6px 0;padding:8px 12px;display:flex;align-items:center;gap:10px;margin-bottom:4px;">'+
+        '<div style="flex:1;"><span style="font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;background:'+c+'22;color:'+c+';">'+l.acao+'</span>'+
+        '<span style="font-size:11px;color:var(--text2);margin-left:8px;">'+l.detalhes+'</span></div>'+
+        '<span style="font-size:10px;color:var(--text3);white-space:nowrap;">'+new Date(l.timestamp).toLocaleString('pt-BR')+'</span></div>';
+    }).join('');
+  var el=document.getElementById('iamListaAuditoria');
+  if(el) el.innerHTML=html;
+}
+
+function iamLimparAuditoria(){ if(confirm('Limpar log?')){localStorage.removeItem(IAM_AUDIT_KEY);iamRenderAuditoria();} }
+
+function iamCarregarPoliticas(){
+  var p=iamGetPol();
+  var set=function(id,v){var e=document.getElementById(id);if(e)e.value=v;};
+  set('polSessionTimeout',p.sessionTimeout);
+  set('polMaxTentativas',p.maxTentativas);
+  set('polDurBloquio',p.durBloqueio);
+}
+
+function iamSalvarPoliticas(){
+  var g=function(id){var e=document.getElementById(id);return e?Number(e.value):0;};
+  localStorage.setItem(IAM_POL_KEY,JSON.stringify({sessionTimeout:g('polSessionTimeout')||8,maxTentativas:g('polMaxTentativas')||5,durBloqueio:g('polDurBloquio')||30}));
+  showToast('✅ Políticas salvas!');
+}
+
+function iamAbrirNovoUsuario(){
+  document.getElementById('iamModalTitulo').textContent='Novo Usuário';
+  document.getElementById('iamEditId').value='';
+  ['iamNome','iamEmailNovo','iamSenhaNova','iamObs'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
+  document.getElementById('iamEmailNovo').disabled=false;
+  document.getElementById('iamPerfil').value='usuario';
+  document.getElementById('iamStatusNovo').value='ativo';
+  document.getElementById('iamSenhaForca').textContent='';
+  document.getElementById('iamModalUsuario').style.display='flex';
+}
+
+function iamEditarUsuario(id){
+  var u=iamGetUsers().find(function(x){return x.id===id;});
+  if(!u) return;
+  document.getElementById('iamModalTitulo').textContent='Editar Usuário';
+  document.getElementById('iamEditId').value=id;
+  document.getElementById('iamNome').value=u.nome;
+  document.getElementById('iamEmailNovo').value=u.email;
+  document.getElementById('iamEmailNovo').disabled=true;
+  document.getElementById('iamPerfil').value=u.perfil;
+  document.getElementById('iamStatusNovo').value=u.status;
+  document.getElementById('iamObs').value=u.obs||'';
+  document.getElementById('iamSenhaNova').value='';
+  document.getElementById('iamSenhaForca').textContent='';
+  document.getElementById('iamModalUsuario').style.display='flex';
+}
+
+function iamFecharModal(){ document.getElementById('iamModalUsuario').style.display='none'; }
+
+function iamSalvarUsuario(){
+  var id=document.getElementById('iamEditId').value;
+  var nome=(document.getElementById('iamNome').value||'').trim();
+  var email=(document.getElementById('iamEmailNovo').value||'').trim();
+  var perfil=document.getElementById('iamPerfil').value;
+  var status=document.getElementById('iamStatusNovo').value;
+  var senha=(document.getElementById('iamSenhaNova').value||'').trim();
+  var obs=(document.getElementById('iamObs').value||'').trim();
+  if(!nome||((!id)&&!email)){showToast('⚠ Preencha nome e e-mail.');return;}
+  var users=iamGetUsers();
+  if(id){
+    var idx=users.findIndex(function(u){return u.id===id;});
+    if(idx>=0){users[idx].nome=nome;users[idx].perfil=perfil;users[idx].status=status;users[idx].obs=obs;if(senha)users[idx].senha=senha;}
+  } else {
+    if(users.find(function(u){return u.email===email;})){showToast('⚠ E-mail já cadastrado.');return;}
+    users.push({id:'usr_'+Date.now(),nome,email,senha:senha||'1234',perfil,status,createdAt:Date.now(),lastLogin:null,tentativas:0,bloqueadoAte:null,twoFA:false,obs});
+    iamAudit('usuario_criado','Usuário criado: '+nome);
+  }
+  iamSaveUsers(users);
+  iamFecharModal();
+  iamRenderUsuarios();
+  showToast('✅ Salvo!');
+}
+
+function iamDesbloquear(id){
+  var users=iamGetUsers();
+  var idx=users.findIndex(function(u){return u.id===id;});
+  if(idx>=0){users[idx].tentativas=0;users[idx].bloqueadoAte=null;iamSaveUsers(users);iamRenderUsuarios();showToast('✅ Usuário desbloqueado!');}
+}
+
+function iamChecarSenha(){
+  var s=(document.getElementById('iamSenhaNova')||{}).value||'';
+  var score=0;
+  if(s.length>=8)score++;if(/[A-Z]/.test(s))score++;if(/[0-9]/.test(s))score++;if(/[^A-Za-z0-9]/.test(s))score++;
+  var labels=['','Fraca','Média','Boa','Forte'];
+  var colors=['','#e74c3c','#f5c842','#2ecc71','#1abc9c'];
+  var el=document.getElementById('iamSenhaForca');
+  if(el){el.textContent=s?labels[score]||'Forte':'';el.style.color=colors[score]||'#1abc9c';}
+}
+
+function iamAbrirMinhaSenha(){
+  ['iamSenhaAtual','iamSenhaNovaAlt','iamSenhaConfAlt'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
+  document.getElementById('iamModalMinhaSenha').style.display='flex';
+}
+
+function iamAlterarMinhaSenha(){
+  var atual=(document.getElementById('iamSenhaAtual').value||'').trim();
+  var nova=(document.getElementById('iamSenhaNovaAlt').value||'').trim();
+  var conf=(document.getElementById('iamSenhaConfAlt').value||'').trim();
+  if(nova!==conf){showToast('⚠ As senhas não coincidem.');return;}
+  if(!nova){showToast('⚠ Digite a nova senha.');return;}
+  var sess=iamGetSessaoAtual();
+  if(!sess){showToast('⚠ Sem sessão ativa.');return;}
+  var users=iamGetUsers();
+  var idx=users.findIndex(function(u){return u.email===sess.email;});
+  if(idx<0){showToast('⚠ Usuário não encontrado.');return;}
+  if(users[idx].senha!==atual){
+    // Also check USUARIOS_SISTEMA
+    var legUser=typeof USUARIOS_SISTEMA!=='undefined'?USUARIOS_SISTEMA.find(function(u){return u.email===sess.email&&u.senha===atual;}):null;
+    if(!legUser){showToast('⚠ Senha atual incorreta.');return;}
+  }
+  users[idx].senha=nova;
+  iamSaveUsers(users);
+  // Update USUARIOS_SISTEMA if possible
+  if(typeof USUARIOS_SISTEMA!=='undefined'){
+    var li=USUARIOS_SISTEMA.findIndex(function(u){return u.email===sess.email;});
+    if(li>=0) USUARIOS_SISTEMA[li].senha=nova;
+  }
+  document.getElementById('iamModalMinhaSenha').style.display='none';
+  iamAudit('senha_alterada','Senha alterada: '+sess.nome,sess.email);
+  showToast('✅ Senha alterada com sucesso!');
+}
+
+function iamExportarAuditoria(){
+  var log=iamGetAudit();
+  var csv='Timestamp,Ação,Usuário,Detalhes
+'+log.map(function(l){
+    return '"'+new Date(l.timestamp).toLocaleString('pt-BR')+'","'+l.acao+'","'+l.userId+'","'+l.detalhes.replace(/"/g,'""')+'"';
+  }).join('
+');
+  var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  var url=URL.createObjectURL(blob);
+  var a=Object.assign(document.createElement('a'),{href:url,download:'auditoria_iam.csv'});
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+}
+
+// Hook into existing login to register audit
+(function(){
+  var orig=window.fazerLogin||function(){};
+  // Already handled by bypass - just ensure audit on login
+  var origVerificar=window.verificarLogin;
+  if(origVerificar){
+    window.verificarLogin=function(){
+      origVerificar.apply(this,arguments);
+      iamEnsureAdmin();
+    };
+  }
+})();
+
+// Populate category selects
+function popularSelectsCategorias(){
+  var cats=typeof catCarregar==='function'?catCarregar():[];
+  if(!cats.length) cats=[
+    {id:'financas',nome:'Finanças e Contabilidade',icone:'💰'},
+    {id:'investimentos',nome:'Investimentos',icone:'📈'},
+    {id:'tributario',nome:'Tributário',icone:'📋'},
+    {id:'gestao',nome:'Gestão Empresarial',icone:'🏢'},
+    {id:'tecnologia',nome:'Tecnologia',icone:'💻'},
+    {id:'autodesenvolvimento',nome:'Autodesenvolvimento',icone:'🌱'},
+    {id:'historia',nome:'História',icone:'🏛️'},
+  ];
+  var ids=['livroCat','apresCat','docCat'];
+  var def='<option value="">Selecione...</option>';
+  ids.forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el) return;
+    el.innerHTML=def+cats.map(function(c){return '<option value="'+c.id+'">'+c.icone+' '+c.nome+'</option>';}).join('');
+  });
+}
+
 </script>
 
 <!-- ==================== MODAL COMPARTILHAR ==================== -->
@@ -8796,5 +9111,134 @@ function fontesArquivarConsulta(titulo) {
     </div>
   </div>
 </div>
+
+<!-- ==================== IAM PANEL ==================== -->
+<div id="iamApp" style="display:none;flex:1;flex-direction:column;height:100vh;overflow:hidden;">
+  <div class="topbar">
+    <div class="page-title">🔐 IAM — <span>Identidade & Acesso</span></div>
+    <div class="topbar-right">
+      <div style="font-size:11px;padding:4px 10px;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.2);border-radius:8px;color:#2ecc71;display:flex;align-items:center;gap:5px;">
+        <span style="width:6px;height:6px;background:#2ecc71;border-radius:50%;display:inline-block;"></span>
+        <span id="iamSessaoBadgeNome">Sessão ativa</span>
+      </div>
+      <button class="btn btn-ghost" onclick="iamExportarAuditoria()">📥 Auditoria CSV</button>
+      <button class="btn btn-primary" onclick="iamAbrirNovoUsuario()">+ Novo Usuário</button>
+    </div>
+  </div>
+  <div style="flex:1;display:flex;overflow:hidden;">
+    <div style="width:240px;min-width:240px;border-right:1px solid var(--border);overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div id="iamStatTotal" style="font-size:20px;font-weight:800;color:#f5c842;">0</div><div style="font-size:10px;color:var(--text3);">Usuários</div></div>
+        <div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div id="iamStatAtivos" style="font-size:20px;font-weight:800;color:#2ecc71;">0</div><div style="font-size:10px;color:var(--text3);">Ativos</div></div>
+        <div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div id="iamStatAdmins" style="font-size:20px;font-weight:800;color:#9b59b6;">0</div><div style="font-size:10px;color:var(--text3);">Admins</div></div>
+        <div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div id="iamStatBloqueados" style="font-size:20px;font-weight:800;color:#e74c3c;">0</div><div style="font-size:10px;color:var(--text3);">Bloqueados</div></div>
+      </div>
+      <input id="iamBusca" type="text" placeholder="🔍 Buscar..." oninput="iamRenderUsuarios()"
+        style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 10px;color:var(--text);font-size:12px;box-sizing:border-box;">
+      <select id="iamFiltroPerfil" onchange="iamRenderUsuarios()" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px;color:var(--text);font-size:12px;">
+        <option value="">Todos os perfis</option>
+        <option value="admin">Admin</option>
+        <option value="gestor">Gestor</option>
+        <option value="usuario">Usuário</option>
+      </select>
+      <div style="background:rgba(46,204,113,0.06);border:1px solid rgba(46,204,113,0.2);border-radius:8px;padding:12px;">
+        <div style="font-size:10px;font-weight:700;color:#2ecc71;text-transform:uppercase;margin-bottom:8px;">● Sessão Ativa</div>
+        <div id="iamSessaoInfo" style="font-size:11px;color:var(--text2);line-height:1.8;"></div>
+        <div style="display:flex;gap:6px;margin-top:10px;">
+          <button onclick="iamAbrirMinhaSenha()" style="flex:1;padding:6px;background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);border-radius:6px;color:#4a9eff;font-size:10px;cursor:pointer;">🔑 Senha</button>
+          <button onclick="fazerLogout()" style="flex:1;padding:6px;background:rgba(231,76,60,0.1);border:1px solid rgba(231,76,60,0.3);border-radius:6px;color:#e74c3c;font-size:10px;cursor:pointer;">🚪 Sair</button>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+      <div style="display:flex;border-bottom:1px solid var(--border);padding:0 16px;flex-shrink:0;background:var(--surface);">
+        <button onclick="iamTab('usuarios')" id="iamTabUsuarios" style="background:none;border:none;border-bottom:2px solid #f5c842;color:#f5c842;font-size:12px;padding:12px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;">👥 Usuários <span id="iamTabUsuariosCnt" style="background:rgba(245,200,66,0.15);border-radius:10px;padding:1px 6px;font-size:10px;">0</span></button>
+        <button onclick="iamTab('sessoes')" id="iamTabSessoes" style="background:none;border:none;border-bottom:2px solid transparent;color:var(--text2);font-size:12px;padding:12px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;">🕐 Sessões</button>
+        <button onclick="iamTab('auditoria')" id="iamTabAuditoria" style="background:none;border:none;border-bottom:2px solid transparent;color:var(--text2);font-size:12px;padding:12px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;">📋 Auditoria</button>
+        <button onclick="iamTab('politicas')" id="iamTabPoliticas" style="background:none;border:none;border-bottom:2px solid transparent;color:var(--text2);font-size:12px;padding:12px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;">🛡 Políticas</button>
+      </div>
+      <div id="iamPainelUsuarios" style="flex:1;overflow-y:auto;padding:16px;"><div id="iamListaUsuarios"></div></div>
+      <div id="iamPainelSessoes" style="display:none;flex:1;overflow-y:auto;padding:16px;"><div id="iamListaSessoes"></div></div>
+      <div id="iamPainelAuditoria" style="display:none;flex:1;overflow-y:auto;padding:16px;">
+        <div style="display:flex;gap:8px;margin-bottom:12px;">
+          <select id="iamAudFiltro" onchange="iamRenderAuditoria()" style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:7px 10px;color:var(--text);font-size:12px;"><option value="">Todas as ações</option><option value="login">Login</option><option value="logout">Logout</option><option value="login_falhou">Falha Login</option><option value="bloqueado">Bloqueado</option><option value="senha_alterada">Senha Alterada</option></select>
+          <button onclick="iamLimparAuditoria()" style="padding:7px 12px;background:rgba(231,76,60,0.1);border:1px solid rgba(231,76,60,0.2);border-radius:8px;color:#e74c3c;font-size:12px;cursor:pointer;">🗑 Limpar</button>
+        </div>
+        <div id="iamListaAuditoria"></div>
+      </div>
+      <div id="iamPainelPoliticas" style="display:none;flex:1;overflow-y:auto;padding:16px;max-width:600px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:16px;">🛡 Política de Segurança</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="background:var(--surface2);border-radius:10px;padding:16px;">
+            <div style="font-size:11px;font-weight:700;color:#f5c842;text-transform:uppercase;margin-bottom:12px;">Timeout de Sessão (horas)</div>
+            <input type="number" id="polSessionTimeout" value="8" min="1" max="72" onchange="iamSalvarPoliticas()" style="width:80px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;padding:6px 8px;color:var(--text);font-size:13px;">
+          </div>
+          <div style="background:var(--surface2);border-radius:10px;padding:16px;">
+            <div style="font-size:11px;font-weight:700;color:#f5c842;text-transform:uppercase;margin-bottom:12px;">Bloqueio por Tentativas</div>
+            <label style="font-size:11px;color:#888;display:block;margin-bottom:4px;">Bloquear após N tentativas</label>
+            <input type="number" id="polMaxTentativas" value="5" min="3" max="10" onchange="iamSalvarPoliticas()" style="width:80px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;padding:6px 8px;color:var(--text);font-size:13px;">
+            <label style="font-size:11px;color:#888;display:block;margin-bottom:4px;margin-top:10px;">Duração do bloqueio (min)</label>
+            <input type="number" id="polDurBloquio" value="30" min="5" max="1440" onchange="iamSalvarPoliticas()" style="width:80px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;padding:6px 8px;color:var(--text);font-size:13px;">
+          </div>
+          <div style="background:var(--surface2);border-radius:10px;padding:16px;">
+            <div style="font-size:11px;font-weight:700;color:#f5c842;text-transform:uppercase;margin-bottom:12px;">Papéis e Permissões</div>
+            <table style="width:100%;font-size:11px;color:var(--text2);border-collapse:collapse;">
+              <tr style="color:#888;border-bottom:1px solid var(--border);"><th style="text-align:left;padding:6px 4px;">Módulo</th><th style="text-align:center;padding:6px 4px;">Admin</th><th style="text-align:center;padding:6px 4px;">Gestor</th><th style="text-align:center;padding:6px 4px;">Usuário</th></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:5px 4px;">Gerador IA</td><td style="text-align:center;color:#2ecc71;">✓</td><td style="text-align:center;color:#2ecc71;">✓</td><td style="text-align:center;color:#2ecc71;">✓</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:5px 4px;">CRM / WhatsApp</td><td style="text-align:center;color:#2ecc71;">✓</td><td style="text-align:center;color:#2ecc71;">✓</td><td style="text-align:center;color:#e74c3c;">✗</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:5px 4px;">Configurações</td><td style="text-align:center;color:#2ecc71;">✓</td><td style="text-align:center;color:#e74c3c;">✗</td><td style="text-align:center;color:#e74c3c;">✗</td></tr>
+              <tr><td style="padding:5px 4px;">IAM</td><td style="text-align:center;color:#2ecc71;">✓</td><td style="text-align:center;color:#e74c3c;">✗</td><td style="text-align:center;color:#e74c3c;">✗</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL USUÁRIO IAM -->
+<div id="iamModalUsuario" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:3000;align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:460px;max-height:90vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div id="iamModalTitulo" style="font-size:16px;font-weight:700;color:var(--text);">Novo Usuário</div>
+      <button onclick="iamFecharModal()" style="background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;">✕</button>
+    </div>
+    <input type="hidden" id="iamEditId">
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div><label class="form-label">Nome *</label><input id="iamNome" type="text" class="tema-input" style="min-height:0;padding:8px 12px;"></div>
+      <div><label class="form-label">E-mail *</label><input id="iamEmailNovo" type="email" class="tema-input" style="min-height:0;padding:8px 12px;"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div><label class="form-label">Perfil</label><select id="iamPerfil" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px;color:var(--text);font-size:12px;"><option value="usuario">Usuário</option><option value="gestor">Gestor</option><option value="admin">Admin</option></select></div>
+        <div><label class="form-label">Status</label><select id="iamStatusNovo" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px;color:var(--text);font-size:12px;"><option value="ativo">Ativo</option><option value="inativo">Inativo</option></select></div>
+      </div>
+      <div id="iamSenhaArea"><label class="form-label">Senha</label><input id="iamSenhaNova" type="password" class="tema-input" style="min-height:0;padding:8px 12px;" oninput="iamChecarSenha()"><div id="iamSenhaForca" style="font-size:11px;margin-top:4px;"></div></div>
+      <div><label class="form-label">Observações</label><textarea id="iamObs" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px;color:var(--text);font-size:12px;resize:vertical;min-height:60px;box-sizing:border-box;"></textarea></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:20px;">
+      <button onclick="iamSalvarUsuario()" style="flex:1;padding:11px;background:#f5c842;color:#000;border:none;border-radius:8px;font-weight:700;cursor:pointer;">Salvar</button>
+      <button onclick="iamFecharModal()" style="padding:11px 14px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL MINHA SENHA -->
+<div id="iamModalMinhaSenha" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:3000;align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:380px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div style="font-size:16px;font-weight:700;color:var(--text);">🔑 Alterar Senha</div>
+      <button onclick="document.getElementById('iamModalMinhaSenha').style.display='none'" style="background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;">✕</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div><label class="form-label">Senha atual</label><input id="iamSenhaAtual" type="password" class="tema-input" style="min-height:0;padding:8px 12px;"></div>
+      <div><label class="form-label">Nova senha</label><input id="iamSenhaNovaAlt" type="password" class="tema-input" style="min-height:0;padding:8px 12px;"></div>
+      <div><label class="form-label">Confirmar</label><input id="iamSenhaConfAlt" type="password" class="tema-input" style="min-height:0;padding:8px 12px;"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:20px;">
+      <button onclick="iamAlterarMinhaSenha()" style="flex:1;padding:11px;background:#f5c842;color:#000;border:none;border-radius:8px;font-weight:700;cursor:pointer;">Alterar</button>
+      <button onclick="document.getElementById('iamModalMinhaSenha').style.display='none'" style="padding:11px 14px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;">Cancelar</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

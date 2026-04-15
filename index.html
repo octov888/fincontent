@@ -2,6 +2,9 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FinContent AI — Gerador de Conteúdo</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
@@ -1254,7 +1257,7 @@
       <div id="sidebarUsuario" style="font-size:10px;color:var(--text3);margin-top:4px;"></div>
     </div>
     <div style="text-align:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">
-      <span style="font-size:9px;color:var(--text3);letter-spacing:0.5px;">v2.3.1 · Abril 2026</span>
+      <span style="font-size:9px;color:var(--text3);letter-spacing:0.5px;">v2.3.2 · Abril 2026</span>
       <div style="margin-top:6px;">
         <button onclick="baixarScripts()" style="width:100%;padding:5px 8px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.3);border-radius:6px;color:#f5c842;font-size:10px;cursor:pointer;font-family:'DM Sans',sans-serif;">
           ⬇ Baixar Scripts de Atualização
@@ -1309,7 +1312,12 @@
         <!-- CATEGORIA -->
         <div class="section">
           <div class="section-title">Categoria</div>
-          <div class="chips">
+          <div style="margin-bottom:8px;">
+            <select id="geradorCategoria" onchange="geradorAtualizarCategoria(this)"
+              style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 10px;color:var(--text);font-size:12px;font-family:'DM Sans',sans-serif;">
+            </select>
+          </div>
+          <div class="chips" id="geradorCategoryChips">
             <div class="chip active" onclick="selectChip(this, 'categoria')">💰 Finanças</div>
             <div class="chip" onclick="selectChip(this, 'categoria')">📊 Contabilidade</div>
             <div class="chip" onclick="selectChip(this, 'categoria')">📋 Tributos</div>
@@ -1578,6 +1586,8 @@
         <label class="form-label">Subtítulo / Tagline</label>
         <input type="text" class="modal-input" id="npTagline" value="Inteligência Financeira para seu Negócio" placeholder="Tagline">
 
+        <label class="form-label">Categoria</label>
+        <select id="npCategoria" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;font-family:'DM Sans',sans-serif;margin-bottom:14px;"></select>
         <label class="form-label">Edição <span style="color:var(--text3);font-weight:400;text-transform:none;">(opcional)</span></label>
         <div style="display:flex;gap:8px;margin-bottom:14px;">
           <input type="number" id="npNumEdicao" placeholder="Nº" min="1" style="width:70px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;text-align:center;" oninput="sincronizarEdicao()">
@@ -2806,6 +2816,14 @@
       <div class="section">
         <div class="section-title">📖 Referências Bibliográficas</div>
         <div style="font-size:11px;color:var(--text3);margin-bottom:8px;">Selecione livros da biblioteca para embasar o conteúdo:</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="font-size:11px;color:var(--text3);">Fontes e livros para embasar o conteúdo</span>
+          <button onclick="abrirSeletorFontesModulo('livroApp')"
+            style="font-size:10px;padding:3px 8px;background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);border-radius:5px;color:#4a9eff;cursor:pointer;">
+            🔗 Selecionar
+          </button>
+        </div>
+        <div id="livroApp_fontesSelecionadas" style="font-size:10px;color:var(--text3);margin-bottom:6px;min-height:16px;"></div>
         <div id="livroRefsList" style="max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;"></div>
       </div>
       <div class="section">
@@ -2884,6 +2902,14 @@
       </div>
       <div class="section">
         <div class="section-title">📚 Referências</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="font-size:11px;color:var(--text3);">Fontes e livros para embasar o conteúdo</span>
+          <button onclick="abrirSeletorFontesModulo('apresentacaoApp')"
+            style="font-size:10px;padding:3px 8px;background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);border-radius:5px;color:#4a9eff;cursor:pointer;">
+            🔗 Selecionar
+          </button>
+        </div>
+        <div id="apresentacaoApp_fontesSelecionadas" style="font-size:10px;color:var(--text3);margin-bottom:6px;min-height:16px;"></div>
         <div id="apresRefsList" style="max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;"></div>
       </div>
       <button class="gerar-btn" id="apresGerarBtn" onclick="apresGerar()">✦ Gerar Apresentação com IA</button>
@@ -2957,6 +2983,14 @@
       </div>
       <div class="section">
         <div class="section-title">📚 Referências</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="font-size:11px;color:var(--text3);">Fontes e livros para embasar o conteúdo</span>
+          <button onclick="abrirSeletorFontesModulo('documentoApp')"
+            style="font-size:10px;padding:3px 8px;background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);border-radius:5px;color:#4a9eff;cursor:pointer;">
+            🔗 Selecionar
+          </button>
+        </div>
+        <div id="documentoApp_fontesSelecionadas" style="font-size:10px;color:var(--text3);margin-bottom:6px;min-height:16px;"></div>
         <div id="docRefsList" style="max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;"></div>
       </div>
       <button class="gerar-btn" id="docGerarBtn" onclick="docGerar()">✦ Gerar Artigo com IA</button>
@@ -4127,6 +4161,20 @@ const FONTES_DEFAULT = [
 const BIBLIOTECA_EDITORIAL = {"projeto":"Sophos","descricao":"Base bibliográfica para geração de conteúdo financeiro automatizado","versao":"1.0","total_livros":55,"categorias":["contabilidade_financas","investimentos_mercado_capitais","administracao_gestao","desenvolvimento_pessoal_negocios","tecnologia_informatica","macro_historia"],"livros":[{"id":"CF001","titulo":"Estrutura e Análise de Balanços","autor":"Alexandre Assaf Neto","categoria":"contabilidade_financas","subcategoria":"analise_demonstracoes","editora":"Atlas","relevancia_fincontent":10,"temas_conteudo":["análise de balanços","índices financeiros","liquidez","rentabilidade","endividamento"],"abnt":"ASSAF NETO, Alexandre. Estrutura e Análise de Balanços. 12. ed. São Paulo: Atlas, 2023.","link_autor":"https://assafneto.com.br","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF002","titulo":"Análise Financeira de Balanços","autor":"Dante C. Matarazzo","categoria":"contabilidade_financas","subcategoria":"analise_demonstracoes","editora":"Atlas","relevancia_fincontent":10,"temas_conteudo":["análise financeira","balanço patrimonial","DRE","índices econômico-financeiros"],"abnt":"MATARAZZO, Dante C. Análise Financeira de Balanços. 7. ed. São Paulo: Atlas, 2010.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF003","titulo":"Técnicas de Análise Financeira","autor":"Erich A. Helfert","categoria":"contabilidade_financas","subcategoria":"analise_demonstracoes","editora":"Bookman","relevancia_fincontent":9,"temas_conteudo":["análise financeira","fluxo de caixa","valuation","decisões de investimento"],"abnt":"HELFERT, Erich A. Técnicas de Análise Financeira. 11. ed. Porto Alegre: Bookman, 2000.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=techniques+financial+analysis+helfert","app_categoria":"Finanças e Contabilidade"},{"id":"CF004","titulo":"Princípios de Administração Financeira","autor":"Lawrence J. Gitman","categoria":"contabilidade_financas","subcategoria":"financas_corporativas","editora":"Pearson","relevancia_fincontent":10,"temas_conteudo":["administração financeira","capital de giro","estrutura de capital","dividendos"],"abnt":"GITMAN, Lawrence J. Princípios de Administração Financeira. 12. ed. São Paulo: Pearson, 2010.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=principios+administracao+financeira+gitman","app_categoria":"Finanças e Contabilidade"},{"id":"CF005","titulo":"Administração Financeira — Corporate Finance","autor":"Ross / Westerfield / Jaffe","categoria":"contabilidade_financas","subcategoria":"financas_corporativas","editora":"Atlas","relevancia_fincontent":10,"temas_conteudo":["finanças corporativas","custo de capital","estrutura de capital","M&A"],"abnt":"ROSS, Stephen A.; WESTERFIELD, Randolph W.; JAFFE, Jeffrey F. Administração Financeira. São Paulo: Atlas, 2008.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=corporate+finance+ross+westerfield","app_categoria":"Finanças e Contabilidade"},{"id":"CF006","titulo":"Valuation: Guia Fundamental","autor":"Roger G. Serra / Marcos Wickert","categoria":"contabilidade_financas","subcategoria":"valuation","editora":"Atlas","relevancia_fincontent":10,"temas_conteudo":["valuation","fluxo de caixa descontado","múltiplos de mercado","avaliação de empresas"],"abnt":"SERRA, Roger G.; WICKERT, Marcos. Valuation: Guia Fundamental. São Paulo: Atlas, 2019.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF007","titulo":"Contabilidade Gerencial","autor":"Ray H. Garrison / Eric W. Noreen","categoria":"contabilidade_financas","subcategoria":"contabilidade_gerencial","editora":"LTC","relevancia_fincontent":9,"temas_conteudo":["contabilidade gerencial","custos","orçamento","controle gerencial"],"abnt":"GARRISON, Ray H.; NOREEN, Eric W. Contabilidade Gerencial. 14. ed. Porto Alegre: LTC, 2013.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF008","titulo":"Contabilidade de Custos","autor":"Eliseu Martins","categoria":"contabilidade_financas","subcategoria":"custos","editora":"Atlas","relevancia_fincontent":9,"temas_conteudo":["custos","custeio por absorção","custeio variável","margem de contribuição"],"abnt":"MARTINS, Eliseu. Contabilidade de Custos. 10. ed. São Paulo: Atlas, 2010.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF009","titulo":"Controladoria","autor":"Armando Catelli","categoria":"contabilidade_financas","subcategoria":"controladoria","editora":"FIPECAFI / Atlas","relevancia_fincontent":9,"temas_conteudo":["controladoria","gestão econômica","GECON","resultado econômico"],"abnt":"CATELLI, Armando. Controladoria: uma abordagem da gestão econômica. 2. ed. São Paulo: FIPECAFI/Atlas, 2001.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF010","titulo":"Controladoria Estratégica e Operacional","autor":"Clóvis Luís Padoveze","categoria":"contabilidade_financas","subcategoria":"controladoria","editora":"Cengage","relevancia_fincontent":9,"temas_conteudo":["controladoria","KPIs","balanced scorecard","planejamento financeiro"],"abnt":"PADOVEZE, Clóvis L. Controladoria Estratégica e Operacional. 3. ed. São Paulo: Cengage, 2019.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF011","titulo":"Análise de Crédito","autor":"Wolfgang K. Schrickel","categoria":"contabilidade_financas","subcategoria":"credito","editora":"Atlas","relevancia_fincontent":8,"temas_conteudo":["análise de crédito","risco de crédito","5 C's do crédito","concessão de empréstimos"],"abnt":"SCHRICKEL, Wolfgang K. Análise de Crédito: Concessão e Gerência de Empréstimos. 5. ed. São Paulo: Atlas, 2000.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF012","titulo":"As Decisões de Investimentos","autor":"Adriano L. Bruni / Rubens Famá","categoria":"contabilidade_financas","subcategoria":"investimentos","editora":"Atlas","relevancia_fincontent":9,"temas_conteudo":["decisões de investimento","VPL","TIR","payback","capital budgeting"],"abnt":"BRUNI, Adriano L.; FAMÁ, Rubens. As Decisões de Investimentos. São Paulo: Atlas, 2007.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF013","titulo":"Mercado Financeiro","autor":"Alexandre Assaf Neto","categoria":"contabilidade_financas","subcategoria":"mercado_capitais","editora":"Atlas","relevancia_fincontent":10,"temas_conteudo":["mercado financeiro","renda fixa","renda variável","derivativos","B3"],"abnt":"ASSAF NETO, Alexandre. Mercado Financeiro. 14. ed. São Paulo: Atlas, 2023.","link_autor":"https://assafneto.com.br","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF014","titulo":"Fundamentos dos Mercados Futuros e de Opções","autor":"John C. Hull","categoria":"contabilidade_financas","subcategoria":"derivativos","editora":"BM&F","relevancia_fincontent":9,"temas_conteudo":["derivativos","opções","futuros","swaps","hedge"],"abnt":"HULL, John C. Fundamentos dos Mercados Futuros e de Opções. 8. ed. São Paulo: BM&F, 2016.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=options+futures+other+derivatives+hull","app_categoria":"Finanças e Contabilidade"},{"id":"CF015","titulo":"Blockchain Básico","autor":"Frankenberg","categoria":"contabilidade_financas","subcategoria":"fintech","editora":"Novatec/Apress","relevancia_fincontent":8,"temas_conteudo":["blockchain","criptomoedas","DeFi","tokenização de ativos"],"abnt":"FRANKENBERG. Blockchain Básico. São Paulo: Novatec/Apress, 2019.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"CF016","titulo":"Indicadores de Desempenho","autor":"Andresa S. N. Francischini / Paulino G. Francischini","categoria":"contabilidade_financas","subcategoria":"gestao_desempenho","editora":"Alta Books","relevancia_fincontent":10,"temas_conteudo":["KPIs","indicadores de desempenho","OKRs","gestão por objetivos","métricas empresariais"],"abnt":"FRANCISCHINI, Andresa S. N.; FRANCISCHINI, Paulino G. Indicadores de Desempenho. São Paulo: Alta Books, 2020.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"INV001","titulo":"O Investidor Inteligente","autor":"Benjamin Graham","categoria":"investimentos_mercado_capitais","subcategoria":"value_investing","editora":"HarperCollins Brasil","relevancia_fincontent":10,"temas_conteudo":["value investing","margem de segurança","análise fundamentalista","Mr. Market","investimento em ações"],"abnt":"GRAHAM, Benjamin. O Investidor Inteligente. São Paulo: HarperCollins Brasil, 2020.","link_autor":"https://en.wikipedia.org/wiki/Benjamin_Graham","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=intelligent+investor+graham","app_categoria":"Finanças e Contabilidade"},{"id":"INV002","titulo":"Warren Buffett e a Análise de Balanços","autor":"Mary Buffett / David Clark","categoria":"investimentos_mercado_capitais","subcategoria":"value_investing","editora":"Sextante","relevancia_fincontent":10,"temas_conteudo":["Warren Buffett","análise de balanços","vantagem competitiva durável","value investing"],"abnt":"BUFFETT, Mary; CLARK, David. Warren Buffett e a Análise de Balanços. São Paulo: Sextante, 2010.","link_autor":"https://marybuffett.com","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"INV003","titulo":"O Tao de Warren Buffett","autor":"Mary Buffett / David Clark","categoria":"investimentos_mercado_capitais","subcategoria":"value_investing","editora":"Sextante","relevancia_fincontent":9,"temas_conteudo":["Warren Buffett","filosofia de investimento","paciência","longo prazo"],"abnt":"BUFFETT, Mary; CLARK, David. O Tao de Warren Buffett. São Paulo: Sextante, 2007.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"INV004","titulo":"Dinheiro e Vida","autor":"Joe Dominguez / Vicki Robin","categoria":"investimentos_mercado_capitais","subcategoria":"financas_pessoais","editora":"Sextante","relevancia_fincontent":9,"temas_conteudo":["independência financeira","FIRE","relação com dinheiro","consumo consciente"],"abnt":"DOMINGUEZ, Joe; ROBIN, Vicki. Dinheiro e Vida. São Paulo: Sextante, 2022.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=your+money+or+your+life+robin","app_categoria":"Finanças e Contabilidade"},{"id":"INV005","titulo":"Antifrágil: Coisas que se Beneficiam com o Caos","autor":"Nassim Nicholas Taleb","categoria":"investimentos_mercado_capitais","subcategoria":"filosofia_financeira","editora":"Best Business","relevancia_fincontent":10,"temas_conteudo":["antifragilidade","risco","incerteza","cisne negro","gestão de portfólio"],"abnt":"TALEB, Nassim N. Antifrágil: coisas que se beneficiam com o caos. São Paulo: Best Business, 2012.","link_autor":"https://www.fooledbyrandomness.com","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=antifragile+taleb","app_categoria":"Finanças e Contabilidade"},{"id":"ADM001","titulo":"Mapas Estratégicos","autor":"Robert S. Kaplan / David P. Norton","categoria":"administracao_gestao","subcategoria":"estrategia","editora":"Campus","relevancia_fincontent":9,"temas_conteudo":["estratégia","balanced scorecard","KPIs","mapa estratégico","gestão por resultados"],"abnt":"KAPLAN, Robert S.; NORTON, David P. Mapas Estratégicos. Rio de Janeiro: Campus, 2004.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=strategy+maps+kaplan+norton","app_categoria":"Finanças e Contabilidade"},{"id":"ADM002","titulo":"A Quinta Disciplina","autor":"Peter M. Senge","categoria":"administracao_gestao","subcategoria":"gestao_organizacional","editora":"Best Seller","relevancia_fincontent":8,"temas_conteudo":["organizações que aprendem","pensamento sistêmico","aprendizado organizacional"],"abnt":"SENGE, Peter M. A Quinta Disciplina. 29. ed. Rio de Janeiro: Best Seller, 2010.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=fifth+discipline+peter+senge","app_categoria":"Finanças e Contabilidade"},{"id":"ADM003","titulo":"A Bíblia da Consultoria","autor":"Alan Weiss","categoria":"administracao_gestao","subcategoria":"consultoria","editora":"Autêntica Business","relevancia_fincontent":8,"temas_conteudo":["consultoria","proposta de valor","precificação","gestão de clientes"],"abnt":"WEISS, Alan. A Bíblia da Consultoria. São Paulo: Autêntica Business, 2019.","link_autor":"https://alanweiss.com","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"ADM004","titulo":"Planejamento Estratégico para Pequenas Empresas","autor":"Arnaldo Rosa de Andrade","categoria":"administracao_gestao","subcategoria":"estrategia_pme","editora":"Atlas","relevancia_fincontent":9,"temas_conteudo":["planejamento estratégico","PMEs","análise SWOT","plano de negócios"],"abnt":"ANDRADE, Arnaldo R. Planejamento Estratégico para Pequenas Empresas. São Paulo: Atlas, 2016.","pdf_gratuito":false,"app_categoria":"Finanças e Contabilidade"},{"id":"ADM005","titulo":"Sistemas de Informação Gerenciais","autor":"Kenneth C. Laudon / Jane P. Laudon","categoria":"administracao_gestao","subcategoria":"ti_negocios","editora":"Pearson","relevancia_fincontent":8,"temas_conteudo":["sistemas de informação","ERP","BI","tecnologia empresarial","transformação digital"],"abnt":"LAUDON, Kenneth C.; LAUDON, Jane P. Sistemas de Informação Gerenciais. 14. ed. São Paulo: Pearson, 2014.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=management+information+systems+laudon","app_categoria":"Finanças e Contabilidade"},{"id":"DP001","titulo":"As Armas da Persuasão 2.0","autor":"Robert B. Cialdini","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"persuasao_influencia","editora":"Sextante","relevancia_fincontent":10,"temas_conteudo":["persuasão","influência","copywriting","comportamento do consumidor","psicologia da decisão"],"abnt":"CIALDINI, Robert B. As Armas da Persuasão 2.0. São Paulo: Sextante, 2022.","link_autor":"https://www.influenceatwork.com","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=influence+cialdini","app_categoria":"Autodesenvolvimento"},{"id":"DP002","titulo":"O Ego é Seu Inimigo","autor":"Ryan Holiday","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"mentalidade","editora":"Objetiva","relevancia_fincontent":8,"temas_conteudo":["ego","humildade","liderança","disciplina"],"abnt":"HOLIDAY, Ryan. O Ego é Seu Inimigo. Rio de Janeiro: Objetiva, 2016.","link_autor":"https://ryanholiday.net","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=ego+is+the+enemy+ryan+holiday","app_categoria":"Autodesenvolvimento"},{"id":"DP003","titulo":"Diário Estoico","autor":"Ryan Holiday / Stephen Hanselman","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"estoicismo","editora":"Objetiva","relevancia_fincontent":8,"temas_conteudo":["estoicismo","disciplina","resiliência","Marco Aurélio","Epicteto","Sêneca"],"abnt":"HOLIDAY, Ryan; HANSELMAN, Stephen. Diário Estoico. Rio de Janeiro: Objetiva, 2017.","link_autor":"https://ryanholiday.net","pdf_gratuito":false,"app_categoria":"Autodesenvolvimento"},{"id":"DP004","titulo":"As 48 Leis do Poder","autor":"Robert Greene","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"poder_estrategia","editora":"Rocco","relevancia_fincontent":8,"temas_conteudo":["poder","estratégia","influência","política corporativa","negociação"],"abnt":"GREENE, Robert. As 48 Leis do Poder. Rio de Janeiro: Rocco.","link_autor":"https://powerseductionandwar.com","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=48+laws+of+power+greene","app_categoria":"Autodesenvolvimento"},{"id":"DP005","titulo":"As Leis da Natureza Humana","autor":"Robert Greene","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"comportamento_humano","editora":"Rocco","relevancia_fincontent":9,"temas_conteudo":["psicologia humana","comportamento","tomada de decisão","vieses","emoções"],"abnt":"GREENE, Robert. As Leis da Natureza Humana. Rio de Janeiro: Rocco, 2019.","pdf_gratuito":false,"app_categoria":"Autodesenvolvimento"},{"id":"DP006","titulo":"O Poder do Hábito","autor":"Charles Duhigg","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"habitos_produtividade","editora":"Objetiva","relevancia_fincontent":8,"temas_conteudo":["hábitos","comportamento","rotina","mudança de hábito","produtividade"],"abnt":"DUHIGG, Charles. O Poder do Hábito. Rio de Janeiro: Objetiva, 2012.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=power+of+habit+duhigg","app_categoria":"Autodesenvolvimento"},{"id":"DP007","titulo":"7 Estratégias para a Riqueza e a Felicidade","autor":"Jim Rohn","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"financas_pessoais","editora":"Alaúde","relevancia_fincontent":8,"temas_conteudo":["riqueza","sucesso","disciplina financeira","filosofia de vida"],"abnt":"ROHN, Jim. 7 Estratégias para a Riqueza & a Felicidade. São Paulo: Alaúde.","link_autor":"https://www.jimrohn.com","pdf_gratuito":false,"app_categoria":"Autodesenvolvimento"},{"id":"DP008","titulo":"Responsabilidade Extrema","autor":"Jocko Willink / Leif Babin","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"lideranca","editora":"CDG","relevancia_fincontent":9,"temas_conteudo":["liderança","ownership","accountability","tomada de decisão","gestão de equipes"],"abnt":"WILLINK, Jocko; BABIN, Leif. Responsabilidade Extrema. São Paulo: CDG, 2020.","link_autor":"https://echelonfront.com","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=extreme+ownership+willink","app_categoria":"Autodesenvolvimento"},{"id":"DP009","titulo":"O Líder 360°","autor":"John C. Maxwell","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"lideranca","editora":"Thomas Nelson Brasil","relevancia_fincontent":8,"temas_conteudo":["liderança 360°","influência","gestão de pessoas","desenvolvimento de líderes"],"abnt":"MAXWELL, John C. O Líder 360°. São Paulo: Thomas Nelson Brasil, 2007.","link_autor":"https://www.johnmaxwell.com","pdf_gratuito":false,"app_categoria":"Autodesenvolvimento"},{"id":"DP010","titulo":"Encontre Seu Porquê","autor":"Simon Sinek / David Mead / Peter Docker","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"proposito","editora":"Portfolio-Penguin","relevancia_fincontent":8,"temas_conteudo":["propósito","Golden Circle","por quê","cultura organizacional"],"abnt":"SINEK, Simon; MEAD, David; DOCKER, Peter. Encontre Seu Porquê. São Paulo: Portfolio-Penguin.","link_autor":"https://simonsinek.com","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=find+your+why+simon+sinek","app_categoria":"Autodesenvolvimento"},{"id":"DP011","titulo":"O Coach de um Trilhão de Dólares","autor":"Eric Schmidt / Jonathan Rosenberg / Alan Eagle","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"coaching_lideranca","editora":"Sextante","relevancia_fincontent":8,"temas_conteudo":["coaching","liderança Silicon Valley","Bill Campbell","gestão de talentos"],"abnt":"SCHMIDT, Eric; ROSENBERG, Jonathan; EAGLE, Alan. O Coach de um Trilhão de Dólares. São Paulo: Sextante, 2020.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=trillion+dollar+coach+schmidt","app_categoria":"Autodesenvolvimento"},{"id":"DP012","titulo":"A Geração Ansiosa","autor":"Jonathan Haidt","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"comportamento_social","editora":"Cia. das Letras","relevancia_fincontent":8,"temas_conteudo":["ansiedade","geração Z","redes sociais","saúde mental","comportamento digital"],"abnt":"HAIDT, Jonathan. A Geração Ansiosa. São Paulo: Cia. das Letras, 2024.","link_autor":"https://jonathanhaidt.com","pdf_gratuito":false,"app_categoria":"Autodesenvolvimento"},{"id":"DP013","titulo":"Seja Útil","autor":"Arnold Schwarzenegger","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"mentalidade","editora":"Portfolio-Penguin","relevancia_fincontent":7,"temas_conteudo":["disciplina","propósito","trabalho duro","superação","mentalidade vencedora"],"abnt":"SCHWARZENEGGER, Arnold. Seja Útil. São Paulo: Portfolio-Penguin, 2023.","pdf_gratuito":false,"app_categoria":"Autodesenvolvimento"},{"id":"DP014","titulo":"Liberte-se dos Seus Medos","autor":"Napoleon Hill","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"mentalidade","editora":"Thomas Nelson","relevancia_fincontent":7,"temas_conteudo":["medos","superação","autoconfiança","sucesso"],"abnt":"HILL, Napoleon. Liberte-se dos Seus Medos. São Paulo: Thomas Nelson.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=napoleon+hill+overcome+fear","app_categoria":"Autodesenvolvimento"},{"id":"DP015","titulo":"O Poder da Autodisciplina","autor":"Giovanni Dienstmann","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"habitos_produtividade","editora":"Universo dos Livros","relevancia_fincontent":7,"temas_conteudo":["autodisciplina","foco","produtividade","meditação"],"abnt":"DIENSTMANN, Giovanni. O Poder da Autodisciplina. São Paulo: Universo dos Livros.","link_autor":"https://liveanddare.com","pdf_gratuito":false,"app_categoria":"Autodesenvolvimento"},{"id":"DP016","titulo":"Maquiavel — O Príncipe","autor":"Nicolau Maquiavel","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"poder_politica","editora":"Domínio Público","relevancia_fincontent":7,"temas_conteudo":["poder","política","liderança","estratégia"],"abnt":"MAQUIAVEL, Nicolau. O Príncipe. [Domínio público].","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=o+principe+maquiavel","app_categoria":"Autodesenvolvimento"},{"id":"DP017","titulo":"A Arte da Guerra","autor":"Sun Tzu","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"estrategia","editora":"Domínio Público","relevancia_fincontent":7,"temas_conteudo":["estratégia","concorrência","planejamento","vantagem competitiva"],"abnt":"SUN TZU. A Arte da Guerra. [Domínio público].","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=arte+da+guerra+sun+tzu","app_categoria":"Autodesenvolvimento"},{"id":"DP018","titulo":"Sobre a Brevidade da Vida","autor":"Sêneca","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"estoicismo","editora":"L&PM","relevancia_fincontent":7,"temas_conteudo":["estoicismo","tempo","produtividade","filosofia prática"],"abnt":"SÊNECA, Lúcio A. Sobre a Brevidade da Vida. Porto Alegre: L&PM.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=brevidade+da+vida+seneca","app_categoria":"Autodesenvolvimento"},{"id":"DP019","titulo":"33 Estratégias de Guerra","autor":"Robert Greene","categoria":"desenvolvimento_pessoal_negocios","subcategoria":"estrategia","editora":"Rocco","relevancia_fincontent":7,"temas_conteudo":["estratégia","guerra","concorrência"],"abnt":"GREENE, Robert. 33 Estratégias de Guerra. Rio de Janeiro: Rocco, 2007.","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=33+strategies+of+war+greene","app_categoria":"Autodesenvolvimento"},{"id":"MAC001","titulo":"Sapiens: Uma Breve História da Humanidade","autor":"Yuval Noah Harari","categoria":"macro_historia","subcategoria":"historia_economia","editora":"L&PM","relevancia_fincontent":10,"temas_conteudo":["história do dinheiro","capitalismo","revolução industrial","economia global","futuro"],"abnt":"HARARI, Yuval N. Sapiens: Uma breve história da humanidade. Porto Alegre: L&PM, 2015.","link_autor":"https://www.ynharari.com","pdf_gratuito":true,"link_pdf":"https://archive.org/search?query=sapiens+harari","app_categoria":"História"},{"id":"TEC001","titulo":"Matemática com Python","autor":"Barucke Marcondes","categoria":"tecnologia_informatica","subcategoria":"programacao","editora":"Novatec","relevancia_fincontent":9,"temas_conteudo":["Python","matemática financeira","análise de dados","automação"],"abnt":"MARCONDES, Barucke. Matemática com Python. São Paulo: Novatec, 2022.","pdf_gratuito":false,"app_categoria":"Tecnologia"},{"id":"TEC002","titulo":"Sistemas de Informações Contábeis","autor":"Clóvis Luís Padoveze","categoria":"tecnologia_informatica","subcategoria":"sistemas_contabeis","editora":"Atlas","relevancia_fincontent":8,"temas_conteudo":["ERP","sistemas contábeis","TI aplicada à contabilidade","BI financeiro"],"abnt":"PADOVEZE, Clóvis L. Sistemas de Informações Contábeis. 3. ed. São Paulo: Atlas, 2015.","pdf_gratuito":false,"app_categoria":"Tecnologia"}],"prompts_sistema":{"system_prompt_base":"Você é um especialista em conteúdo financeiro de alta qualidade para o mercado brasileiro. IMPORTANTE: Nunca mencione que o conteúdo foi gerado por IA, inteligência artificial, Claude ou qualquer ferramenta tecnológica. Escreva sempre como um especialista humano. Sua base de conhecimento inclui contabilidade, finanças corporativas, mercado de capitais, comportamento do investidor, gestão empresarial e macroeconomia. Você cita referências acadêmicas quando relevante (ABNT). Seu tom é inteligente, direto e acessível. Você nunca inventa dados ou estatísticas. Adapte o nível técnico ao público informado no prompt.","templates":{"newsletter_b2c":"Escreva uma newsletter financeira de {palavra_count} palavras sobre {tema}. Público: investidor pessoa física brasileiro, classe média, 30-50 anos. Estrutura: 1) Gancho (2 parágrafos provocativos), 2) Contexto, 3) Análise principal (3-4 parágrafos), 4) Takeaway prático (3 bullet points), 5) CTA. Tom: {tom}. Referências: {referencias}.","artigo_b2b":"Escreva um artigo técnico de {palavra_count} palavras sobre {tema} para CFOs e gestores financeiros de médias empresas brasileiras. Estrutura: 1) Resumo executivo, 2) Contexto, 3) Desenvolvimento em 3 seções, 4) Implementação prática, 5) Conclusão. Tom: técnico, executivo.","post_linkedin":"Crie um post LinkedIn de 200-250 palavras sobre {tema_financeiro}. 1ª linha = gancho forte, 2-4 parágrafos curtos, pergunta final. Tom: {tom}. Baseado em: {referencia}. Máx 3 hashtags.","relatorio_executivo":"Produza um relatório executivo de {palavra_count} palavras sobre o cenário financeiro brasileiro em {mes_ano}. Seções: Resumo executivo, Macro (SELIC/Câmbio/Inflação), Mercado de Capitais, Crédito e PMEs, Tendências FinTech, 5 Recomendações. Tom: analítico, baseado em dados."}},"calendario_editorial_q2_2026":{"abril":{"tema_mes":"Fundamentos e Mentalidade Financeira","pautas":[{"semana":1,"tipo":"newsletter","titulo":"O que Benjamin Graham ensinaria sobre a B3 em 2026?","refs_ids":["INV001","INV002","CF013"]},{"semana":2,"tipo":"artigo","titulo":"Valuation na prática: como precificar uma PME brasileira","refs_ids":["CF006","CF002","CF004"]},{"semana":3,"tipo":"newsletter","titulo":"Antifrágil financeiro: patrimônio que cresce nas crises","refs_ids":["INV005","INV001","CF014"]},{"semana":4,"tipo":"newsletter_premium","titulo":"KPIs que todo CFO deveria acompanhar em 2026","refs_ids":["CF016","ADM001","CF009"]}]},"maio":{"tema_mes":"Comportamento, Tecnologia e Mercado","pautas":[{"semana":1,"tipo":"newsletter","titulo":"Por que seu cérebro sabota seus investimentos?","refs_ids":["DP001","INV005","DP005"]},{"semana":2,"tipo":"artigo","titulo":"IA e automação na análise financeira em 2026","refs_ids":["TEC001","TEC002","CF015"]},{"semana":3,"tipo":"newsletter","titulo":"Dinheiro, poder e humanidade: o que a história revela","refs_ids":["MAC001","INV005","CF014"]},{"semana":4,"tipo":"newsletter_premium","titulo":"Análise de crédito: como bancos decidem emprestar","refs_ids":["CF011","CF002"]}]},"junho":{"tema_mes":"Estratégia, Liderança e Crescimento","pautas":[{"semana":1,"tipo":"newsletter","titulo":"Responsabilidade extrema nas finanças: lições para o CFO","refs_ids":["DP008","DP002","DP009"]},{"semana":2,"tipo":"artigo","titulo":"Planejamento estratégico financeiro para PMEs: guia completo","refs_ids":["ADM004","CF016","CF007"]},{"semana":3,"tipo":"newsletter","titulo":"As leis da natureza humana que sabotam seu negócio","refs_ids":["DP005","DP001","DP006"]},{"semana":4,"tipo":"newsletter_premium","titulo":"Relatório especial: finanças empresariais brasileiras em 2026","refs_ids":["CF001","CF004","CF002","CF010"]}]}},"script_uso":{"descricao":"Exemplo de uso do JSON como base para chamadas à API da Anthropic","codigo_python":"import json, anthropic\n\nwith open('fincontent_biblioteca.json') as f:\n    biblioteca = json.load(f)\n\nclient = anthropic.Anthropic(api_key='SUA_CHAVE')\n\ndef buscar_refs(ids):\n    return [l for l in biblioteca['livros'] if l['id'] in ids]\n\ndef gerar_conteudo(pauta):\n    refs = buscar_refs(pauta['refs_ids'])\n    refs_str = '\\n'.join([r['abnt'] for r in refs])\n    temas = ', '.join([t for r in refs for t in r['temas_conteudo']])\n    \n    template = biblioteca['prompts_sistema']['templates'][pauta['tipo'].replace('_premium', '_b2c' if 'newsletter' in pauta['tipo'] else '_b2b')]\n    prompt = template.format(\n        palavra_count=600,\n        tema=pauta['titulo'],\n        tom='educativo e direto',\n        referencias=refs_str,\n        mes_ano='Junho 2026'\n    )\n    \n    response = client.messages.create(\n        model='claude-sonnet-4-6',\n        max_tokens=2000,\n        system=biblioteca['prompts_sistema']['system_prompt_base'],\n        messages=[{'role': 'user', 'content': prompt}]\n    )\n    return response.content[0].text\n\npauta_teste = biblioteca['calendario_editorial_q2_2026']['abril']['pautas'][0]\nconteudo = gerar_conteudo(pauta_teste)\nprint(conteudo)"}};
 
 
+// Resetar cache se versão mudou
+(function() {
+  var APP_VER = 'v2.3.1';
+  var storedVer = localStorage.getItem('fc_app_version');
+  if (storedVer !== APP_VER) {
+    // Limpar apenas caches de UI (não dados do usuário)
+    ['fc_categorias_cache', 'fc_init_done'].forEach(function(k) {
+      localStorage.removeItem(k);
+    });
+    localStorage.setItem('fc_app_version', APP_VER);
+    console.log('FinContent AI ' + APP_VER + ' — cache limpo');
+  }
+})();
+
 loadFontes();
 seedUsuarios();
 verificarLogin();
@@ -4199,7 +4247,7 @@ let npArticles = {};
 // NAVEGAÇÃO CENTRAL
 // =====================
 function navIr(destino) {
-  if(['livro','apresentacao','documento'].includes(destino)) setTimeout(popularSelectsCategorias,80);
+  if(['livro','apresentacao','documento','newsletter','gerador'].includes(destino)) { setTimeout(popularTodosSelects,80); setTimeout(popularSelectsCategorias,80); }
   if(destino==='iam') setTimeout(iamInit,100);
   // Marcar item ativo
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -4333,7 +4381,10 @@ function navIr(destino) {
 
     case 'categorias':
       show(document.getElementById('categoriasApp'), 'column');
-      setTimeout(() => catInit(), 100);
+      setTimeout(() => {
+        catInit();
+        popularTodosSelects();
+      }, 150);
       break;
 
     case 'whatsapp':
@@ -6631,6 +6682,7 @@ async function apresGerar() {
 
   const formatoTexto = { roteiro: 'roteiro detalhado com texto completo para cada slide', pptx: 'estrutura para PowerPoint com título, bullets e notas do apresentador', pdf: 'estrutura para PDF com título, conteúdo e observações' }[formato];
 
+  const _bib = fmGetBibliografiaTexto('apresentacaoApp');
   const prompt = `Crie um ${formatoTexto} para uma apresentação com as seguintes especificações:\n- Título: "${titulo || tema}"\n- Tema/Objetivo: ${tema}\n- Público: ${publico}\n- Número de slides: ${slides}\n\nPara cada slide inclua: número, título, conteúdo principal (bullets ou texto), e notas do apresentador.\nFormato: profissional, visual e objetivo.${refs ? `\n\nBaseie-se nestas referências: ${refs}` : ''}`;
 
   // Inject selected sources into prompt
@@ -6710,6 +6762,7 @@ async function docGerar() {
   const tamanhos = { curto: '500-800 palavras (1-2 páginas)', medio: '1200-2000 palavras (3-5 páginas)', longo: '3000-4000 palavras (6-10 páginas)' };
   const tipos = { relatorio: 'Relatório Executivo', proposta: 'Proposta Comercial', artigo: 'Artigo Técnico', manual: 'Manual/Guia Prático', analise: 'Análise de Mercado', plano: 'Plano de Negócios', carta: 'Carta/Ofício Formal', ata: 'Ata de Reunião' };
 
+  const _bib = fmGetBibliografiaTexto('documentoApp');
   const prompt = `Crie um ${tipos[tipo] || tipo} profissional com as seguintes especificações:\n- Título: "${titulo || tema}"\n- Conteúdo: ${tema}\n- Tamanho: ${tamanhos[tamanho]}\n- Tom: ${tom}\n\nFormate como um documento Word profissional com: cabeçalho, sumário executivo (quando aplicável), seções bem estruturadas com títulos, parágrafos claros e objetivos, e conclusão.\nUse formatação em Markdown para estruturar o documento.${refs ? `\n\nReferências para embasar: ${refs}` : ''}`;
 
   try {
@@ -7838,6 +7891,24 @@ const CATEGORIAS_DEFAULT = [
   { id: 'vajrayana', nome: 'Vajrayana', icone: '💎', cor: '#795548', grupo: 'espiritualidade', fixo: true },
   // Varejo Alimentar
   { id: 'supermercados', nome: 'Supermercados & Varejo Alimentar', icone: '🛒', cor: '#27ae60', grupo: 'varejo', fixo: true },
+  // Geopolítica
+  { id: 'geopolitica', nome: 'Geopolítica e Relações Internacionais', icone: '🌐', cor: '#e74c3c', grupo: 'geopolitica', fixo: true },
+  { id: 'macroeconomia', nome: 'Macroeconomia', icone: '📊', cor: '#3498db', grupo: 'geopolitica', fixo: true },
+  // Portal
+  { id: 'portal_noticias', nome: 'Portal de Notícias', icone: '📰', cor: '#95a5a6', grupo: 'outros', fixo: true },
+  // Subcategorias Finanças
+  { id: 'contabilidade', nome: 'Contabilidade', icone: '📒', cor: '#f39c12', grupo: 'financas', fixo: true },
+  { id: 'planejamento', nome: 'Planejamento Financeiro', icone: '📅', cor: '#1abc9c', grupo: 'financas', fixo: true },
+  { id: 'credito', nome: 'Crédito e Análise', icone: '💳', cor: '#e67e22', grupo: 'financas', fixo: true },
+  { id: 'derivativos', nome: 'Derivativos', icone: '📉', cor: '#c0392b', grupo: 'financas', fixo: true },
+  { id: 'fintech', nome: 'FinTech e Blockchain', icone: '⛓️', cor: '#8e44ad', grupo: 'financas', fixo: true },
+  { id: 'valuation', nome: 'Valuation', icone: '💎', cor: '#2ecc71', grupo: 'financas', fixo: true },
+  // Subcategorias Gestão
+  { id: 'consultoria', nome: 'Consultoria', icone: '🤝', cor: '#16a085', grupo: 'financas', fixo: true },
+  { id: 'estrategia', nome: 'Estratégia Empresarial', icone: '🎯', cor: '#2980b9', grupo: 'financas', fixo: true },
+  { id: 'lideranca', nome: 'Liderança', icone: '👑', cor: '#d35400', grupo: 'conhecimento', fixo: true },
+  { id: 'habitos', nome: 'Hábitos e Produtividade', icone: '⚡', cor: '#27ae60', grupo: 'conhecimento', fixo: true },
+  { id: 'persuasao', nome: 'Persuasão e Influência', icone: '🗣️', cor: '#8e44ad', grupo: 'conhecimento', fixo: true },
 ];
 
 const GRUPO_LABELS = {
@@ -7851,6 +7922,7 @@ const GRUPO_LABELS = {
   tecnologia: '💻 Tecnologia',
   outros: '📦 Outros',
   varejo: '🛒 Varejo Alimentar',
+  geopolitica: '🌐 Geopolítica e Relações Internacionais',
 };
 
 let _catCorSelecionada = '#f5c842';
@@ -7872,6 +7944,11 @@ function catSalvarDB(categorias) {
 }
 
 function catInit() {
+  // Ensure CATEGORIAS_DEFAULT is available
+  if (typeof CATEGORIAS_DEFAULT === 'undefined') {
+    setTimeout(catInit, 100);
+    return;
+  }
   catRenderizar();
 }
 
@@ -8918,6 +8995,238 @@ function popularSelectsCategorias(){
   });
 }
 
+
+// ============================================================
+// CATEGORIAS — popular todos os selects dinamicamente
+// ============================================================
+function popularTodosSelects() {
+  var cats = typeof catCarregar === 'function' ? catCarregar() : (typeof CATEGORIAS_DEFAULT !== 'undefined' ? CATEGORIAS_DEFAULT : []);
+  var defaultOpt = '<option value="">Todas as categorias</option>';
+  var allOpts = defaultOpt + cats.map(function(c) {
+    return '<option value="' + c.id + '">' + (c.icone||'') + ' ' + c.nome + '</option>';
+  }).join('');
+
+  var selIds = ['geradorCategoria','npCategoria','livroCat','apresCat','docCat','fmFiltroCat'];
+  selIds.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.innerHTML = allOpts;
+  });
+
+  // Also populate fontes page filter
+  var fontesCatEl = document.getElementById('fontesFiltrocat') || document.getElementById('fontesFiltrocat');
+  if (fontesCatEl) {
+    var fontesCats = [...new Set(
+      (typeof fontesGetTodas === 'function' ? fontesGetTodas() : []).map(function(f){ return f.categoria; }).filter(Boolean)
+    )].sort();
+    fontesCatEl.innerHTML = '<option value="">Todas as categorias</option>' +
+      fontesCats.map(function(c){ return '<option>' + c + '</option>'; }).join('');
+  }
+}
+
+function geradorAtualizarCategoria(sel) {
+  // Sync chip selection with dropdown
+  var val = sel.value;
+  if (!val) return;
+  var cats = typeof CATEGORIAS_DEFAULT !== 'undefined' ? CATEGORIAS_DEFAULT : [];
+  var cat = cats.find(function(c){ return c.id === val; });
+  if (cat) {
+    // Update current state
+    if (typeof currentConfig !== 'undefined') currentConfig.categoria = cat.nome;
+  }
+}
+
+// ============================================================
+// SELETOR DE FONTES POR MÓDULO
+// ============================================================
+var _fmModuloAtual = null;
+var _fmTab = 'sites';
+var _fmSelecionados = { sites: new Set(), livros: new Set() };
+
+function abrirSeletorFontesModulo(moduloId) {
+  _fmModuloAtual = moduloId;
+  // Restore previous selection
+  var saved = JSON.parse(localStorage.getItem('fm_sel_' + moduloId) || '{"sites":[],"livros":[]}');
+  _fmSelecionados.sites = new Set(saved.sites || []);
+  _fmSelecionados.livros = new Set(saved.livros || []);
+  document.getElementById('modalFontesModulo').style.display = 'flex';
+  fontesModuloTab('sites');
+  popularTodosSelects();
+}
+
+function fecharSeletorFontesModulo() {
+  document.getElementById('modalFontesModulo').style.display = 'none';
+}
+
+function fontesModuloTab(tab) {
+  _fmTab = tab;
+  var tabs = ['sites','livros'];
+  tabs.forEach(function(t) {
+    var btn = document.getElementById('fmTab' + t.charAt(0).toUpperCase() + t.slice(1));
+    if (btn) {
+      btn.style.borderBottom = t === tab ? '2px solid #f5c842' : '2px solid transparent';
+      btn.style.color = t === tab ? '#f5c842' : 'var(--text2)';
+    }
+  });
+  document.getElementById('fmBusca').value = '';
+  fmRenderLista();
+}
+
+function fmFiltrar() { fmRenderLista(); }
+
+function fmRenderLista() {
+  var busca = (document.getElementById('fmBusca').value || '').toLowerCase();
+  var catFiltro = (document.getElementById('fmFiltroCat').value || '');
+  var lista = document.getElementById('fmLista');
+  if (!lista) return;
+
+  var html = '';
+
+  if (_fmTab === 'sites') {
+    var fontes = typeof fontesGetTodas === 'function' ? fontesGetTodas() : [];
+    var filtradas = fontes.filter(function(f) {
+      var matchB = !busca || (f.nome||'').toLowerCase().includes(busca) || (f.url||'').toLowerCase().includes(busca);
+      var matchC = !catFiltro || f.categoria === catFiltro || (typeof CATEGORIAS_DEFAULT !== 'undefined' && CATEGORIAS_DEFAULT.find(function(c){ return c.id === catFiltro && c.nome === f.categoria; }));
+      return matchB && matchC && f.ativo !== false;
+    });
+    var cnt = document.getElementById('fmCountSites');
+    if (cnt) cnt.textContent = _fmSelecionados.sites.size + '/' + fontes.length;
+
+    html = filtradas.map(function(f) {
+      var sel = _fmSelecionados.sites.has(f.id || f.nome);
+      return '<div onclick="fmToggleFonte(\'' + (f.id||f.nome).replace(/'/g,"\\'") + '\',\'sites\')" ' +
+        'style="background:' + (sel ? 'rgba(245,200,66,0.08)' : 'var(--surface2)') + ';border:1px solid ' + (sel ? 'rgba(245,200,66,0.3)' : 'var(--border)') + ';border-radius:8px;padding:10px;cursor:pointer;">' +
+        '<div style="display:flex;align-items:center;gap:8px;">' +
+        '<input type="checkbox" ' + (sel ? 'checked' : '') + ' style="pointer-events:none;accent-color:#f5c842;">' +
+        '<div style="flex:1;min-width:0;">' +
+        '<div style="font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + (f.nome||'') + '</div>' +
+        '<div style="font-size:10px;color:var(--text3);">' + (f.categoria||'') + '</div>' +
+        '</div></div></div>';
+    }).join('') || '<div style="text-align:center;padding:40px;color:var(--text3);">Nenhuma fonte encontrada</div>';
+
+  } else {
+    // Livros
+    var bib = typeof BIBLIOTECA_EDITORIAL !== 'undefined' ? (BIBLIOTECA_EDITORIAL.livros || []) : [];
+    var filtrados = bib.filter(function(l) {
+      var matchB = !busca || (l.titulo||'').toLowerCase().includes(busca) || (l.autor||'').toLowerCase().includes(busca);
+      var matchC = !catFiltro || l.app_categoria === catFiltro || (typeof CATEGORIAS_DEFAULT !== 'undefined' && CATEGORIAS_DEFAULT.find(function(c){ return c.id === catFiltro && c.nome === l.app_categoria; }));
+      return matchB && matchC;
+    });
+    var cntL = document.getElementById('fmCountLivros');
+    if (cntL) cntL.textContent = _fmSelecionados.livros.size + '/' + bib.length;
+
+    html = filtrados.map(function(l) {
+      var sel = _fmSelecionados.livros.has(l.id);
+      return '<div onclick="fmToggleFonte(\'' + l.id + '\',\'livros\')" ' +
+        'style="background:' + (sel ? 'rgba(74,158,255,0.08)' : 'var(--surface2)') + ';border:1px solid ' + (sel ? 'rgba(74,158,255,0.3)' : 'var(--border)') + ';border-radius:8px;padding:10px;cursor:pointer;">' +
+        '<div style="display:flex;align-items:center;gap:8px;">' +
+        '<input type="checkbox" ' + (sel ? 'checked' : '') + ' style="pointer-events:none;accent-color:#4a9eff;">' +
+        '<div style="flex:1;min-width:0;">' +
+        '<div style="font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + (l.titulo||'') + '</div>' +
+        '<div style="font-size:10px;color:var(--text3);">' + (l.autor||'') + ' · ' + (l.app_categoria||'') + '</div>' +
+        '</div></div></div>';
+    }).join('') || '<div style="text-align:center;padding:40px;color:var(--text3);">Nenhum livro encontrado</div>';
+  }
+
+  lista.innerHTML = html;
+  fmAtualizarContador();
+}
+
+function fmToggleFonte(id, tipo) {
+  if (_fmSelecionados[tipo].has(id)) {
+    _fmSelecionados[tipo].delete(id);
+  } else {
+    _fmSelecionados[tipo].add(id);
+  }
+  fmRenderLista();
+}
+
+function fmSelecionarTodos() {
+  if (_fmTab === 'sites') {
+    var fontes = typeof fontesGetTodas === 'function' ? fontesGetTodas() : [];
+    fontes.forEach(function(f) { _fmSelecionados.sites.add(f.id || f.nome); });
+  } else {
+    var bib = typeof BIBLIOTECA_EDITORIAL !== 'undefined' ? (BIBLIOTECA_EDITORIAL.livros || []) : [];
+    bib.forEach(function(l) { _fmSelecionados.livros.add(l.id); });
+  }
+  fmRenderLista();
+}
+
+function fmLimparSelecao() {
+  _fmSelecionados[_fmTab] = new Set();
+  fmRenderLista();
+}
+
+function fmAtualizarContador() {
+  var total = _fmSelecionados.sites.size + _fmSelecionados.livros.size;
+  var el = document.getElementById('fmSelecionadosCount');
+  if (el) el.textContent = total;
+}
+
+function fmConfirmar() {
+  if (!_fmModuloAtual) return;
+  var sel = {
+    sites: [..._fmSelecionados.sites],
+    livros: [..._fmSelecionados.livros]
+  };
+  localStorage.setItem('fm_sel_' + _fmModuloAtual, JSON.stringify(sel));
+
+  // Update display in module
+  var display = document.getElementById(_fmModuloAtual + '_fontesSelecionadas');
+  var total = sel.sites.length + sel.livros.length;
+  if (display) {
+    display.innerHTML = total > 0
+      ? '<span style="color:#f5c842;">✓ ' + total + ' fonte(s) selecionada(s)</span> — ' +
+        (document.getElementById('fmIncluirBibliografia').checked
+          ? '<span style="color:#2ecc71;">bibliografia será incluída</span>'
+          : '<span style="color:#888;">sem bibliografia</span>')
+      : '';
+    // Save bibliography preference
+    localStorage.setItem('fm_bib_' + _fmModuloAtual, document.getElementById('fmIncluirBibliografia').checked ? '1' : '0');
+  }
+  fecharSeletorFontesModulo();
+  showToast('✅ ' + total + ' fonte(s) selecionada(s)!');
+}
+
+function fmGetBibliografiaTexto(moduloId) {
+  // Returns bibliography text to inject into AI prompt
+  var sel = JSON.parse(localStorage.getItem('fm_sel_' + moduloId) || '{"sites":[],"livros":[]}');
+  var incluir = localStorage.getItem('fm_bib_' + moduloId) !== '0';
+  if (!incluir || (sel.sites.length === 0 && sel.livros.length === 0)) return '';
+
+  var linhas = [];
+
+  // Sites
+  if (sel.sites.length > 0) {
+    var fontes = typeof fontesGetTodas === 'function' ? fontesGetTodas() : [];
+    var selecionadas = fontes.filter(function(f) { return sel.sites.includes(f.id || f.nome); });
+    if (selecionadas.length > 0) {
+      linhas.push('\n\nFONTES DE REFERÊNCIA:');
+      selecionadas.forEach(function(f) {
+        linhas.push('• ' + f.nome + ' (' + f.url + ') — ' + (f.descricao || f.categoria || ''));
+      });
+    }
+  }
+
+  // Livros
+  if (sel.livros.length > 0) {
+    var bib = typeof BIBLIOTECA_EDITORIAL !== 'undefined' ? (BIBLIOTECA_EDITORIAL.livros || []) : [];
+    var selecionados = bib.filter(function(l) { return sel.livros.includes(l.id); });
+    if (selecionados.length > 0) {
+      linhas.push('\n\nREFERÊNCIAS BIBLIOGRÁFICAS (ABNT):');
+      selecionados.forEach(function(l) {
+        linhas.push('• ' + l.abnt);
+      });
+    }
+  }
+
+  return linhas.join('\n');
+}
+
+// Initialize all selects when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(popularTodosSelects, 300);
+});
+
 </script>
 
 <!-- ==================== MODAL COMPARTILHAR ==================== -->
@@ -9236,6 +9545,67 @@ function popularSelectsCategorias(){
     <div style="display:flex;gap:8px;margin-top:20px;">
       <button onclick="iamAlterarMinhaSenha()" style="flex:1;padding:11px;background:#f5c842;color:#000;border:none;border-radius:8px;font-weight:700;cursor:pointer;">Alterar</button>
       <button onclick="document.getElementById('iamModalMinhaSenha').style.display='none'" style="padding:11px 14px;background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:8px;cursor:pointer;">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== MODAL SELETOR DE FONTES POR MÓDULO ==================== -->
+<div id="modalFontesModulo" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:3000;align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:800px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;">
+    <!-- Header -->
+    <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <div>
+        <div style="font-size:15px;font-weight:700;color:var(--text);">🔗 Selecionar Fontes e Referências</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:2px;">Escolha quais fontes e livros embasarão o conteúdo gerado</div>
+      </div>
+      <button onclick="fecharSeletorFontesModulo()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+    </div>
+    <!-- Tabs -->
+    <div style="display:flex;border-bottom:1px solid var(--border);flex-shrink:0;">
+      <button onclick="fontesModuloTab('sites')" id="fmTabSites"
+        style="background:none;border:none;border-bottom:2px solid #f5c842;color:#f5c842;font-size:12px;padding:10px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;">
+        🌐 Sites e Fontes <span id="fmCountSites" style="background:rgba(245,200,66,0.15);border-radius:10px;padding:1px 6px;font-size:10px;">0</span>
+      </button>
+      <button onclick="fontesModuloTab('livros')" id="fmTabLivros"
+        style="background:none;border:none;border-bottom:2px solid transparent;color:var(--text2);font-size:12px;padding:10px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;">
+        📚 Biblioteca de Livros <span id="fmCountLivros" style="background:rgba(74,158,255,0.15);border-radius:10px;padding:1px 6px;font-size:10px;">0</span>
+      </button>
+    </div>
+    <!-- Filtros -->
+    <div style="padding:10px 16px;border-bottom:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0;">
+      <input id="fmBusca" type="text" placeholder="🔍 Buscar..." oninput="fmFiltrar()"
+        style="flex:1;min-width:160px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:7px 10px;color:var(--text);font-size:12px;">
+      <select id="fmFiltroCat" onchange="fmFiltrar()"
+        style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:7px 10px;color:var(--text);font-size:12px;">
+        <option value="">Todas as categorias</option>
+      </select>
+      <button onclick="fmSelecionarTodos()"
+        style="padding:7px 12px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.2);border-radius:8px;color:#f5c842;font-size:11px;cursor:pointer;">
+        ✓ Selecionar todos
+      </button>
+      <button onclick="fmLimparSelecao()"
+        style="padding:7px 12px;background:rgba(231,76,60,0.1);border:1px solid rgba(231,76,60,0.2);border-radius:8px;color:#e74c3c;font-size:11px;cursor:pointer;">
+        ✕ Limpar
+      </button>
+    </div>
+    <!-- Lista -->
+    <div id="fmLista" style="flex:1;overflow-y:auto;padding:12px 16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px;align-content:start;"></div>
+    <!-- Footer -->
+    <div style="padding:12px 16px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <div style="font-size:12px;color:var(--text2);">
+        <span id="fmSelecionadosCount" style="font-weight:700;color:#f5c842;">0</span> selecionados
+      </div>
+      <div style="display:flex;gap:8px;">
+        <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);cursor:pointer;">
+          <input type="checkbox" id="fmIncluirBibliografia" checked>
+          Incluir bibliografia no conteúdo
+        </label>
+        <button onclick="fmConfirmar()"
+          style="padding:9px 20px;background:#f5c842;color:#000;border:none;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;">
+          ✓ Confirmar Seleção
+        </button>
+      </div>
     </div>
   </div>
 </div>
